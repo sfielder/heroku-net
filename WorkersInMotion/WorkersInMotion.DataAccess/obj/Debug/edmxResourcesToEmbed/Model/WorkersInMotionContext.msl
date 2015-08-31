@@ -1,0 +1,937 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WorkersInMotionModelStoreContainer" CdmEntityContainer="WorkersInMotionDB">
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.AspNetUserClaim">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.AspNetUserLogin">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExceptionsOrganizations">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.ExceptionsOrganization">
+        <MappingFragment StoreEntitySet="ExceptionsOrganizations">
+          <ScalarProperty Name="OrganizationExceptionGUID" ColumnName="OrganizationExceptionGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="ExceptionDate" ColumnName="ExceptionDate" />
+          <ScalarProperty Name="IsNonWorkingDay" ColumnName="IsNonWorkingDay" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExceptionsUsers">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.ExceptionsUser">
+        <MappingFragment StoreEntitySet="ExceptionsUsers">
+          <ScalarProperty Name="UserExceptionGUID" ColumnName="UserExceptionGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="ExceptionDate" ColumnName="ExceptionDate" />
+          <ScalarProperty Name="IsNonWorkingDay" ColumnName="IsNonWorkingDay" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GlobalUsers">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.GlobalUser">
+        <MappingFragment StoreEntitySet="GlobalUsers">
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ReportingPlaceType" ColumnName="ReportingPlaceType" />
+          <ScalarProperty Name="ReportPlaceGUID" ColumnName="ReportPlaceGUID" />
+          <ScalarProperty Name="IsExempt" ColumnName="IsExempt" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobAssigneds">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobAssigned">
+        <MappingFragment StoreEntitySet="JobAssigned">
+          <ScalarProperty Name="JobAssignGUID" ColumnName="JobAssignGUID" />
+          <ScalarProperty Name="JobGUID" ColumnName="JobGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobCostTypes">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobCostType">
+        <MappingFragment StoreEntitySet="JobCostTypes">
+          <ScalarProperty Name="CostType" ColumnName="CostType" />
+          <ScalarProperty Name="CostName" ColumnName="CostName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobForums">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobForum">
+        <MappingFragment StoreEntitySet="JobForums">
+          <ScalarProperty Name="JobForumGUID" ColumnName="JobForumGUID" />
+          <ScalarProperty Name="JobOfferGUID" ColumnName="JobOfferGUID" />
+          <ScalarProperty Name="JobGUID" ColumnName="JobGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="ParentJobForumGUID" ColumnName="ParentJobForumGUID" />
+          <ScalarProperty Name="ForumText" ColumnName="ForumText" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="ForumStatus" ColumnName="ForumStatus" />
+          <ScalarProperty Name="StartTimePreference" ColumnName="StartTimePreference" />
+          <ScalarProperty Name="CounterCostOffer" ColumnName="CounterCostOffer" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobNotes">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobNote">
+        <MappingFragment StoreEntitySet="JobNotes">
+          <ScalarProperty Name="JobNoteGUID" ColumnName="JobNoteGUID" />
+          <ScalarProperty Name="JobGUID" ColumnName="JobGUID" />
+          <ScalarProperty Name="Deletable" ColumnName="Deletable" />
+          <ScalarProperty Name="NoteType" ColumnName="NoteType" />
+          <ScalarProperty Name="NoteText" ColumnName="NoteText" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="FileURL" ColumnName="FileURL" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobOffers">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobOffer">
+        <MappingFragment StoreEntitySet="JobOffers">
+          <ScalarProperty Name="JobOfferGUID" ColumnName="JobOfferGUID" />
+          <ScalarProperty Name="JobGUID" ColumnName="JobGUID" />
+          <ScalarProperty Name="ManagerUserGUID" ColumnName="ManagerUserGUID" />
+          <ScalarProperty Name="OfferText" ColumnName="OfferText" />
+          <ScalarProperty Name="OfferValue" ColumnName="OfferValue" />
+          <ScalarProperty Name="ExpiryDateTime" ColumnName="ExpiryDateTime" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobProgresses">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobProgress">
+        <MappingFragment StoreEntitySet="JobProgress">
+          <ScalarProperty Name="JobProgressGUID" ColumnName="JobProgressGUID" />
+          <ScalarProperty Name="JobGUID" ColumnName="JobGUID" />
+          <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
+          <ScalarProperty Name="JobSubStatus" ColumnName="JobSubStatus" />
+          <ScalarProperty Name="StatusNote" ColumnName="StatusNote" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="LocationMismatch" ColumnName="LocationMismatch" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jobs">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.Job">
+        <MappingFragment StoreEntitySet="Jobs">
+          <ScalarProperty Name="JobGUID" ColumnName="JobGUID" />
+          <ScalarProperty Name="JobReferenceNo" ColumnName="JobReferenceNo" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="RegionGUID" ColumnName="RegionGUID" />
+          <ScalarProperty Name="TerritoryGUID" ColumnName="TerritoryGUID" />
+          <ScalarProperty Name="LocationType" ColumnName="LocationType" />
+          <ScalarProperty Name="CustomerGUID" ColumnName="CustomerGUID" />
+          <ScalarProperty Name="CustomerStopGUID" ColumnName="CustomerStopGUID" />
+          <ScalarProperty Name="ServicePointGUID" ColumnName="ServicePointGUID" />
+          <ScalarProperty Name="ServiceAddress" ColumnName="ServiceAddress" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="AssignedUserGUID" ColumnName="AssignedUserGUID" />
+          <ScalarProperty Name="ManagerUserGUID" ColumnName="ManagerUserGUID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsUrgent" ColumnName="IsUrgent" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="SubStatusCode" ColumnName="SubStatusCode" />
+          <ScalarProperty Name="IsSecheduled" ColumnName="IsSecheduled" />
+          <ScalarProperty Name="JobName" ColumnName="JobName" />
+          <ScalarProperty Name="PreferedStartTime" ColumnName="PreferedStartTime" />
+          <ScalarProperty Name="PreferedEndTime" ColumnName="PreferedEndTime" />
+          <ScalarProperty Name="ScheduledStartTime" ColumnName="ScheduledStartTime" />
+          <ScalarProperty Name="ScheduledEndTime" ColumnName="ScheduledEndTime" />
+          <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
+          <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
+          <ScalarProperty Name="EstimatedDuration" ColumnName="EstimatedDuration" />
+          <ScalarProperty Name="QuotedDuration" ColumnName="QuotedDuration" />
+          <ScalarProperty Name="ActualDuration" ColumnName="ActualDuration" />
+          <ScalarProperty Name="CostType" ColumnName="CostType" />
+          <ScalarProperty Name="QuotedCost" ColumnName="QuotedCost" />
+          <ScalarProperty Name="ActualCost" ColumnName="ActualCost" />
+          <ScalarProperty Name="JobForm" ColumnName="JobForm" />
+          <ScalarProperty Name="JobClass" ColumnName="JobClass" />
+          <ScalarProperty Name="SignOffRequired" ColumnName="SignOffRequired" />
+          <ScalarProperty Name="SignoffName" ColumnName="SignoffName" />
+          <ScalarProperty Name="PictureRequired" ColumnName="PictureRequired" />
+          <ScalarProperty Name="PictureDescription" ColumnName="PictureDescription" />
+          <ScalarProperty Name="LocationSpecific" ColumnName="LocationSpecific" />
+          <ScalarProperty Name="PONumber" ColumnName="PONumber" />
+          <ScalarProperty Name="TermsURL" ColumnName="TermsURL" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Markets">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.Market">
+        <MappingFragment StoreEntitySet="Markets">
+          <ScalarProperty Name="MarketGUID" ColumnName="MarketGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="MarketID" ColumnName="MarketID" />
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="EntityType" ColumnName="EntityType" />
+          <ScalarProperty Name="OwnerGUID" ColumnName="OwnerGUID" />
+          <ScalarProperty Name="MarketName" ColumnName="MarketName" />
+          <ScalarProperty Name="RegionGUID" ColumnName="RegionGUID" />
+          <ScalarProperty Name="TerritoryGUID" ColumnName="TerritoryGUID" />
+          <ScalarProperty Name="PrimaryContactGUID" ColumnName="PrimaryContactGUID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="MarketPhone" ColumnName="MarketPhone" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="Emails" ColumnName="Emails" />
+          <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="TeritoryID" ColumnName="TeritoryID" />
+          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+          <ScalarProperty Name="RMUserID" ColumnName="RMUserID" />
+          <ScalarProperty Name="FMUserID" ColumnName="FMUserID" />
+          <ScalarProperty Name="StoreJSON" ColumnName="StoreJSON" />
+          <ScalarProperty Name="LastStoreVisitedDate" ColumnName="LastStoreVisitedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MasterLogins">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.MasterLogin">
+        <MappingFragment StoreEntitySet="MasterLogins">
+          <ScalarProperty Name="LoginGUID" ColumnName="LoginGUID" />
+          <ScalarProperty Name="LoginType" ColumnName="LoginType" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+          <ScalarProperty Name="ExpiryTime" ColumnName="ExpiryTime" />
+          <ScalarProperty Name="SessionTimeOut" ColumnName="SessionTimeOut" />
+          <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Organizations">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.Organization">
+        <MappingFragment StoreEntitySet="Organizations">
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+          <ScalarProperty Name="OrganizationFullName" ColumnName="OrganizationFullName" />
+          <ScalarProperty Name="Website" ColumnName="Website" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="AllowContractors" ColumnName="AllowContractors" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrganizationSubscriptions">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.OrganizationSubscription">
+        <MappingFragment StoreEntitySet="OrganizationSubscriptions">
+          <ScalarProperty Name="OrganizationSubscriptionGUID" ColumnName="OrganizationSubscriptionGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SubscriptionPurchased" ColumnName="SubscriptionPurchased" />
+          <ScalarProperty Name="SubscriptionConsumed" ColumnName="SubscriptionConsumed" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrganizationUsersMaps">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.OrganizationUsersMap">
+        <MappingFragment StoreEntitySet="OrganizationUsersMap">
+          <ScalarProperty Name="OrganizationUserMapGUID" ColumnName="OrganizationUserMapGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="IsContractor" ColumnName="IsContractor" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="HourlyRate" ColumnName="HourlyRate" />
+          <ScalarProperty Name="RegionGUID" ColumnName="RegionGUID" />
+          <ScalarProperty Name="TerritoryGUID" ColumnName="TerritoryGUID" />
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+          <ScalarProperty Name="UserSubTypeCode" ColumnName="UserSubTypeCode" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.Person">
+        <MappingFragment StoreEntitySet="People">
+          <ScalarProperty Name="PeopleGUID" ColumnName="PeopleGUID" />
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="IsPrimaryContact" ColumnName="IsPrimaryContact" />
+          <ScalarProperty Name="PlaceGUID" ColumnName="PlaceGUID" />
+          <ScalarProperty Name="MarketGUID" ColumnName="MarketGUID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="BusinessPhone" ColumnName="BusinessPhone" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="Emails" ColumnName="Emails" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Places">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.Place">
+        <MappingFragment StoreEntitySet="Places">
+          <ScalarProperty Name="PlaceGUID" ColumnName="PlaceGUID" />
+          <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="PlaceName" ColumnName="PlaceName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="PlacePhone" ColumnName="PlacePhone" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="Emails" ColumnName="Emails" />
+          <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="POs">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.POs">
+        <MappingFragment StoreEntitySet="POs">
+          <ScalarProperty Name="POGUID" ColumnName="POGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="RegionGUID" ColumnName="RegionGUID" />
+          <ScalarProperty Name="TerritoryGUID" ColumnName="TerritoryGUID" />
+          <ScalarProperty Name="PONumber" ColumnName="PONumber" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+          <ScalarProperty Name="LocationType" ColumnName="LocationType" />
+          <ScalarProperty Name="MarketID" ColumnName="MarketID" />
+          <ScalarProperty Name="EndCustomerAddress" ColumnName="EndCustomerAddress" />
+          <ScalarProperty Name="EndCustomerName" ColumnName="EndCustomerName" />
+          <ScalarProperty Name="EndCustomerPhone" ColumnName="EndCustomerPhone" />
+          <ScalarProperty Name="WorkerName" ColumnName="WorkerName" />
+          <ScalarProperty Name="CustomBooleanValue" ColumnName="CustomBooleanValue" />
+          <ScalarProperty Name="JobClass" ColumnName="JobClass" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="PreferredDateTime" ColumnName="PreferredDateTime" />
+          <ScalarProperty Name="EstimatedCost" ColumnName="EstimatedCost" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="POID" ColumnName="POID" />
+          <ScalarProperty Name="TerritoryID" ColumnName="TerritoryID" />
+          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+          <ScalarProperty Name="RMUserID" ColumnName="RMUserID" />
+          <ScalarProperty Name="FMUserID" ColumnName="FMUserID" />
+          <ScalarProperty Name="POJobType" ColumnName="POJobType" />
+          <ScalarProperty Name="POJobCode" ColumnName="POJobCode" />
+          <ScalarProperty Name="POJson" ColumnName="POJson" />
+          <ScalarProperty Name="InstallerName" ColumnName="InstallerName" />
+          <ScalarProperty Name="POCustomerName" ColumnName="POCustomerName" />
+          <ScalarProperty Name="POCustomerPhone" ColumnName="POCustomerPhone" />
+          <ScalarProperty Name="POCustomerMobile" ColumnName="POCustomerMobile" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Regions">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.Region">
+        <MappingFragment StoreEntitySet="Regions">
+          <ScalarProperty Name="RegionGUID" ColumnName="RegionGUID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="REGIONID" ColumnName="REGIONID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShiftsOrganizations">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.ShiftsOrganization">
+        <MappingFragment StoreEntitySet="ShiftsOrganizations">
+          <ScalarProperty Name="OrganizationShiftGUID" ColumnName="OrganizationShiftGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShiftsUsers">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.ShiftsUser">
+        <MappingFragment StoreEntitySet="ShiftsUsers">
+          <ScalarProperty Name="UserShiftGUID" ColumnName="UserShiftGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="OrganizationShiftGUID" ColumnName="OrganizationShiftGUID" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SkillsOrganizations">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.SkillsOrganization">
+        <MappingFragment StoreEntitySet="SkillsOrganizations">
+          <ScalarProperty Name="OrganizationSkillGuid" ColumnName="OrganizationSkillGuid" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="Skill" ColumnName="Skill" />
+          <ScalarProperty Name="SkillLevel" ColumnName="SkillLevel" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SkillsUsers">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.SkillsUser">
+        <MappingFragment StoreEntitySet="SkillsUsers">
+          <ScalarProperty Name="UserSkillGuid" ColumnName="UserSkillGuid" />
+          <ScalarProperty Name="OrganizationSkillGuid" ColumnName="OrganizationSkillGuid" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Territories">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.Territory">
+        <MappingFragment StoreEntitySet="Territories">
+          <ScalarProperty Name="TerritoryGUID" ColumnName="TerritoryGUID" />
+          <ScalarProperty Name="RegionGUID" ColumnName="RegionGUID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TerritoryID" ColumnName="TerritoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserDevices">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.UserDevice">
+        <MappingFragment StoreEntitySet="UserDevices">
+          <ScalarProperty Name="UserDevicesGUID" ColumnName="UserDevicesGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="LoginGUID" ColumnName="LoginGUID" />
+          <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+          <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+          <ScalarProperty Name="DeviceInfo" ColumnName="DeviceInfo" />
+          <ScalarProperty Name="DeviceType" ColumnName="DeviceType" />
+          <ScalarProperty Name="PUSHID" ColumnName="PUSHID" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserHeartBeats">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.UserHeartBeat">
+        <MappingFragment StoreEntitySet="UserHeartBeats">
+          <ScalarProperty Name="HeartBeatGUID" ColumnName="HeartBeatGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="HeartBeatTime" ColumnName="HeartBeatTime" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserProfiles">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.UserProfile">
+        <MappingFragment StoreEntitySet="UserProfiles">
+          <ScalarProperty Name="ProfileGUID" ColumnName="ProfileGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="BusinessPhone" ColumnName="BusinessPhone" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="PicFileURL" ColumnName="PicFileURL" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserSubscriptions">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.UserSubscription">
+        <MappingFragment StoreEntitySet="UserSubscriptions">
+          <ScalarProperty Name="UserSubscriptionGUID" ColumnName="UserSubscriptionGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="OrganizationSubscriptionGUID" ColumnName="OrganizationSubscriptionGUID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WorkDaysOrganizations">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.WorkDaysOrganization">
+        <MappingFragment StoreEntitySet="WorkDaysOrganizations">
+          <ScalarProperty Name="OrganizationWorkDaysGUID" ColumnName="OrganizationWorkDaysGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="WorkDays" ColumnName="WorkDays" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WorkDaysUsers">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.WorkDaysUser">
+        <MappingFragment StoreEntitySet="WorkDaysUsers">
+          <ScalarProperty Name="UserWorkdaysGUID" ColumnName="UserWorkdaysGUID" />
+          <ScalarProperty Name="OrganizationWorkDaysGUID" ColumnName="OrganizationWorkDaysGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobFormDatas">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobFormData">
+        <MappingFragment StoreEntitySet="JobFormData">
+          <ScalarProperty Name="JobFormDataGUID" ColumnName="JobFormDataGUID" />
+          <ScalarProperty Name="JobFormGUID" ColumnName="JobFormGUID" />
+          <ScalarProperty Name="JobGUID" ColumnName="JobGUID" />
+          <ScalarProperty Name="ControlsID" ColumnName="ControlsID" />
+          <ScalarProperty Name="Val" ColumnName="Val" />
+          <ScalarProperty Name="ValID" ColumnName="ValID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobForms">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobForm">
+        <MappingFragment StoreEntitySet="JobForms">
+          <ScalarProperty Name="JobFormGUID" ColumnName="JobFormGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="Skill" ColumnName="Skill" />
+          <ScalarProperty Name="JobClass" ColumnName="JobClass" />
+          <ScalarProperty Name="LocationType" ColumnName="LocationType" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="FriendlyName" ColumnName="FriendlyName" />
+          <ScalarProperty Name="JobForm1" ColumnName="JobForm" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobForumStatus">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobForumStatu">
+        <MappingFragment StoreEntitySet="JobForumStatus">
+          <ScalarProperty Name="ForumStatusGUID" ColumnName="ForumStatusGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="ForumStatus" ColumnName="ForumStatus" />
+          <ScalarProperty Name="StatusText" ColumnName="StatusText" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobStatus">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobStatu">
+        <MappingFragment StoreEntitySet="JobStatus">
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobStatusOrganizations">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobStatusOrganization">
+        <MappingFragment StoreEntitySet="JobStatusOrganizations">
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobSubStatus">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobSubStatu">
+        <MappingFragment StoreEntitySet="JobSubStatus">
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="SubStatusCode" ColumnName="SubStatusCode" />
+          <ScalarProperty Name="SubStatus" ColumnName="SubStatus" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobSubStatusOrganizations">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.JobSubStatusOrganization">
+        <MappingFragment StoreEntitySet="JobSubStatusOrganizations">
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="SubStatusCode" ColumnName="SubStatusCode" />
+          <ScalarProperty Name="SubStatus" ColumnName="SubStatus" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OptionLists">
+      <EntityTypeMapping TypeName="WorkersInMotionModel.OptionList">
+        <MappingFragment StoreEntitySet="OptionLists">
+          <ScalarProperty Name="OptionListGUID" ColumnName="OptionListGUID" />
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="ListGUID" ColumnName="ListGUID" />
+          <ScalarProperty Name="ListType" ColumnName="ListType" />
+          <ScalarProperty Name="ListValue" ColumnName="ListValue" />
+          <ScalarProperty Name="ListURL" ColumnName="ListURL" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="WorkersInMotionModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionName="WorkersInMotionModel.Store.SplitString" FunctionImportName="SplitString">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WorkersInMotionModel.SplitString_Result">
+          <ScalarProperty Name="Skill" ColumnName="Skill" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="p_GetJobs" FunctionName="WorkersInMotionModel.Store.p_GetJobs">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WorkersInMotionModel.p_GetJobs_Result">
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ReportingPlaceType" ColumnName="ReportingPlaceType" />
+          <ScalarProperty Name="ReportPlaceGUID" ColumnName="ReportPlaceGUID" />
+          <ScalarProperty Name="IsExempt" ColumnName="IsExempt" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
+          <ScalarProperty Name="JobGUID" ColumnName="JobGUID" />
+          <ScalarProperty Name="JobName" ColumnName="JobName" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="SubStatusCode" ColumnName="SubStatusCode" />
+          <ScalarProperty Name="QuotedCost" ColumnName="QuotedCost" />
+          <ScalarProperty Name="ActualCost" ColumnName="ActualCost" />
+          <ScalarProperty Name="Latitude1" ColumnName="Latitude1" />
+          <ScalarProperty Name="Longitude1" ColumnName="Longitude1" />
+          <ScalarProperty Name="IsUrgent" ColumnName="IsUrgent" />
+          <ScalarProperty Name="PreferedStartTime" ColumnName="PreferedStartTime" />
+          <ScalarProperty Name="PreferedEndTime" ColumnName="PreferedEndTime" />
+          <ScalarProperty Name="ScheduledStartTime" ColumnName="ScheduledStartTime" />
+          <ScalarProperty Name="ScheduledEndTime" ColumnName="ScheduledEndTime" />
+          <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
+          <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
+          <ScalarProperty Name="PlaceName" ColumnName="PlaceName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="Emails" ColumnName="Emails" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="MarketName" ColumnName="MarketName" />
+          <ScalarProperty Name="FirstName1" ColumnName="FirstName1" />
+          <ScalarProperty Name="LastName1" ColumnName="LastName1" />
+          <ScalarProperty Name="MarketPhone" ColumnName="MarketPhone" />
+          <ScalarProperty Name="MobilePhone1" ColumnName="MobilePhone1" />
+          <ScalarProperty Name="Emails1" ColumnName="Emails1" />
+          <ScalarProperty Name="ImageURL1" ColumnName="ImageURL1" />
+          <ScalarProperty Name="JobNoteGUID" ColumnName="JobNoteGUID" />
+          <ScalarProperty Name="NoteType" ColumnName="NoteType" />
+          <ScalarProperty Name="NoteText" ColumnName="NoteText" />
+          <ScalarProperty Name="FileURL" ColumnName="FileURL" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Deletable" ColumnName="Deletable" />
+          <ScalarProperty Name="CreateDate1" ColumnName="CreateDate1" />
+          <ScalarProperty Name="JobFormGUID" ColumnName="JobFormGUID" />
+          <ScalarProperty Name="FriendlyName" ColumnName="FriendlyName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="p_GetJobStatistics" FunctionName="WorkersInMotionModel.Store.p_GetJobStatistics">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WorkersInMotionModel.p_GetJobStatistics_Result">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="JobCount" ColumnName="JobCount" />
+          <ScalarProperty Name="QuotedCost" ColumnName="QuotedCost" />
+          <ScalarProperty Name="ActualCost" ColumnName="ActualCost" />
+          <ScalarProperty Name="QuotedDuration" ColumnName="QuotedDuration" />
+          <ScalarProperty Name="ActualDuration" ColumnName="ActualDuration" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="p_GetOpenJobs" FunctionName="WorkersInMotionModel.Store.p_GetOpenJobs">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WorkersInMotionModel.p_GetOpenJobs_Result">
+          <ScalarProperty Name="JobGUID" ColumnName="JobGUID" />
+          <ScalarProperty Name="JobName" ColumnName="JobName" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="SubStatusCode" ColumnName="SubStatusCode" />
+          <ScalarProperty Name="QuotedCost" ColumnName="QuotedCost" />
+          <ScalarProperty Name="ActualCost" ColumnName="ActualCost" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="IsUrgent" ColumnName="IsUrgent" />
+          <ScalarProperty Name="PreferedStartTime" ColumnName="PreferedStartTime" />
+          <ScalarProperty Name="PreferedEndTime" ColumnName="PreferedEndTime" />
+          <ScalarProperty Name="ScheduledStartTime" ColumnName="ScheduledStartTime" />
+          <ScalarProperty Name="ScheduledEndTime" ColumnName="ScheduledEndTime" />
+          <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
+          <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
+          <ScalarProperty Name="PlaceName" ColumnName="PlaceName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="Emails" ColumnName="Emails" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="MarketName" ColumnName="MarketName" />
+          <ScalarProperty Name="FirstName1" ColumnName="FirstName1" />
+          <ScalarProperty Name="LastName1" ColumnName="LastName1" />
+          <ScalarProperty Name="MarketPhone" ColumnName="MarketPhone" />
+          <ScalarProperty Name="MobilePhone1" ColumnName="MobilePhone1" />
+          <ScalarProperty Name="Emails1" ColumnName="Emails1" />
+          <ScalarProperty Name="ImageURL1" ColumnName="ImageURL1" />
+          <ScalarProperty Name="JobNoteGUID" ColumnName="JobNoteGUID" />
+          <ScalarProperty Name="NoteType" ColumnName="NoteType" />
+          <ScalarProperty Name="NoteText" ColumnName="NoteText" />
+          <ScalarProperty Name="FileURL" ColumnName="FileURL" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Deletable" ColumnName="Deletable" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="JobFormGUID" ColumnName="JobFormGUID" />
+          <ScalarProperty Name="FriendlyName" ColumnName="FriendlyName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="p_GetOrganizationsForSkills" FunctionName="WorkersInMotionModel.Store.p_GetOrganizationsForSkills">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WorkersInMotionModel.p_GetOrganizationsForSkills_Result">
+          <ScalarProperty Name="OrganizationGUID" ColumnName="OrganizationGUID" />
+          <ScalarProperty Name="OrganizationGUID1" ColumnName="OrganizationGUID1" />
+          <ScalarProperty Name="Skill" ColumnName="Skill" />
+          <ScalarProperty Name="SkillLevel" ColumnName="SkillLevel" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="p_GetUsers" FunctionName="WorkersInMotionModel.Store.p_GetUsers">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WorkersInMotionModel.p_GetUsers_Result">
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="RegionGUID" ColumnName="RegionGUID" />
+          <ScalarProperty Name="TerritoryGUID" ColumnName="TerritoryGUID" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="p_GetUsersAvailability" FunctionName="WorkersInMotionModel.Store.p_GetUsersAvailability">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WorkersInMotionModel.p_GetUsersAvailability_Result">
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ReportingPlaceType" ColumnName="ReportingPlaceType" />
+          <ScalarProperty Name="ReportPlaceGUID" ColumnName="ReportPlaceGUID" />
+          <ScalarProperty Name="IsExempt" ColumnName="IsExempt" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="p_GetUsersLocationForADate" FunctionName="WorkersInMotionModel.Store.p_GetUsersLocationForADate">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WorkersInMotionModel.p_GetUsersLocationForADate_Result">
+          <ScalarProperty Name="JobAssignGUID" ColumnName="JobAssignGUID" />
+          <ScalarProperty Name="JobGUID" ColumnName="JobGUID" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="p_Lognin" FunctionName="WorkersInMotionModel.Store.p_Lognin" />
+    <FunctionImportMapping FunctionImportName="p_UpdateJob" FunctionName="WorkersInMotionModel.Store.p_UpdateJob" />
+    <FunctionImportMapping FunctionImportName="p_UpdateJobStatus" FunctionName="WorkersInMotionModel.Store.p_UpdateJobStatus" />
+  </EntityContainerMapping>
+</Mapping>

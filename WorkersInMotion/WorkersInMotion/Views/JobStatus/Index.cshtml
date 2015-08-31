@@ -1,0 +1,331 @@
+﻿@model WorkersInMotion.Model.ViewModel.JobStatusViewModel
+
+@{
+    // Layout = null;
+}
+@using PagedList.Mvc;
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    @*<script src="~/jqueryplugin-dyndatetime-0.2-src/jquery.dynDateTime.js"></script>
+        <script src="~/jqueryplugin-dyndatetime-0.2-src/lang/calendar-en.min.js"></script>
+        <link href="~/jqueryplugin-dyndatetime-0.2-src/css/calendar-blue.css" rel="stylesheet" />*@
+
+
+    <title>Index</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                Visit List
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="#">Visit List</a></li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page lists the status of all visits against your profile.</div>
+
+                    <table align="right">
+                        <tr>
+                            <td>
+                                <div id="reportrange" class="btn default" align="right">
+                                    <i class="icon-calendar"></i>
+                                    &nbsp;
+                                    <span id="JobStatus"></span>
+
+                                    <b class="icon-angle-down"></b>
+                                </div>
+                            </td>
+                            <td style="padding-left:10px">
+                                @Html.Raw(@ViewBag.RegionList)
+                            </td>
+                            @*<td>
+                                    From :
+                                    <input type="text" id="FromDate" readonly="readonly" style="cursor:pointer" onchange="return datechange();" />
+                                </td>
+                                <td>
+                                    To :
+                                    <input type="text" id="ToDate" readonly="readonly" style="cursor:pointer" onchange="return datechange();" />
+                                </td>*@
+                        </tr>
+                    </table>
+                </div>
+                @Html.Partial("~/Views/JobStatus/_tableview.cshtml")
+                @*<div class="portlet-body">
+                    <div class="table-toolbar">
+                    </div>
+                    <table class="table table-striped table-hover table-bordered dataTable" id="sample_1" aria-describedby="sample_1_info" style="overflow-y:scroll">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+                                    : activate to sort column ascending">
+                                </th>
+                                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+                                      Job Name
+                                    : activate to sort column ascending">
+                                    Job Name
+                                </th>
+                                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+                                       Customer Name
+                                    : activate to sort column ascending">
+                                    Customer Name
+                                </th>
+                                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+                                      Store ID
+                                    : activate to sort column ascending">
+                                    Store ID
+                                </th>
+                                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+                                       PO#
+                                    : activate to sort column ascending">
+                                    PO Number
+                                </th>
+                                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+                                       Status
+                                    : activate to sort column ascending">
+                                    Status
+                                </th>
+                                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+                                     Preferred time
+                                    : activate to sort column ascending">
+                                    Preferred time
+                                </th>
+                                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+                                     Est. Start time
+                                    : activate to sort column ascending">
+                                    Est. Start time
+                                </th>
+                                <th class="sorting-disabled" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+                                         Actions
+                                    : activate to sort column ascending">
+                                    Actions
+                                </th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody role="alert" aria-live="polite" aria-relevant="all">
+                            @if (Model != null && Model.JobStatusModel != null && Model.JobStatusModel.Count() > 0)
+                            {
+                                foreach (var item in Model.JobStatusModel)
+                                {
+                                    <tr class="odd gradeX">
+                                        <td style="text-align: center;">
+                                            @if (item.locationmismatch == true)
+                                            {
+                                                <span style="color:red;font-weight:bold">!</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.JobName)
+                                            <div id="tblextend" style="display:none;">
+                                                @Html.Label("Site Address : ", new { @style = "font-size:12px" })
+                                                @Html.DisplayFor(modelItem => item.SiteAddress, new { @style = "font-size:12px" })
+                                                <br />
+                                                @Html.Label("Estimated Duration : ", new { @style = "font-size:12px" })
+                                                @Html.DisplayFor(modelItem => item.EstimatedDuration, new { @style = "font-size:12px" })
+                                                <br />
+                                                @if (item.statuscode >= 2 && !string.IsNullOrEmpty(item.AssignedTo))
+                                                {
+                                                    @Html.Label("Associate Name : ", new { @style = "font-size:12px" })
+                                                    @Html.DisplayFor(modelItem => item.AssociateName, new { @style = "font-size:12px" })
+                                                    <br />
+                                                    @Html.Label("Associate Contact Number : ", new { @style = "font-size:12px" })
+                                                    @Html.DisplayFor(modelItem => item.AssociateContactNumber, new { @style = "font-size:12px" })
+                                                    <br />
+                                                    @Html.Label("Email : ", new { @style = "font-size:12px" })
+                                                    @Html.DisplayFor(modelItem => item.Email, new { @style = "font-size:12px" })
+                                                }
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CustomerName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StoreID)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PONumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PreferredStartTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EstimatedStartTime)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Details", "Index", "JobDetails", new { jobindexguid = item.JobIndexGUID }, new { @class = "label label-sm label-default", @style = "border-radius:0px;" })
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.JobIndexGUID }, new { @class = "label label-sm label-warning", @style = "border-radius:0px;", @onclick = "return deleteconfirm();" })
+                                            @if (item.statuscode == 1)
+                                            {
+                                                @Html.ActionLink("Assign", "Index", "JobStatus", new { jobindexguid = item.JobIndexGUID, regionguid = item.RegionGUID, territoryguid = item.TerritoryGUID }, new { @class = "label label-sm label-success", @style = "border-radius:0px;" })
+                                            }
+                                            </td>
+                                            </tr>
+                                            }
+                                            }
+                                            else
+                                            {
+                                            <tr>
+                                                <td colspan="10" align="center" style=" color:red">
+                                                    No Data Found
+                                                </td>
+                                            </tr>
+                                            }
+                                            </tbody>
+                                            </table>
+                                        </div>*@
+                <div class="clearfix"></div>
+
+            </div>
+            <!-- END PAGE -->
+        </div>
+    </div>
+
+    @if (Model != null && Model.GlobalUsers != null && Model.JobModel != null)
+    {
+        <div class="row" style="width:50%">
+            <div class="col-md-12 col-sm-12">
+                <!-- BEGIN PORTLET-->
+                <div class="portlet box grey">
+                    <div class="portlet-title">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.Label("Job Name :", new { @style = "font-size:12px" })
+                                @Html.DisplayFor(model => model.JobModel.JobName, new { @style = "font-size:12px" })
+                                @Html.HiddenFor(model => model.JobModel.JobIndexGUID)
+                            </div>
+                        </div>
+                        @*<div>
+                                <br />
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.Label("Estimated Start Time : ", new { @style = "font-size:12px" })
+                                    @Html.TextBox("EstimatedStartTime", null, new { @readonly = "readonly", @style = "cursor:pointer", @onchange = "return datevalidate();" })
+                                </div>
+                            </div>*@
+                    </div>
+                    <div class="portlet-body">
+                        <table class="table table-striped table-hover table-bordered dataTable">
+                            <tr>
+                                <th>
+                                </th>
+                                <th style="font-size:14px;font-weight:600">
+                                    User Name
+                                </th>
+                            </tr>
+                            @if (Model.GlobalUsers.Count() > 0)
+                            {
+                                foreach (var item in Model.GlobalUsers.AsEnumerable())
+                                {
+                                    <tr class="odd gradeX">
+                                        <td>
+                                            @Html.RadioButton("rdoUser", item.UserGUID, new { @id = "rdo_btn_" + item.UserGUID })
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UserName)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="2" align="center" style="color:red">
+                                        No Data Found
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- END PAGE -->
+            </div>
+        </div>
+    }
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            TableAdvanced.init();
+            ComponentsPickers.init();
+
+            if ('@TempData["PoNumber"]' != null && '@TempData["PoNumber"]' != "") {
+                $("input[aria-controls]").val('@TempData["PoNumber"]');
+            }
+
+            if ('@ViewBag.DateValue' != "") {
+                $('#reportrange span').html('@ViewBag.DateValue');
+                //$("div[class='ranges'] ul li").removeAttr('class');
+            }
+
+            $("input[name = rdoUser]").on("change", function () {
+                //  alert($(this).val());
+                var val = $(this).val();
+                window.location = "/AssignJob/Assign/" + val + "?jobindexguid=" + $('#JobModel_JobIndexGUID').val() + "";
+            });
+        });
+
+
+        function datevalidate() {
+            if ($("#EstimatedStartTime").val() < '@System.DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm")') {
+                document.getElementById("EstimatedStartTime").value = '@System.DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm")';
+                ModalPopupsAlert('Workers-In-Motion', 'Start time should be greater or equal to current time.');
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        }
+
+
+    </script>
+</body>
+</html>

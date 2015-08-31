@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>elmahappender_log4net_1.2.10</id>
+    <version>1.0.2</version>
+    <title>ELMAH Appender for log4net 1.2.10</title>
+    <authors>edwinf</authors>
+    <owners>edwinf</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+    <projectUrl>https://github.com/edwinf/log4net---ELMAH-Appender</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This appender will allow log4net to be configured to send log messages to ELMAH directly. This way ELMAH can be the log manager of record for sites while still allowing specific logging parameters to be controlled with log4net as usual.
+
+This package is specifically for log4net 1.2.10.  If you upgrade to 1.2.11, you need to remove this package and install elmahappender_log4net.</description>
+    <releaseNotes>*1.0.2 - Fix issue with MVC sites when the LogManager is created for the first time inside of the Application_Start function.  This fix includes a new property to set the ApplicationName value for ELMAH manually instead of trying to infer it from the HttpContext.</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>elmah log4net</tags>
+    <dependencies>
+      <dependency id="elmah.corelibrary" version="1.2.2" />
+      <dependency id="log4net" version="[1.2.10]" />
+    </dependencies>
+  </metadata>
+</package>

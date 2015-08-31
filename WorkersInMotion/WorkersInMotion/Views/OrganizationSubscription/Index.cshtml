@@ -1,0 +1,171 @@
+﻿@model WorkersInMotion.Model.ViewModel.OrganizationSubscriptionViewModel
+
+@{
+    // Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Edit</title>
+
+    <link href="~/Content/JqueryUI.css" rel="stylesheet" />
+    <style type="text/css">
+        /*.leftbar-heading {
+                font-family: Arial,Verdana, Helvetica, sans-serif;
+                font-size: 13px;
+                font-style: normal;
+                line-height: normal;
+                font-weight: normal;
+                font-variant: normal;
+                text-transform: none;
+            }*/
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            @if (Session["UserType"] != null && Session["UserType"].ToString() != "WIM_A")
+            {
+                <h3 class="page-title">
+                    ' @ViewBag.OrganizationName ' Organization's Subscription
+                </h3>
+            }
+            else
+            {
+                <h3 class="page-title">
+                    Update ' @ViewBag.OrganizationName ' Organization's Subscription
+                </h3>
+            }
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="#">Organization Subscription</a></li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    @if (Session["UserType"] != null && Session["UserType"].ToString() != "WIM_A")
+                    {
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to view an Organization Subscription.</div>
+                    }
+                    else
+                    {
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to update an Organization Subscription.</div>
+                    }
+
+                </div>
+                <div class="portlet-body">
+                    <div id="sample_editable_3_wrapper" class="dataTables_wrapper" role="grid">
+                        <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_3" aria-describedby="sample_editable_3_info" style="width: 1065px;">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_3" rowspan="1" colspan="1" style="width: 233px;" aria-label="
+                                         Name
+                                    : activate to sort column ascending">
+                                        Name
+                                    </th>
+                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_3" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                      Valid
+                                    : activate to sort column ascending">
+                                        Valid
+                                    </th>
+                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_3" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                      Expired
+                                    : activate to sort column ascending">
+                                        Expired
+                                    </th>
+                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_3" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                      Assigned
+                                    : activate to sort column ascending">
+                                        Assigned
+                                    </th>
+                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_3" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                      Term End Date
+                                    : activate to sort column ascending">
+                                        Term End Date
+                                    </th>
+                                    <th class="sorting-disabled" role="columnheader" tabindex="0" aria-controls="sample_editable_3" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                      Renew
+                                    : activate to sort column ascending">
+                                        Renew
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                @if (Model.OrganizationSubscriptionViewList != null && Model.OrganizationSubscriptionViewList.Count() > 0)
+                                {
+                                    foreach (var item in Model.OrganizationSubscriptionViewList)
+                                    {
+                                        <tr class="odd gradeX">
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.OrganizationName)
+                                            </td>
+                                            <td>
+                                                Unlimited
+                                            </td>
+                                            <td>
+                                                None
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SubscriptionConsumed)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ExpiryDate)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Renew", "Edit", "OrganizationSubscription", new { id = item.OrganizationGUID }, new { @id = "delete", @class = "label label-sm label-warning", @style = "border-radius:0px;margin-right:4px" })
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6" align="center" style="color:red">
+                                            No Data Found
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+
+                    </div><div class="row"></div>
+                </div>
+
+            </div>
+            <!-- END PORTLET-->
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- END PAGE -->
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            TableEditable.init();
+        });
+    </script>
+</body>
+</html>

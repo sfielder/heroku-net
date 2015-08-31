@@ -1,0 +1,954 @@
+﻿@model WorkersInMotion.Model.ViewModel.JobFormNew
+
+@{
+    //Layout = null;
+    List<string> parentIDList = new List<string>();
+    List<string> controlIDList = new List<string>();
+    int imagecount = 0;
+    List<WorkersInMotion.Model.ViewModel.JobFormValueDetails> FormValues = new List<WorkersInMotion.Model.ViewModel.JobFormValueDetails>();
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+    <style type="text/css">
+        .mask2 {
+            background-color: #000;
+            display: block;
+            height: 100%;
+            left: 0;
+            opacity: .8;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .badge_new {
+            font-size: 8px !important;
+            font-weight: 600;
+            text-align: center;
+            background-color: #e02222;
+            height: 18px;
+            padding: 3px 6px 3px 6px;
+            -webkit-border-radius: 12px !important;
+            -moz-border-radius: 12px !important;
+            border-radius: 12px !important;
+            text-shadow: none !important;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    @if (ViewBag.CoOrdinates == null)
+    {
+        ViewBag.CoOrdinates = "";
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                View Visit Form
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        <a href="@Url.Action("Index","MyCompany")">@Session["OrganizationName"].ToString()</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                }
+
+                <li>
+                    <a href="@Url.Action("Index","UserActivities")">User Activities</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="#">Detail</a></li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to view a visit Form.</div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        bool flag = false;
+                        <div align="right" style="padding-right: 35px;">
+                            @if (Model != null && Model.FormValues != null)
+                            {
+                                <a href="@Url.Action("GeneratePDFByID", "UserActivities", new { id = Model.JobGUID, type = "SiteVisit" })" class="btn red">
+                                    Generate PDF <i class='icon-plus'></i>
+                                </a>
+                            }
+                        </div>
+                        <div class="form-horizontal">
+                            <div style="padding:15px">
+                                <fieldset style="padding-left:20px;width:98%;padding-top:20px;padding-bottom:20px;padding-right:20px; border:solid 1px #CBCDCF;">
+                                    <div id="SelectBoxDiv" style="float:left;width:100%">
+                                        <div id="divmask" class="mask2" style="display:none;"></div>
+                                        @*@if (ViewBag.JobName != null && !string.IsNullOrEmpty(ViewBag.JobName))
+                                            {
+                                                <div style="width: 100%; height: 30px; font-weight: bold; font-size: 24px; padding-left: 10px;text-align:center">
+                                                    @ViewBag.JobName
+                                                </div>
+
+                                            }*@
+                                        <div>
+                                            @if (Model != null && Model.FormValues != null && Model.JobFormHeading != null)
+                                            {
+                                                <div>
+                                                    <div align="center" style="padding-bottom:20px;">
+                                                        <table style="width:100%" align="center" cellpadding="0">
+                                                            <tr>
+                                                                <td colspan="2" style="font-size:18px;font-family:verdana;font-weight:bold;text-align:center;">@Model.JobFormHeading.JobName&nbsp;Report</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="font-size: 12px; font-family: verdana; font-weight: bold; text-align: left; width: 70%" align="left">Client Name :<span style="font-weight:normal;">@Model.JobFormHeading.PlaceName</span> </td>
+                                                                <td style="font-size: 12px; font-family: verdana; font-weight: bold; text-align: left; width: 30%; " align="left">PO Number :<span style="font-weight:normal;">@Model.JobFormHeading.PoNumber</span> </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="font-size: 12px; font-family: verdana; font-weight: bold; text-align: left; width: 70%" align="left">Store ID :<span style="font-weight:normal;">@Model.JobFormHeading.MarketID</span> </td>
+                                                                <td style="font-size: 12px; font-family: verdana; font-weight: bold; text-align: left; width: 30%" align="left">Check-In :<span style="font-weight:normal;">@Model.JobFormHeading.CheckInTime</span> </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="font-size: 12px; font-family: verdana; font-weight: bold; text-align: left; width: 70%; " align="left">Store Name : <span style="font-weight:normal;">@Model.JobFormHeading.MarketName</span></td>
+                                                                <td style="font-size: 12px; font-family: verdana; font-weight: bold; text-align: left; width: 30%; " align="left">Check-Out : <span style="font-weight:normal;">@Model.JobFormHeading.CheckOutTime</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="font-size:12px;font-family:verdana;font-weight:bold;text-align:left;" align="left">Address :<span style="font-weight:normal;">@Model.JobFormHeading.MarketAddress</span> </td>
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td style="font-size:10px;font-family:verdana;text-align:center"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                foreach (var item1 in Model.FormValues)
+                                                {
+                                                    if ((item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT && item1.parentID == -100) || (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT && item1.ControlLabel == "Email") || (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT && item1.ControlLabel == "Phone"))
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            //if (!parentIDList.Contains(item1.parentID.ToString()))
+                                                            //{
+                                                            //    parentIDList.Add(item1.parentID.ToString());
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.controlParentLabel</label>
+                                                                <table style="width:100%" align="left" cellpadding="5">
+                                                                    <tr>
+                                                                        @foreach (var items in Model.FormValues.Where(one => (one.parentID == item1.parentID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT) || ((one.ControlLabel == "Email" || one.ControlLabel == "Phone") && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT)))
+                                                                        {
+                                                                            if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                            {
+
+                                                                                controlIDList.Add(items.ControlID.ToString());
+
+                                                                                <td align="left" style="width:25%">
+                                                                                    <span style="padding-left:10px;line-height:20px">@items.Value</span>
+                                                                                    <p style="padding:0px 10px 0px 10px; border-bottom: 1px solid gray; border-left: 1px solid gray; border-right: 1px solid gray; line-height: 2px;">
+                                                                                        &nbsp;
+                                                                                    </p>
+                                                                                </td>
+
+                                                                            }
+                                                                        }
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                        }
+                                                        //}
+                                                    }
+
+
+
+                                                    @*else if ((item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT && item1.parentID == -101) || (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT && item1.controlParentLabel == "Date"))
+                                                        {
+                                                            if (!parentIDList.Contains(item1.parentID.ToString()))
+                                                            {
+                                                                parentIDList.Add(item1.parentID.ToString());
+                                                                <div id="Div" class="leftbar-heading">
+                                                                    <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.controlParentLabel</label>
+                                                                    <table style="width:100%" align="left" cellpadding="5">
+                                                                        <tr>
+                                                                            <td align="left">
+                                                                                @foreach (var items in Model.FormValues.Where(one => (one.parentID == item1.parentID && ((one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT && item1.parentID == -101) || (one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT && one.ControlLabel == "Date")))))
+                                                                                {
+                                                                                    if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                                    {
+                                                                                        controlIDList.Add(items.ControlID.ToString());
+                                                                                        if (items.ControlLabel == "Year" || items.ControlLabel == "Day")
+                                                                                        {
+                                                                                            <span style="padding-left:0px;line-height:20px">-@items.Value</span>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <span style="padding-left:10px;line-height:20px">@items.Value</span>
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                <p style="padding:0px 10px 0px 10px; border-bottom: 1px solid gray; border-left: 1px solid gray; border-right: 1px solid gray; line-height: 2px;">
+                                                                                    &nbsp;
+                                                                                </p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+
+                                                            }
+                                                        }*@
+
+                                                    else if ((item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT) && (item1.ControlLabel == "Region"))
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <table style="width:100%" align="left" cellpadding="5">
+                                                                    <tr>
+                                                                        @foreach (var items in Model.FormValues.Where(one => ((one.ControlLabel == "Region" || one.ControlLabel == "Market") && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT)))
+                                                                        {
+                                                                            if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                            {
+
+                                                                                controlIDList.Add(items.ControlID.ToString());
+
+                                                                                <td align="left" style="width:25%">
+                                                                                    <label style="color:black;font-weight:bold;border-bottom:10px;">@items.ControlLabel</label><br />
+                                                                                    <span style="padding-left:10px;line-height:20px">@items.Value</span>
+                                                                                    <p style="padding:0px 10px 0px 10px; border-bottom: 1px solid gray; border-left: 1px solid gray; border-right: 1px solid gray; line-height: 2px;">
+                                                                                        &nbsp;
+                                                                                    </p>
+                                                                                </td>
+
+                                                                            }
+                                                                        }
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else if ((item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT) && (item1.ControlLabel == "Store Number # *" || item1.ControlLabel == "Store Address"))
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <table style="width:100%" align="left" cellpadding="5">
+                                                                    <tr>
+                                                                        @foreach (var items in Model.FormValues.Where(one => ((one.ControlLabel == "Store Number # *" || one.ControlLabel == "Store Address") && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT)))
+                                                                        {
+                                                                            if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                            {
+
+                                                                                controlIDList.Add(items.ControlID.ToString());
+
+                                                                                <td align="left" style="width:25%">
+                                                                                    <label style="color:black;font-weight:bold;border-bottom:10px;">@items.ControlLabel</label><br />
+                                                                                    <span style="padding-left:10px;line-height:20px">@items.Value</span>
+                                                                                    <p style="padding:0px 10px 0px 10px; border-bottom: 1px solid gray; border-left: 1px solid gray; border-right: 1px solid gray; line-height: 2px;">
+                                                                                        &nbsp;
+                                                                                    </p>
+                                                                                </td>
+
+                                                                            }
+                                                                        }
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        }
+
+                                                    }
+                                                    else if ((item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT && item1.parentID < 0))
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.controlParentLabel</label>
+                                                                <table style="width:100%" align="left" cellpadding="5">
+                                                                    <tr>
+                                                                        @foreach (var items in Model.FormValues.Where(one => (one.parentID == item1.parentID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT)))
+                                                                        {
+                                                                            if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                            {
+
+                                                                                controlIDList.Add(items.ControlID.ToString());
+
+                                                                                <td align="left" style="width:25%">
+                                                                                    <span style="padding-left:10px;line-height:20px">@items.Value</span>
+                                                                                    <p style="padding:0px 10px 0px 10px; border-bottom: 1px solid gray; border-left: 1px solid gray; border-right: 1px solid gray; line-height: 2px;">
+                                                                                        &nbsp;
+                                                                                    </p>
+                                                                                </td>
+
+                                                                            }
+                                                                        }
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                        }
+                                                    }
+                                                    else if ((item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT || item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_DROP_DOWN) && item1.controlParentLabel != "Email" && item1.controlParentLabel != "Phone")
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            controlIDList.Add(item1.ControlID.ToString());
+                                                            if (!string.IsNullOrEmpty(item1.ControlLabel) && !string.IsNullOrEmpty(item1.Value))
+                                                            {
+                                                                <div id="Div" class="leftbar-heading">
+                                                                    <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.ControlLabel</label>
+                                                                    <table style="width:100%" align="left">
+                                                                        <tr>
+                                                                            <td align="left" style="width:40%">
+                                                                                <span style="padding-left:10px;line-height:20px">@item1.Value</span>
+                                                                                <p style="padding:0px 10px 0px 10px; border-bottom: 1px solid gray; border-left: 1px solid gray; border-right: 1px solid gray; line-height: 2px;">
+                                                                                    &nbsp;
+                                                                                </p>
+                                                                            </td>
+                                                                            @*<td align="left">
+                                                                                    <label>@item1.ControlLabel</label><label>:</label>
+                                                                                    <input type="text" disabled="disabled" value="@item1.Value" />&nbsp;
+                                                                                </td>*@
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    }
+
+                                                    else if (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_CHECKBOX)
+                                                    {
+                                                        //if (!parentIDList.Contains(item1.parentID.ToString()))
+                                                        //{
+                                                        //    parentIDList.Add(item1.parentID.ToString());
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.controlParentLabel</label>
+                                                                @{
+                                                            FormValues = Model.FormValues.Where(one => one.parentID == item1.parentID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_CHECKBOX).ToList();
+                                                                }
+                                                                @if (FormValues.Count() > 0)
+                                                                {
+                                                                    <table style="width:100%" align="left">
+                                                                        @for (int i = 0; i < FormValues.Count; i = i + 3)
+                                                                        {
+                                                                            //foreach (var items in Model.FormValues.Where(one => one.parentID == item1.parentID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_CHECKBOX))
+                                                                            <tr>
+                                                                                @for (int j = i; j < i + 3 && j < FormValues.Count; j++)
+                                                                                {
+                                                                                    WorkersInMotion.Model.ViewModel.JobFormValueDetails items = (WorkersInMotion.Model.ViewModel.JobFormValueDetails)FormValues[j];
+                                                                                    if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                                    {
+                                                                                        controlIDList.Add(items.ControlID.ToString());
+
+
+                                                                                        <td align="left" style="width:25%">
+                                                                                            @if (items.Value == "true")
+                                                                                            {
+                                                                                                <input type="checkbox" disabled="disabled" checked />
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <input type="checkbox" disabled="disabled" />
+                                                                                            }
+                                                                                            <span style="color:black;border-bottom:10px;">@items.ControlLabel</span>
+                                                                                            &nbsp;
+                                                                                        </td>
+
+                                                                                    }
+                                                                                }
+                                                                            </tr>
+                                                                        }
+                                                                    </table>
+                                                                }
+                                                            </div>
+                                                        }
+
+                                                    }
+                                                    else if (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_MULTITEXT)
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            controlIDList.Add(item1.ControlID.ToString());
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <table style="width:100%" align="left">
+                                                                    <tr>
+                                                                        <td align="left">
+                                                                            <label>@item1.ControlLabel</label>
+
+                                                                            <label>:</label>
+
+                                                                            <textarea cols="20" rows="2" style="background-color:#FFFFFD;">@item1.Value</textarea>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else if (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_LABEL)
+                                                    {
+                                                        <div id="Div" class="leftbar-heading">
+                                                            <table style="width:100%" align="left">
+                                                                <tr>
+                                                                    <td align="left">
+                                                                        <label>@item1.ControlLabel</label>
+
+                                                                        <label>:</label>
+
+                                                                        <label>&nbsp;&nbsp;@item1.Value</label>&nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+
+
+                                                        </div>
+                                                    }
+
+                                                    else if (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_RADIO_GROUP)
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            controlIDList.Add(item1.ControlID.ToString());
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.ControlLabel</label>
+                                                                <table style="width:100%" align="left" cellpadding="5">
+                                                                    <tr>
+                                                                        @foreach (var items in Model.FormValues.Where(one => (one.parentID == item1.ControlID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_RADIO_BUTTON)))
+                                                                        {
+                                                                            if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                            {
+
+                                                                                controlIDList.Add(items.ControlID.ToString());
+
+                                                                                <td align="left" style="width:25%">
+                                                                                    @if (items.Value == "true")
+                                                                                    {
+                                                                                        <input type="radio" disabled="disabled" checked />
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <input type="radio" disabled="disabled" />
+                                                                                    }
+                                                                                    <span style="color:black;border-bottom:10px;">@items.ControlLabel</span>
+                                                                                    &nbsp;
+                                                                                </td>
+
+                                                                            }
+                                                                        }
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        }
+                                                    }
+
+                                                    else if (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_SWITCH)
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            controlIDList.Add(item1.ControlID.ToString());
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.ControlLabel</label>
+                                                                @{
+                                                            FormValues = Model.FormValues.Where(one => one.parentID == item1.ControlID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_RADIO_BUTTON).ToList();
+                                                                }
+                                                                @if (FormValues.Count() > 0)
+                                                                {
+                                                                    <table style="width:100%" align="left">
+                                                                        @for (int i = 0; i < FormValues.Count; i = i + 3)
+                                                                        {
+                                                                            //foreach (var items in Model.FormValues.Where(one => one.parentID == item1.parentID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_CHECKBOX))
+                                                                            <tr>
+                                                                                @for (int j = i; j < i + 3 && j < FormValues.Count; j++)
+                                                                                {
+                                                                                    WorkersInMotion.Model.ViewModel.JobFormValueDetails items = (WorkersInMotion.Model.ViewModel.JobFormValueDetails)FormValues[j];
+
+                                                                                    if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                                    {
+                                                                                        controlIDList.Add(items.ControlID.ToString());
+
+                                                                                        <td align="left" style="width:25%">
+                                                                                            @if (items.Value == "true")
+                                                                                            {
+                                                                                                <input type="radio" disabled="disabled" checked />
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <input type="radio" disabled="disabled" />
+                                                                                            }
+                                                                                            <span style="color:black;border-bottom:10px;">@items.ControlLabel</span>
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    }
+
+                                                                                }
+                                                                            </tr>
+                                                                        }
+                                                                    </table>
+                                                                }
+
+                                                                <div id="Div" class="leftbar-heading">
+                                                                    <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.controlParentLabel</label>
+                                                                    @{
+                                                            FormValues = Model.FormValues.Where(one => one.parentID == item1.ControlID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_IMAGE).ToList();
+                                                                    }
+                                                                    @if (FormValues.Count() > 0)
+                                                                    {
+                                                                        if (!parentIDList.Contains(item1.ControlID.ToString()))
+                                                                        {
+                                                                            parentIDList.Add(item1.ControlID.ToString());
+                                                                            <table style="width:100%" align="left">
+                                                                                @for (int i = 0; i < FormValues.Count; i = i + 3)
+                                                                                {
+                                                                                    <tr>
+                                                                                        @for (int j = i; j < i + 3 && j < FormValues.Count; j++)
+                                                                                        {
+                                                                                            WorkersInMotion.Model.ViewModel.JobFormValueDetails items = (WorkersInMotion.Model.ViewModel.JobFormValueDetails)FormValues[j];
+                                                                                            if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                                            {
+                                                                                                controlIDList.Add(items.ControlID.ToString());
+
+
+                                                                                                <td align="left">
+                                                                                                    @if (!string.IsNullOrEmpty(items.ImagePath))
+                                                                                                    {
+                                                                                                        <div>
+                                                                                                            <img src="@items.ImagePath/@items.Value" style="width:120px;height:120px;" onclick="imgexpandClick('@items.ImagePath/@items.Value')" />
+                                                                                                        </div>
+                                                                                                    }
+                                                                                                    <span style="color:black;border-bottom:10px;">@items.ControlLabel</span>
+                                                                                                    &nbsp;
+                                                                                                </td>
+
+                                                                                            }
+                                                                                        }
+                                                                                    </tr>
+                                                                                }
+                                                                            </table>
+                                                                        }
+                                                                    }
+                                                                </div>
+
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else if (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_IMAGE)
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.controlParentLabel</label>
+                                                                @{
+                                                            FormValues = Model.FormValues.Where(one => one.parentID == item1.parentID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_IMAGE).ToList();
+                                                                }
+                                                                @if (FormValues.Count() > 0)
+                                                                {
+                                                                    <table style="width:100%" align="left">
+                                                                        @for (int i = 0; i < FormValues.Count; i = i + 3)
+                                                                        {
+                                                                            <tr>
+                                                                                @for (int j = i; j < i + 3 && j < FormValues.Count; j++)
+                                                                                {
+                                                                                    WorkersInMotion.Model.ViewModel.JobFormValueDetails items = (WorkersInMotion.Model.ViewModel.JobFormValueDetails)FormValues[j];
+                                                                                    if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                                    {
+                                                                                        controlIDList.Add(items.ControlID.ToString());
+
+
+                                                                                        <td align="left">
+                                                                                            @if (!string.IsNullOrEmpty(items.ImagePath))
+                                                                                            {
+                                                                                                @*string base64String = string.Empty;
+                                                                                                    using (var webClient = new WebClient())
+                                                                                                    {
+                                                                                                        byte[] imageAsByteArray = webClient.DownloadData(items.ImagePath + '/' + items.Value);
+                                                                                                        base64String = Convert.ToBase64String(imageAsByteArray, 0, imageAsByteArray.Length);
+                                                                                                    }
+
+
+                                                                                                    <div>
+                                                                                                        <img src='@String.Format("data:image/jpeg;base64,{0}" ,base64String)' alt='logo' width="120" height="120" onclick="imgexpandClick('@items.ImagePath/@items.Value')" />
+
+                                                                                                    </div>*@
+                                                                                                <div>
+                                                                                                    @*<img src='@Url.Content(Path.Combine("~/" + items.OrganizationGUID + "/Jobs/" + items.JobGUID + "/" + items.Value + ""))' style="width:120px;height:120px;" onclick="imgexpandClick('@items.ImagePath/@items.Value')" />*@
+                                                                                                    <img src="@items.ImagePath/@items.Value" style="width:120px;height:120px;" onclick="imgexpandClick('@items.ImagePath/@items.Value')" />
+                                                                                                </div>
+                                                                                            }
+                                                                                            <span style="color:black;border-bottom:10px;">@items.ControlLabel</span>
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    }
+                                                                                }
+                                                                            </tr>
+                                                                        }
+                                                                    </table>
+                                                                }
+                                                            </div>
+                                                        }
+
+                                                    }
+                                                    else if (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_IMAGE_DESC)
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.controlParentLabel</label>
+                                                                @{
+                                                            FormValues = Model.FormValues.Where(one => one.parentID == item1.parentID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_IMAGE_DESC).ToList();
+                                                                }
+                                                                @if (FormValues.Count() > 0)
+                                                                {
+                                                                    <table style="width:100%" align="left">
+                                                                        @for (int i = 0; i < FormValues.Count; i = i + 3)
+                                                                        {
+                                                                            <tr>
+                                                                                @for (int j = i; j < i + 3 && j < FormValues.Count; j++)
+                                                                                {
+                                                                                    WorkersInMotion.Model.ViewModel.JobFormValueDetails items = (WorkersInMotion.Model.ViewModel.JobFormValueDetails)FormValues[j];
+                                                                                    if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                                    {
+                                                                                        controlIDList.Add(items.ControlID.ToString());
+
+
+                                                                                        <td align="left">
+                                                                                            @if (!string.IsNullOrEmpty(items.ImagePath))
+                                                                                            {
+                                                                                                @*string base64String = string.Empty;
+                                                                                                    using (var webClient = new WebClient())
+                                                                                                    {
+
+                                                                                                        byte[] imageAsByteArray = webClient.DownloadData(items.ImagePath + '/' + items.Value);
+                                                                                                        base64String = Convert.ToBase64String(imageAsByteArray, 0, imageAsByteArray.Length);
+                                                                                                    }
+
+                                                                                                    <div>
+                                                                                                        @if (items.Value.IndexOf(".jpg") != -1 || items.Value.IndexOf(".jpeg") != -1)
+                                                                                                        {
+                                                                                                            <img src='data:image/jpeg;base64,@base64String' alt='logo' width="120" height="120" onclick="imgexpandClick('@items.ImagePath/@items.Value')" />
+                                                                                                        }
+                                                                                                        else if (items.Value.IndexOf(".gif") != -1)
+                                                                                                        {
+                                                                                                            <img src='data:image/gif;base64,@base64String' alt='logo' width="120" height="120" onclick="imgexpandClick('@items.ImagePath/@items.Value')" />
+                                                                                                        }
+                                                                                                        else if (items.Value.IndexOf(".png") != -1)
+                                                                                                        {
+                                                                                                            <img src='data:image/png;base64,@base64String' alt='logo' width="120" height="120" onclick="imgexpandClick('@items.ImagePath/@items.Value')" />
+                                                                                                        }
+
+                                                                                                    </div>*@
+                                                                                                <div>
+                                                                                                    @*<img src='@Url.Content(Path.Combine("~/" + items.OrganizationGUID + "/Jobs/" + items.JobGUID + "/" + items.Value + ""))' style="width:120px;height:120px;" onclick="imgexpandClick(' @items.ImagePath   />@items.Value')" />
+                                                                                                        sbJobForm.Append("<img src='" + Server.MapPath("~/" + items.OrganizationGUID + "/Jobs/" + items.JobGUID + "/" + items.Value + "") + "' alt='logo' width='120px' height='120px' />");*@
+                                                                                                    <img src="@items.ImagePath/@items.Value" style="width:120px;height:120px;" onclick="imgexpandClick('@items.ImagePath/@items.Value')" />
+
+                                                                                                </div>
+                                                                                            }
+                                                                                            @foreach (var item in Model.FormValues.Where(one => one.parentID == items.ControlID && one.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_EDIT))
+                                                                                            {
+                                                                                                if (!controlIDList.Contains(item.ControlID.ToString()))
+                                                                                                {
+
+                                                                                                    controlIDList.Add(item.ControlID.ToString());
+                                                                                                    <span style="color:black;border-bottom:10px;">@item.Value</span>
+                                                                                                }
+                                                                                            }
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    }
+                                                                                }
+                                                                            </tr>
+                                                                        }
+                                                                    </table>
+                                                                }
+                                                            </div>
+                                                        }
+
+                                                    }
+                                                    else if (item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_ISSUES_TO_REPORT || item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_OPEN_CHARGEBACKS || item1.ControlType == WorkersInMotion.Model.ViewModel.ControlType.CONTROL_TYPE_UNSOLD_QUOTES)
+                                                    {
+                                                        if (!controlIDList.Contains(item1.ControlID.ToString()))
+                                                        {
+                                                            <div id="Div" class="leftbar-heading">
+                                                                <label style="color:black;font-weight:bold;border-bottom:10px;">@item1.ControlLabel</label>
+                                                                @*<a class="label label-sm label-default" style="cursor:pointer;text-decoration:none" onclick="enablePopup('div_@item1.ControlID');">View <span class="badge_new"> @item1.Value</span></a>*@
+
+                                                                <div id="div_@item1.ControlID">
+                                                                    @*<img src="~/assets/img/remove-icon-small.png" id="img_@item1.ControlID" onclick="disablepopUp('div_@item1.ControlID');" style="float:right;top:-18px;right:-18px;position:relative" />*@
+                                                                    @foreach (var items in Model.FormValues.Where(one => one.parentID == item1.ControlID))
+                                                                    {
+                                                                        if (!controlIDList.Contains(items.ControlID.ToString()))
+                                                                        {
+                                                                            controlIDList.Add(items.ControlID.ToString());
+                                                                            <table style="width:100%" align="left">
+                                                                                <tr>
+                                                                                    <td align="left" style="width:100px">
+                                                                                        @if (items.currentValueID > 0)
+                                                                                        {
+                                                                                            <span style="color:black;border-bottom:10px;font-weight:bold">@items.Value</span>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <span style="color:black;border-bottom:10px;">@items.Value</span>
+                                                                                        }
+                                                                                        &nbsp;
+                                                                                    </td>
+                                                                                <tr>
+                                                                            </table>
+                                                                        }
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div style="display: block;padding:15px;">
+                            <table style="width:100%">
+                                <tr>
+                                    <td>
+                                        <img src="/assets/img/marketRed.png" width="30" height="30" /><span style="padding-left:15px;font-weight:bold">- Store</span>
+                                    </td>
+                                    <td>
+                                        <img src="/assets/img/marketGreen.png" width="30" height="30" /><span style="padding-left: 15px; font-weight: bold">- Visit Start</span>
+                                    </td>
+                                    <td>
+                                        <img src="/assets/img/marketRedSmall.png" width="30" height="30" /><span style="padding-left: 15px; font-weight: bold">- Visit End</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="display: block;padding:15px;">
+                            <div id="divMap" style="width: 98%; height: 400px;">
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+            <!-- END PORTLET-->
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- END PAGE -->
+    <div>
+        @if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+        {
+            @Html.ActionLink("Back to List", "Index")
+        }
+        else
+        {
+            @Html.ActionLink("Back to List", "Index", "JobStatus")
+        }
+
+    </div>
+    <script type="text/javascript">
+        var pagename = "";
+        var pgname = "";
+        $(document).ready(function () {
+
+            $("td.radiobtn").each(function () {
+                var result = $(this).attr("data-value");
+                $(this).html(getRadioBoxValueforEdit(result));
+
+            });
+            $("td.dropdownbtn").each(function () {
+                var result = $(this).attr("data-value");
+                $(this).html(getDropdownValueforEdit(result));
+
+            });
+            getMap();
+        });
+
+        function getMap() {
+            //var myLatlng = new google.maps.LatLng(-25.363882, 131.044922);
+            //var mapOptions = {
+            //    zoom: 4,
+            //    center: myLatlng
+            //}
+            //var map = new google.maps.Map(document.getElementById('divMap'), mapOptions);
+
+            //var marker = new google.maps.Marker({
+            //    position: myLatlng,
+            //    map: map,
+            //    title: 'Hello World!'
+            //});
+            var numberOfCheckboxesSelected = 0;
+            //var locations=new Array();
+            var latis = ""; var longis = ""; var place = "";
+
+            var locations=  @Html.Raw(Json.Encode(@ViewBag.CoOrdinates));
+            //locations=strloc.split("#");
+            //alert(locations);
+            var map = new google.maps.Map(document.getElementById('divMap'), {
+                zoom: 10,
+                center: new google.maps.LatLng(latis, longis),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            var bounds = new google.maps.LatLngBounds();
+            var infowindow = new google.maps.InfoWindow(); var marker, i;
+            var image0 = '/assets/img/marketRedSmall.png';
+            var image1 = '/assets/img/marketRed.png';
+            var image2 = '/assets/img/marketGreen.png';
+            for (i = 0; i < locations.length; i++) {
+                locate = "";
+                locate = locations[i].split("~");
+
+
+                if(locate.length >3)
+                {
+                    if(locate[2]=='store')
+                    {
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(locate[0], locate[1]),
+                            map: map,
+                            icon:image1
+                        });
+
+
+                        bounds.extend(marker.getPosition());
+                        google.maps.event.addListener(marker, "mouseover", (function (marker, i) {
+                            return function () {
+                                locate = locations[i].split("~");
+                                var contentString = "<div style='border-radius:10px;background-color:#DCDCDC;padding:10px;'> Store Name: <b>" + locate[3] + "</b><br /><br/>";
+                                //contentString += "Longitude :  <b>" + locate[1] + "</b><br/><br/>";
+                                //contentString += "Customer : <b>" + locate[0] + "</b><br/></div>";
+                                infowindow.setContent(contentString);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, i));
+                    }
+                    else if(locate[2]=='start')
+                    {
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(locate[0], locate[1]),
+                            map: map,
+                            icon:image2
+                        });
+
+
+                        bounds.extend(marker.getPosition());
+                        google.maps.event.addListener(marker, "mouseover", (function (marker, i) {
+                            return function () {
+                                locate = locations[i].split("~");
+                                var contentString = "<div style='border-radius:10px;background-color:#DCDCDC;padding:10px;'> Visit Name: <b>" + locate[3] + "</b><br /><br/>";
+                                contentString += "Start Time :  <b>" + locate[4] + "</b><br/><br/>";
+                                //contentString += "Customer : <b>" + locate[0] + "</b><br/></div>";
+                                infowindow.setContent(contentString);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, i));
+                    }
+                    else if(locate[2]=='stop')
+                    {
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(locate[0], locate[1]),
+                            map: map,
+                            icon:image0
+                        });
+
+
+                        bounds.extend(marker.getPosition());
+                        google.maps.event.addListener(marker, "mouseover", (function (marker, i) {
+                            return function () {
+                                locate = locations[i].split("~");
+                                var contentString = "<div style='border-radius:10px;background-color:#DCDCDC;padding:10px;'> Visit Name: <b>" + locate[3] + "</b><br /><br/>";
+                                contentString += "End Time :  <b>" + locate[4] + "</b><br/><br/>";
+                                //contentString += "Customer : <b>" + locate[0] + "</b><br/></div>";
+                                infowindow.setContent(contentString);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, i));
+                    }
+                }
+            }
+            map.fitBounds(bounds);
+        }
+        function enablePopup(id) {
+            $("#divmask").css("display", "block");
+            $("#" + id).css("display", "block");
+            $("body").scrollTop(0);
+        }
+        function disablepopUp(id) {
+            $("#divmask").css("display", "none");
+            $("#" + id).css("display", "none");
+        }
+        function getDropdownValueforEdit(valueid) {
+            var value = valueid.split('$');
+            var createdrop = '';
+            if (value.length > 1) {
+                if (value[0] != "") {
+                    var s = value[0].split('txt="');
+                    for (var i = 1; i < s.length; i++) {
+                        var temp = s[i].split('/&gt;')[0].replace('"', ' ').trim();
+                        if (temp != '')
+                            createdrop = createdrop + '<option id=' + i + '> ' + temp + '</option>';
+                    }
+                    createdrop = '<select>' + createdrop + '</select>';
+                }
+            }
+            return createdrop;
+        }
+        function getRadioBoxValueforEdit(valueid) {
+            var value = valueid.split('$');
+            var createradio = '';
+            if (value.length > 1) {
+                if (value[0] != "") {
+                    createradio = '<table>';
+                    var s = value[0].split('txt="');
+                    for (var i = 1; i < s.length; i++) {
+                        var temp = s[i].split('/&gt;')[0].replace('"', ' ').trim();
+                        if (temp != '')
+                            createradio = createradio + '<tr><td><input type="radio" name=' + value[1] + ' id=' + i + ' value=' + temp + '/><label for=' + i + '>' + temp + '</label></td></tr>';
+                    }
+                    createradio = createradio + '</table>';
+                }
+            }
+            return createradio;
+        }
+
+        function imgexpandClick(imageid) {
+            window.open(
+            imageid,
+            '_blank' // <- This is what makes it open in a new window.
+          );
+        }
+    </script>
+</body>
+</html>

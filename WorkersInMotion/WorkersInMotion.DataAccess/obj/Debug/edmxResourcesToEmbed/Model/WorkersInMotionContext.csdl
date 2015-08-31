@@ -1,0 +1,1652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WorkersInMotionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <ComplexType Name="SplitString_Result">
+    <Property Name="Skill" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+  </ComplexType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="GlobalUsers" Relationship="Self.FK_dbo_GlobalUsers_dbo_AspNetRoles_Role_Id" FromRole="AspNetRoles" ToRole="GlobalUsers" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+    </Key>
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="EmailID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_dbo_AspNetUsers_dbo_Organizations_OrganizationGUID" FromRole="AspNetUsers" ToRole="Organizations" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="ExceptionsOrganization">
+    <Key>
+      <PropertyRef Name="OrganizationExceptionGUID" />
+    </Key>
+    <Property Name="OrganizationExceptionGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="ExceptionDate" Type="DateTime" Precision="0" />
+    <Property Name="IsNonWorkingDay" Type="Boolean" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_ExceptionsOrganizations_Organizations" FromRole="ExceptionsOrganizations" ToRole="Organizations" />
+  </EntityType>
+  <EntityType Name="ExceptionsUser">
+    <Key>
+      <PropertyRef Name="UserExceptionGUID" />
+    </Key>
+    <Property Name="UserExceptionGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="UserGUID" Type="Guid" />
+    <Property Name="ExceptionDate" Type="DateTime" Precision="0" />
+    <Property Name="IsNonWorkingDay" Type="Boolean" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="GlobalUser" Relationship="Self.FK_ExceptionsUsers_GlobalUsers" FromRole="ExceptionsUsers" ToRole="GlobalUsers" />
+  </EntityType>
+  <EntityType Name="GlobalUser">
+    <Key>
+      <PropertyRef Name="UserGUID" />
+    </Key>
+    <Property Name="UserGUID" Type="Guid" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Role_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="ReportingPlaceType" Type="Int32" />
+    <Property Name="ReportPlaceGUID" Type="Guid" />
+    <Property Name="IsExempt" Type="Boolean" Nullable="false" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <Property Name="USERID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetRole" Relationship="Self.FK_dbo_GlobalUsers_dbo_AspNetRoles_Role_Id" FromRole="GlobalUsers" ToRole="AspNetRoles" />
+    <NavigationProperty Name="ExceptionsUsers" Relationship="Self.FK_ExceptionsUsers_GlobalUsers" FromRole="GlobalUsers" ToRole="ExceptionsUsers" />
+    <NavigationProperty Name="Markets" Relationship="Self.FK_dbo_Markets_dbo_GlobalUsers_UserGUID" FromRole="GlobalUsers" ToRole="Markets" />
+    <NavigationProperty Name="People" Relationship="Self.FK_dbo_People_dbo_GlobalUsers_UserGUID" FromRole="GlobalUsers" ToRole="People" />
+    <NavigationProperty Name="Places" Relationship="Self.FK_dbo_Places_dbo_GlobalUsers_UserGUID" FromRole="GlobalUsers" ToRole="Places" />
+    <NavigationProperty Name="UserProfiles" Relationship="Self.FK_dbo_UserProfiles_dbo_GlobalUsers_UserGUID" FromRole="GlobalUsers" ToRole="UserProfiles" />
+    <NavigationProperty Name="OrganizationUsersMaps" Relationship="Self.FK_OrganizationUsersMap_GlobalUsers" FromRole="GlobalUsers" ToRole="OrganizationUsersMap" />
+    <NavigationProperty Name="ShiftsUsers" Relationship="Self.FK_ShiftsUsers_GlobalUsers" FromRole="GlobalUsers" ToRole="ShiftsUsers" />
+    <NavigationProperty Name="UserSubscriptions" Relationship="Self.FK_UserSubscriptions_GlobalUsers" FromRole="GlobalUsers" ToRole="UserSubscriptions" />
+    <NavigationProperty Name="WorkDaysUsers" Relationship="Self.FK_WorkDaysUsers_GlobalUsers" FromRole="GlobalUsers" ToRole="WorkDaysUsers" />
+  </EntityType>
+  <EntityType Name="JobAssigned">
+    <Key>
+      <PropertyRef Name="JobAssignGUID" />
+    </Key>
+    <Property Name="JobAssignGUID" Type="Guid" Nullable="false" />
+    <Property Name="JobGUID" Type="Guid" />
+    <Property Name="UserGUID" Type="Guid" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="Job" Relationship="Self.FK_JobAssigned_Jobs" FromRole="JobAssigned" ToRole="Jobs" />
+  </EntityType>
+  <EntityType Name="JobCostType">
+    <Key>
+      <PropertyRef Name="CostType" />
+    </Key>
+    <Property Name="CostType" Type="Int16" Nullable="false" />
+    <Property Name="CostName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Rate" Type="Double" />
+    <Property Name="Symbol" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="Jobs" Relationship="Self.FK_Jobs_JobCostTypes" FromRole="JobCostTypes" ToRole="Jobs" />
+  </EntityType>
+  <EntityType Name="JobForum">
+    <Key>
+      <PropertyRef Name="JobForumGUID" />
+    </Key>
+    <Property Name="JobForumGUID" Type="Guid" Nullable="false" />
+    <Property Name="JobOfferGUID" Type="Guid" />
+    <Property Name="JobGUID" Type="Guid" />
+    <Property Name="UserGUID" Type="Guid" />
+    <Property Name="ParentJobForumGUID" Type="Guid" />
+    <Property Name="ForumText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsRead" Type="Boolean" />
+    <Property Name="ForumStatus" Type="Int16" />
+    <Property Name="StartTimePreference" Type="DateTime" Precision="3" />
+    <Property Name="CounterCostOffer" Type="Double" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="Job" Relationship="Self.FK_JobForums_Jobs" FromRole="JobForums" ToRole="Jobs" />
+  </EntityType>
+  <EntityType Name="JobNote">
+    <Key>
+      <PropertyRef Name="JobNoteGUID" />
+    </Key>
+    <Property Name="JobNoteGUID" Type="Guid" Nullable="false" />
+    <Property Name="JobGUID" Type="Guid" />
+    <Property Name="Deletable" Type="Boolean" />
+    <Property Name="NoteType" Type="Int16" />
+    <Property Name="NoteText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FileURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <NavigationProperty Name="Job" Relationship="Self.FK_JobNotes_Jobs" FromRole="JobNotes" ToRole="Jobs" />
+  </EntityType>
+  <EntityType Name="JobOffer">
+    <Key>
+      <PropertyRef Name="JobOfferGUID" />
+    </Key>
+    <Property Name="JobOfferGUID" Type="Guid" Nullable="false" />
+    <Property Name="JobGUID" Type="Guid" />
+    <Property Name="ManagerUserGUID" Type="Guid" />
+    <Property Name="OfferText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OfferValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ExpiryDateTime" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="Job" Relationship="Self.FK_JobOffers_Jobs" FromRole="JobOffers" ToRole="Jobs" />
+  </EntityType>
+  <EntityType Name="JobProgress">
+    <Key>
+      <PropertyRef Name="JobProgressGUID" />
+    </Key>
+    <Property Name="JobProgressGUID" Type="Guid" Nullable="false" />
+    <Property Name="JobGUID" Type="Guid" />
+    <Property Name="JobStatus" Type="Int32" />
+    <Property Name="JobSubStatus" Type="Int32" />
+    <Property Name="StatusNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="LocationMismatch" Type="Boolean" />
+    <Property Name="Duration" Type="Double" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="Job" Relationship="Self.FK_JobProgress_Jobs" FromRole="JobProgress" ToRole="Jobs" />
+  </EntityType>
+  <EntityType Name="Job">
+    <Key>
+      <PropertyRef Name="JobGUID" />
+    </Key>
+    <Property Name="JobGUID" Type="Guid" Nullable="false" />
+    <Property Name="JobReferenceNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OrganizationGUID" Type="Guid" Nullable="false" />
+    <Property Name="RegionGUID" Type="Guid" />
+    <Property Name="TerritoryGUID" Type="Guid" />
+    <Property Name="LocationType" Type="Int16" />
+    <Property Name="CustomerGUID" Type="Guid" />
+    <Property Name="CustomerStopGUID" Type="Guid" />
+    <Property Name="ServicePointGUID" Type="Guid" />
+    <Property Name="ServiceAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="AssignedUserGUID" Type="Guid" />
+    <Property Name="ManagerUserGUID" Type="Guid" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="IsUrgent" Type="Boolean" />
+    <Property Name="StatusCode" Type="Int32" />
+    <Property Name="SubStatusCode" Type="Int32" />
+    <Property Name="IsSecheduled" Type="Boolean" />
+    <Property Name="JobName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PreferedStartTime" Type="DateTime" Precision="3" />
+    <Property Name="PreferedEndTime" Type="DateTime" Precision="3" />
+    <Property Name="ScheduledStartTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ScheduledEndTime" Type="DateTime" Precision="3" />
+    <Property Name="ActualStartTime" Type="DateTime" Precision="3" />
+    <Property Name="ActualEndTime" Type="DateTime" Precision="3" />
+    <Property Name="EstimatedDuration" Type="Double" />
+    <Property Name="QuotedDuration" Type="Double" />
+    <Property Name="ActualDuration" Type="Double" />
+    <Property Name="CostType" Type="Int16" />
+    <Property Name="QuotedCost" Type="Double" />
+    <Property Name="ActualCost" Type="Double" />
+    <Property Name="JobForm" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="JobClass" Type="Int16" />
+    <Property Name="SignOffRequired" Type="Int16" />
+    <Property Name="SignoffName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PictureRequired" Type="Int16" />
+    <Property Name="PictureDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LocationSpecific" Type="Boolean" />
+    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TermsURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="JobAssigneds" Relationship="Self.FK_JobAssigned_Jobs" FromRole="Jobs" ToRole="JobAssigned" />
+    <NavigationProperty Name="JobCostType" Relationship="Self.FK_Jobs_JobCostTypes" FromRole="Jobs" ToRole="JobCostTypes" />
+    <NavigationProperty Name="JobForums" Relationship="Self.FK_JobForums_Jobs" FromRole="Jobs" ToRole="JobForums" />
+    <NavigationProperty Name="JobNotes" Relationship="Self.FK_JobNotes_Jobs" FromRole="Jobs" ToRole="JobNotes" />
+    <NavigationProperty Name="JobOffers" Relationship="Self.FK_JobOffers_Jobs" FromRole="Jobs" ToRole="JobOffers" />
+    <NavigationProperty Name="JobProgresses" Relationship="Self.FK_JobProgress_Jobs" FromRole="Jobs" ToRole="JobProgress" />
+  </EntityType>
+  <EntityType Name="Market">
+    <Key>
+      <PropertyRef Name="MarketGUID" />
+    </Key>
+    <Property Name="MarketGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="MarketID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RecordStatus" Type="Int32" />
+    <Property Name="IsDefault" Type="Boolean" />
+    <Property Name="Version" Type="Int32" />
+    <Property Name="UserGUID" Type="Guid" />
+    <Property Name="EntityType" Type="Int32" />
+    <Property Name="OwnerGUID" Type="Guid" />
+    <Property Name="MarketName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="RegionGUID" Type="Guid" />
+    <Property Name="TerritoryGUID" Type="Guid" />
+    <Property Name="PrimaryContactGUID" Type="Guid" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MobilePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="MarketPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="HomePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Emails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TimeZone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="ParentID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TeritoryID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RegionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RMUserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FMUserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StoreJSON" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastStoreVisitedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="GlobalUser" Relationship="Self.FK_dbo_Markets_dbo_GlobalUsers_UserGUID" FromRole="Markets" ToRole="GlobalUsers" />
+    <NavigationProperty Name="Region" Relationship="Self.FK_dbo_Markets_dbo_Regions_RegionGUID" FromRole="Markets" ToRole="Regions" />
+    <NavigationProperty Name="Territory" Relationship="Self.FK_dbo_Markets_dbo_Territories_TerritoryGUID" FromRole="Markets" ToRole="Territories" />
+  </EntityType>
+  <EntityType Name="MasterLogin">
+    <Key>
+      <PropertyRef Name="LoginGUID" />
+    </Key>
+    <Property Name="LoginGUID" Type="Guid" Nullable="false" />
+    <Property Name="LoginType" Type="Int16" />
+    <Property Name="UserGUID" Type="Guid" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="SessionID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ExpiryTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SessionTimeOut" Type="Int32" />
+    <Property Name="IsLoggedIn" Type="Boolean" />
+    <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+  </EntityType>
+  <EntityType Name="Organization">
+    <Key>
+      <PropertyRef Name="OrganizationGUID" />
+    </Key>
+    <Property Name="OrganizationGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OrganizationFullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TimeZone" Type="Double" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="AddressLine1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmailID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="AllowContractors" Type="Boolean" />
+    <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUsers_dbo_Organizations_OrganizationGUID" FromRole="Organizations" ToRole="AspNetUsers" />
+    <NavigationProperty Name="ExceptionsOrganizations" Relationship="Self.FK_ExceptionsOrganizations_Organizations" FromRole="Organizations" ToRole="ExceptionsOrganizations" />
+    <NavigationProperty Name="OrganizationSubscriptions" Relationship="Self.FK_dbo_OrganizationSubscriptions_dbo_Organizations_OrganizationGUID" FromRole="Organizations" ToRole="OrganizationSubscriptions" />
+    <NavigationProperty Name="Regions" Relationship="Self.FK_dbo_Regions_dbo_Organizations_OrganizationGUID" FromRole="Organizations" ToRole="Regions" />
+    <NavigationProperty Name="OrganizationUsersMaps" Relationship="Self.FK_OrganizationUsersMap_Organizations" FromRole="Organizations" ToRole="OrganizationUsersMap" />
+    <NavigationProperty Name="ShiftsOrganizations" Relationship="Self.FK_ShiftsOrganizations_Organizations" FromRole="Organizations" ToRole="ShiftsOrganizations" />
+    <NavigationProperty Name="SkillsOrganizations" Relationship="Self.FK_SkillsOrganizations_Organizations" FromRole="Organizations" ToRole="SkillsOrganizations" />
+    <NavigationProperty Name="WorkDaysOrganizations" Relationship="Self.FK_WorkDaysOrganizations_Organizations" FromRole="Organizations" ToRole="WorkDaysOrganizations" />
+  </EntityType>
+  <EntityType Name="OrganizationSubscription">
+    <Key>
+      <PropertyRef Name="OrganizationSubscriptionGUID" />
+    </Key>
+    <Property Name="OrganizationSubscriptionGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" Nullable="false" />
+    <Property Name="Version" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="SubscriptionPurchased" Type="Int32" Nullable="false" />
+    <Property Name="SubscriptionConsumed" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_dbo_OrganizationSubscriptions_dbo_Organizations_OrganizationGUID" FromRole="OrganizationSubscriptions" ToRole="Organizations" />
+  </EntityType>
+  <EntityType Name="OrganizationUsersMap">
+    <Key>
+      <PropertyRef Name="OrganizationUserMapGUID" />
+    </Key>
+    <Property Name="OrganizationUserMapGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" Nullable="false" />
+    <Property Name="UserGUID" Type="Guid" Nullable="false" />
+    <Property Name="IsContractor" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Status" Type="Int16" Nullable="false" />
+    <Property Name="HourlyRate" Type="Double" />
+    <Property Name="RegionGUID" Type="Guid" />
+    <Property Name="TerritoryGUID" Type="Guid" />
+    <Property Name="UserType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UserSubTypeCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="GlobalUser" Relationship="Self.FK_OrganizationUsersMap_GlobalUsers" FromRole="OrganizationUsersMap" ToRole="GlobalUsers" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationUsersMap_Organizations" FromRole="OrganizationUsersMap" ToRole="Organizations" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="PeopleGUID" />
+    </Key>
+    <Property Name="PeopleGUID" Type="Guid" Nullable="false" />
+    <Property Name="RecordStatus" Type="Int32" />
+    <Property Name="UserGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="IsPrimaryContact" Type="Boolean" />
+    <Property Name="PlaceGUID" Type="Guid" />
+    <Property Name="MarketGUID" Type="Guid" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MobilePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="BusinessPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="HomePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Emails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryID" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="GlobalUser" Relationship="Self.FK_dbo_People_dbo_GlobalUsers_UserGUID" FromRole="People" ToRole="GlobalUsers" />
+  </EntityType>
+  <EntityType Name="Place">
+    <Key>
+      <PropertyRef Name="PlaceGUID" />
+    </Key>
+    <Property Name="PlaceGUID" Type="Guid" Nullable="false" />
+    <Property Name="PlaceID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="PlaceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MobilePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="PlacePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="HomePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Emails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TimeZone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryID" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="GlobalUser" Relationship="Self.FK_dbo_Places_dbo_GlobalUsers_UserGUID" FromRole="Places" ToRole="GlobalUsers" />
+  </EntityType>
+  <EntityType Name="POs">
+    <Key>
+      <PropertyRef Name="POGUID" />
+    </Key>
+    <Property Name="POGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="RegionGUID" Type="Guid" />
+    <Property Name="TerritoryGUID" Type="Guid" />
+    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int16" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PlaceID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LocationType" Type="Int16" />
+    <Property Name="MarketID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EndCustomerAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EndCustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EndCustomerPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomBooleanValue" Type="Boolean" />
+    <Property Name="JobClass" Type="Int16" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+    <Property Name="PreferredDateTime" Type="DateTime" Precision="3" />
+    <Property Name="EstimatedCost" Type="Double" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <Property Name="POID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TerritoryID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RegionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RMUserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FMUserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="POJobType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="POJobCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="POJson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InstallerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="POCustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="POCustomerPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="POCustomerMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Region">
+    <Key>
+      <PropertyRef Name="RegionGUID" />
+    </Key>
+    <Property Name="RegionGUID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="IsDefault" Type="Boolean" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="REGIONID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Markets" Relationship="Self.FK_dbo_Markets_dbo_Regions_RegionGUID" FromRole="Regions" ToRole="Markets" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_dbo_Regions_dbo_Organizations_OrganizationGUID" FromRole="Regions" ToRole="Organizations" />
+    <NavigationProperty Name="Regions1" Relationship="Self.FK_Regions_Regions" FromRole="Regions" ToRole="Regions1" />
+    <NavigationProperty Name="Region1" Relationship="Self.FK_Regions_Regions" FromRole="Regions1" ToRole="Regions" />
+    <NavigationProperty Name="Territories" Relationship="Self.FK_Territories_Territories" FromRole="Regions" ToRole="Territories" />
+  </EntityType>
+  <EntityType Name="ShiftsOrganization">
+    <Key>
+      <PropertyRef Name="OrganizationShiftGUID" />
+    </Key>
+    <Property Name="OrganizationShiftGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="ShiftName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="Time" Precision="7" />
+    <Property Name="EndTime" Type="Time" Precision="7" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_ShiftsOrganizations_Organizations" FromRole="ShiftsOrganizations" ToRole="Organizations" />
+    <NavigationProperty Name="ShiftsUsers" Relationship="Self.FK_ShiftsUsers_ShiftsOrganizations" FromRole="ShiftsOrganizations" ToRole="ShiftsUsers" />
+  </EntityType>
+  <EntityType Name="ShiftsUser">
+    <Key>
+      <PropertyRef Name="UserShiftGUID" />
+    </Key>
+    <Property Name="UserShiftGUID" Type="Guid" Nullable="false" />
+    <Property Name="UserGUID" Type="Guid" />
+    <Property Name="OrganizationShiftGUID" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="GlobalUser" Relationship="Self.FK_ShiftsUsers_GlobalUsers" FromRole="ShiftsUsers" ToRole="GlobalUsers" />
+    <NavigationProperty Name="ShiftsOrganization" Relationship="Self.FK_ShiftsUsers_ShiftsOrganizations" FromRole="ShiftsUsers" ToRole="ShiftsOrganizations" />
+  </EntityType>
+  <EntityType Name="SkillsOrganization">
+    <Key>
+      <PropertyRef Name="OrganizationSkillGuid" />
+    </Key>
+    <Property Name="OrganizationSkillGuid" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="Skill" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SkillLevel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_SkillsOrganizations_Organizations" FromRole="SkillsOrganizations" ToRole="Organizations" />
+    <NavigationProperty Name="SkillsUsers" Relationship="Self.FK_SkillsUsers_SkillsOrganizations" FromRole="SkillsOrganizations" ToRole="SkillsUsers" />
+  </EntityType>
+  <EntityType Name="SkillsUser">
+    <Key>
+      <PropertyRef Name="UserSkillGuid" />
+    </Key>
+    <Property Name="UserSkillGuid" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationSkillGuid" Type="Guid" />
+    <Property Name="UserGUID" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="SkillsOrganization" Relationship="Self.FK_SkillsUsers_SkillsOrganizations" FromRole="SkillsUsers" ToRole="SkillsOrganizations" />
+  </EntityType>
+  <EntityType Name="Territory">
+    <Key>
+      <PropertyRef Name="TerritoryGUID" />
+    </Key>
+    <Property Name="TerritoryGUID" Type="Guid" Nullable="false" />
+    <Property Name="RegionGUID" Type="Guid" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="IsDefault" Type="Boolean" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="TerritoryID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Markets" Relationship="Self.FK_dbo_Markets_dbo_Territories_TerritoryGUID" FromRole="Territories" ToRole="Markets" />
+    <NavigationProperty Name="Region" Relationship="Self.FK_Territories_Territories" FromRole="Territories" ToRole="Regions" />
+  </EntityType>
+  <EntityType Name="UserDevice">
+    <Key>
+      <PropertyRef Name="UserDevicesGUID" />
+    </Key>
+    <Property Name="UserDevicesGUID" Type="Guid" Nullable="false" />
+    <Property Name="UserGUID" Type="Guid" />
+    <Property Name="LoginGUID" Type="Guid" />
+    <Property Name="DeviceID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IPAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DeviceInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DeviceType" Type="Int16" />
+    <Property Name="PUSHID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="TimeZone" Type="Double" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+  </EntityType>
+  <EntityType Name="UserHeartBeat">
+    <Key>
+      <PropertyRef Name="HeartBeatGUID" />
+    </Key>
+    <Property Name="HeartBeatGUID" Type="Guid" Nullable="false" />
+    <Property Name="UserGUID" Type="Guid" Nullable="false" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="HeartBeatTime" Type="DateTime" Precision="3" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+  </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="ProfileGUID" />
+    </Key>
+    <Property Name="ProfileGUID" Type="Guid" Nullable="false" />
+    <Property Name="UserGUID" Type="Guid" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MobilePhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BusinessPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="HomePhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmailID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="ZipCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="PicFileURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="GlobalUser" Relationship="Self.FK_dbo_UserProfiles_dbo_GlobalUsers_UserGUID" FromRole="UserProfiles" ToRole="GlobalUsers" />
+  </EntityType>
+  <EntityType Name="UserSubscription">
+    <Key>
+      <PropertyRef Name="UserSubscriptionGUID" />
+    </Key>
+    <Property Name="UserSubscriptionGUID" Type="Guid" Nullable="false" />
+    <Property Name="UserGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationSubscriptionGUID" Type="Guid" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="GlobalUser" Relationship="Self.FK_UserSubscriptions_GlobalUsers" FromRole="UserSubscriptions" ToRole="GlobalUsers" />
+  </EntityType>
+  <EntityType Name="WorkDaysOrganization">
+    <Key>
+      <PropertyRef Name="OrganizationWorkDaysGUID" />
+    </Key>
+    <Property Name="OrganizationWorkDaysGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" Nullable="false" />
+    <Property Name="WorkDays" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_WorkDaysOrganizations_Organizations" FromRole="WorkDaysOrganizations" ToRole="Organizations" />
+    <NavigationProperty Name="WorkDaysUsers" Relationship="Self.FK_WorkDaysUsers_WorkDaysOrganizations" FromRole="WorkDaysOrganizations" ToRole="WorkDaysUsers" />
+  </EntityType>
+  <EntityType Name="WorkDaysUser">
+    <Key>
+      <PropertyRef Name="UserWorkdaysGUID" />
+    </Key>
+    <Property Name="UserWorkdaysGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationWorkDaysGUID" Type="Guid" />
+    <Property Name="UserGUID" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+    <NavigationProperty Name="GlobalUser" Relationship="Self.FK_WorkDaysUsers_GlobalUsers" FromRole="WorkDaysUsers" ToRole="GlobalUsers" />
+    <NavigationProperty Name="WorkDaysOrganization" Relationship="Self.FK_WorkDaysUsers_WorkDaysOrganizations" FromRole="WorkDaysUsers" ToRole="WorkDaysOrganizations" />
+  </EntityType>
+  <EntityType Name="JobFormData">
+    <Key>
+      <PropertyRef Name="JobFormDataGUID" />
+    </Key>
+    <Property Name="JobFormDataGUID" Type="Guid" Nullable="false" />
+    <Property Name="JobFormGUID" Type="Guid" />
+    <Property Name="JobGUID" Type="Guid" />
+    <Property Name="ControlsID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Val" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ValID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="JobForm">
+    <Key>
+      <PropertyRef Name="JobFormGUID" />
+    </Key>
+    <Property Name="JobFormGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="Skill" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="JobClass" Type="Int16" />
+    <Property Name="LocationType" Type="Int16" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="FriendlyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="JobForm1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+  </EntityType>
+  <EntityType Name="JobForumStatu">
+    <Key>
+      <PropertyRef Name="ForumStatusGUID" />
+      <PropertyRef Name="ForumStatus" />
+    </Key>
+    <Property Name="ForumStatusGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="ForumStatus" Type="Int16" Nullable="false" />
+    <Property Name="StatusText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="JobStatu">
+    <Key>
+      <PropertyRef Name="StatusCode" />
+    </Key>
+    <Property Name="StatusCode" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+  </EntityType>
+  <EntityType Name="JobStatusOrganization">
+    <Key>
+      <PropertyRef Name="StatusCode" />
+    </Key>
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="StatusCode" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+  </EntityType>
+  <EntityType Name="JobSubStatu">
+    <Key>
+      <PropertyRef Name="StatusCode" />
+      <PropertyRef Name="SubStatusCode" />
+    </Key>
+    <Property Name="StatusCode" Type="Int32" Nullable="false" />
+    <Property Name="SubStatusCode" Type="Int32" Nullable="false" />
+    <Property Name="SubStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+  </EntityType>
+  <EntityType Name="JobSubStatusOrganization">
+    <Key>
+      <PropertyRef Name="SubStatusCode" />
+    </Key>
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="StatusCode" Type="Int32" />
+    <Property Name="SubStatusCode" Type="Int32" Nullable="false" />
+    <Property Name="SubStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+  </EntityType>
+  <EntityType Name="OptionList">
+    <Key>
+      <PropertyRef Name="OptionListGUID" />
+    </Key>
+    <Property Name="OptionListGUID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationGUID" Type="Guid" />
+    <Property Name="ListGUID" Type="Guid" />
+    <Property Name="ListType" Type="Int16" />
+    <Property Name="ListValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ListURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Guid" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Guid" />
+  </EntityType>
+  <Association Name="FK_dbo_GlobalUsers_dbo_AspNetRoles_Role_Id">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="0..1" />
+    <End Role="GlobalUsers" Type="Self.GlobalUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GlobalUsers">
+        <PropertyRef Name="Role_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUsers_dbo_Organizations_OrganizationGUID">
+    <End Role="Organizations" Type="Self.Organization" Multiplicity="0..1" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Principal>
+      <Dependent Role="AspNetUsers">
+        <PropertyRef Name="OrganizationGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExceptionsOrganizations_Organizations">
+    <End Role="Organizations" Type="Self.Organization" Multiplicity="0..1" />
+    <End Role="ExceptionsOrganizations" Type="Self.ExceptionsOrganization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Principal>
+      <Dependent Role="ExceptionsOrganizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExceptionsUsers_GlobalUsers">
+    <End Role="GlobalUsers" Type="Self.GlobalUser" Multiplicity="0..1" />
+    <End Role="ExceptionsUsers" Type="Self.ExceptionsUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GlobalUsers">
+        <PropertyRef Name="UserGUID" />
+      </Principal>
+      <Dependent Role="ExceptionsUsers">
+        <PropertyRef Name="UserGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Markets_dbo_GlobalUsers_UserGUID">
+    <End Role="GlobalUsers" Type="Self.GlobalUser" Multiplicity="0..1" />
+    <End Role="Markets" Type="Self.Market" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GlobalUsers">
+        <PropertyRef Name="UserGUID" />
+      </Principal>
+      <Dependent Role="Markets">
+        <PropertyRef Name="UserGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_People_dbo_GlobalUsers_UserGUID">
+    <End Role="GlobalUsers" Type="Self.GlobalUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="People" Type="Self.Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GlobalUsers">
+        <PropertyRef Name="UserGUID" />
+      </Principal>
+      <Dependent Role="People">
+        <PropertyRef Name="UserGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Places_dbo_GlobalUsers_UserGUID">
+    <End Role="GlobalUsers" Type="Self.GlobalUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Places" Type="Self.Place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GlobalUsers">
+        <PropertyRef Name="UserGUID" />
+      </Principal>
+      <Dependent Role="Places">
+        <PropertyRef Name="UserGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_UserProfiles_dbo_GlobalUsers_UserGUID">
+    <End Role="GlobalUsers" Type="Self.GlobalUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfiles" Type="Self.UserProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GlobalUsers">
+        <PropertyRef Name="UserGUID" />
+      </Principal>
+      <Dependent Role="UserProfiles">
+        <PropertyRef Name="UserGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationUsersMap_GlobalUsers">
+    <End Role="GlobalUsers" Type="Self.GlobalUser" Multiplicity="1" />
+    <End Role="OrganizationUsersMap" Type="Self.OrganizationUsersMap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GlobalUsers">
+        <PropertyRef Name="UserGUID" />
+      </Principal>
+      <Dependent Role="OrganizationUsersMap">
+        <PropertyRef Name="UserGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShiftsUsers_GlobalUsers">
+    <End Role="GlobalUsers" Type="Self.GlobalUser" Multiplicity="0..1" />
+    <End Role="ShiftsUsers" Type="Self.ShiftsUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GlobalUsers">
+        <PropertyRef Name="UserGUID" />
+      </Principal>
+      <Dependent Role="ShiftsUsers">
+        <PropertyRef Name="UserGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSubscriptions_GlobalUsers">
+    <End Role="GlobalUsers" Type="Self.GlobalUser" Multiplicity="1" />
+    <End Role="UserSubscriptions" Type="Self.UserSubscription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GlobalUsers">
+        <PropertyRef Name="UserGUID" />
+      </Principal>
+      <Dependent Role="UserSubscriptions">
+        <PropertyRef Name="UserGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkDaysUsers_GlobalUsers">
+    <End Role="GlobalUsers" Type="Self.GlobalUser" Multiplicity="0..1" />
+    <End Role="WorkDaysUsers" Type="Self.WorkDaysUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GlobalUsers">
+        <PropertyRef Name="UserGUID" />
+      </Principal>
+      <Dependent Role="WorkDaysUsers">
+        <PropertyRef Name="UserGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobAssigned_Jobs">
+    <End Role="Jobs" Type="Self.Job" Multiplicity="0..1" />
+    <End Role="JobAssigned" Type="Self.JobAssigned" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jobs">
+        <PropertyRef Name="JobGUID" />
+      </Principal>
+      <Dependent Role="JobAssigned">
+        <PropertyRef Name="JobGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Jobs_JobCostTypes">
+    <End Role="JobCostTypes" Type="Self.JobCostType" Multiplicity="0..1" />
+    <End Role="Jobs" Type="Self.Job" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobCostTypes">
+        <PropertyRef Name="CostType" />
+      </Principal>
+      <Dependent Role="Jobs">
+        <PropertyRef Name="CostType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobForums_Jobs">
+    <End Role="Jobs" Type="Self.Job" Multiplicity="0..1" />
+    <End Role="JobForums" Type="Self.JobForum" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jobs">
+        <PropertyRef Name="JobGUID" />
+      </Principal>
+      <Dependent Role="JobForums">
+        <PropertyRef Name="JobGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobNotes_Jobs">
+    <End Role="Jobs" Type="Self.Job" Multiplicity="0..1" />
+    <End Role="JobNotes" Type="Self.JobNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jobs">
+        <PropertyRef Name="JobGUID" />
+      </Principal>
+      <Dependent Role="JobNotes">
+        <PropertyRef Name="JobGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobOffers_Jobs">
+    <End Role="Jobs" Type="Self.Job" Multiplicity="0..1" />
+    <End Role="JobOffers" Type="Self.JobOffer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jobs">
+        <PropertyRef Name="JobGUID" />
+      </Principal>
+      <Dependent Role="JobOffers">
+        <PropertyRef Name="JobGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobProgress_Jobs">
+    <End Role="Jobs" Type="Self.Job" Multiplicity="0..1" />
+    <End Role="JobProgress" Type="Self.JobProgress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jobs">
+        <PropertyRef Name="JobGUID" />
+      </Principal>
+      <Dependent Role="JobProgress">
+        <PropertyRef Name="JobGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Markets_dbo_Regions_RegionGUID">
+    <End Role="Regions" Type="Self.Region" Multiplicity="0..1" />
+    <End Role="Markets" Type="Self.Market" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Regions">
+        <PropertyRef Name="RegionGUID" />
+      </Principal>
+      <Dependent Role="Markets">
+        <PropertyRef Name="RegionGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Markets_dbo_Territories_TerritoryGUID">
+    <End Role="Territories" Type="Self.Territory" Multiplicity="0..1" />
+    <End Role="Markets" Type="Self.Market" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Territories">
+        <PropertyRef Name="TerritoryGUID" />
+      </Principal>
+      <Dependent Role="Markets">
+        <PropertyRef Name="TerritoryGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_OrganizationSubscriptions_dbo_Organizations_OrganizationGUID">
+    <End Role="Organizations" Type="Self.Organization" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OrganizationSubscriptions" Type="Self.OrganizationSubscription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Principal>
+      <Dependent Role="OrganizationSubscriptions">
+        <PropertyRef Name="OrganizationGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Regions_dbo_Organizations_OrganizationGUID">
+    <End Role="Organizations" Type="Self.Organization" Multiplicity="0..1" />
+    <End Role="Regions" Type="Self.Region" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Principal>
+      <Dependent Role="Regions">
+        <PropertyRef Name="OrganizationGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationUsersMap_Organizations">
+    <End Role="Organizations" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationUsersMap" Type="Self.OrganizationUsersMap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Principal>
+      <Dependent Role="OrganizationUsersMap">
+        <PropertyRef Name="OrganizationGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShiftsOrganizations_Organizations">
+    <End Role="Organizations" Type="Self.Organization" Multiplicity="0..1" />
+    <End Role="ShiftsOrganizations" Type="Self.ShiftsOrganization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Principal>
+      <Dependent Role="ShiftsOrganizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SkillsOrganizations_Organizations">
+    <End Role="Organizations" Type="Self.Organization" Multiplicity="0..1" />
+    <End Role="SkillsOrganizations" Type="Self.SkillsOrganization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Principal>
+      <Dependent Role="SkillsOrganizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkDaysOrganizations_Organizations">
+    <End Role="Organizations" Type="Self.Organization" Multiplicity="1" />
+    <End Role="WorkDaysOrganizations" Type="Self.WorkDaysOrganization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Principal>
+      <Dependent Role="WorkDaysOrganizations">
+        <PropertyRef Name="OrganizationGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Regions_Regions">
+    <End Role="Regions" Type="Self.Region" Multiplicity="1" />
+    <End Role="Regions1" Type="Self.Region" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Regions">
+        <PropertyRef Name="RegionGUID" />
+      </Principal>
+      <Dependent Role="Regions1">
+        <PropertyRef Name="RegionGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Territories_Territories">
+    <End Role="Regions" Type="Self.Region" Multiplicity="0..1" />
+    <End Role="Territories" Type="Self.Territory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Regions">
+        <PropertyRef Name="RegionGUID" />
+      </Principal>
+      <Dependent Role="Territories">
+        <PropertyRef Name="RegionGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShiftsUsers_ShiftsOrganizations">
+    <End Role="ShiftsOrganizations" Type="Self.ShiftsOrganization" Multiplicity="0..1" />
+    <End Role="ShiftsUsers" Type="Self.ShiftsUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShiftsOrganizations">
+        <PropertyRef Name="OrganizationShiftGUID" />
+      </Principal>
+      <Dependent Role="ShiftsUsers">
+        <PropertyRef Name="OrganizationShiftGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SkillsUsers_SkillsOrganizations">
+    <End Role="SkillsOrganizations" Type="Self.SkillsOrganization" Multiplicity="0..1" />
+    <End Role="SkillsUsers" Type="Self.SkillsUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SkillsOrganizations">
+        <PropertyRef Name="OrganizationSkillGuid" />
+      </Principal>
+      <Dependent Role="SkillsUsers">
+        <PropertyRef Name="OrganizationSkillGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkDaysUsers_WorkDaysOrganizations">
+    <End Role="WorkDaysOrganizations" Type="Self.WorkDaysOrganization" Multiplicity="0..1" />
+    <End Role="WorkDaysUsers" Type="Self.WorkDaysUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkDaysOrganizations">
+        <PropertyRef Name="OrganizationWorkDaysGUID" />
+      </Principal>
+      <Dependent Role="WorkDaysUsers">
+        <PropertyRef Name="OrganizationWorkDaysGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="WorkersInMotionDB" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="ExceptionsOrganizations" EntityType="Self.ExceptionsOrganization" />
+    <EntitySet Name="ExceptionsUsers" EntityType="Self.ExceptionsUser" />
+    <EntitySet Name="GlobalUsers" EntityType="Self.GlobalUser" />
+    <EntitySet Name="JobAssigneds" EntityType="Self.JobAssigned" />
+    <EntitySet Name="JobCostTypes" EntityType="Self.JobCostType" />
+    <EntitySet Name="JobForums" EntityType="Self.JobForum" />
+    <EntitySet Name="JobNotes" EntityType="Self.JobNote" />
+    <EntitySet Name="JobOffers" EntityType="Self.JobOffer" />
+    <EntitySet Name="JobProgresses" EntityType="Self.JobProgress" />
+    <EntitySet Name="Jobs" EntityType="Self.Job" />
+    <EntitySet Name="Markets" EntityType="Self.Market" />
+    <EntitySet Name="MasterLogins" EntityType="Self.MasterLogin" />
+    <EntitySet Name="Organizations" EntityType="Self.Organization" />
+    <EntitySet Name="OrganizationSubscriptions" EntityType="Self.OrganizationSubscription" />
+    <EntitySet Name="OrganizationUsersMaps" EntityType="Self.OrganizationUsersMap" />
+    <EntitySet Name="People" EntityType="Self.Person" />
+    <EntitySet Name="Places" EntityType="Self.Place" />
+    <EntitySet Name="POs" EntityType="Self.POs" />
+    <EntitySet Name="Regions" EntityType="Self.Region" />
+    <EntitySet Name="ShiftsOrganizations" EntityType="Self.ShiftsOrganization" />
+    <EntitySet Name="ShiftsUsers" EntityType="Self.ShiftsUser" />
+    <EntitySet Name="SkillsOrganizations" EntityType="Self.SkillsOrganization" />
+    <EntitySet Name="SkillsUsers" EntityType="Self.SkillsUser" />
+    <EntitySet Name="Territories" EntityType="Self.Territory" />
+    <EntitySet Name="UserDevices" EntityType="Self.UserDevice" />
+    <EntitySet Name="UserHeartBeats" EntityType="Self.UserHeartBeat" />
+    <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
+    <EntitySet Name="UserSubscriptions" EntityType="Self.UserSubscription" />
+    <EntitySet Name="WorkDaysOrganizations" EntityType="Self.WorkDaysOrganization" />
+    <EntitySet Name="WorkDaysUsers" EntityType="Self.WorkDaysUser" />
+    <EntitySet Name="JobFormDatas" EntityType="Self.JobFormData" />
+    <EntitySet Name="JobForms" EntityType="Self.JobForm" />
+    <EntitySet Name="JobForumStatus" EntityType="Self.JobForumStatu" />
+    <EntitySet Name="JobStatus" EntityType="Self.JobStatu" />
+    <EntitySet Name="JobStatusOrganizations" EntityType="Self.JobStatusOrganization" />
+    <EntitySet Name="JobSubStatus" EntityType="Self.JobSubStatu" />
+    <EntitySet Name="JobSubStatusOrganizations" EntityType="Self.JobSubStatusOrganization" />
+    <EntitySet Name="OptionLists" EntityType="Self.OptionList" />
+    <AssociationSet Name="FK_dbo_GlobalUsers_dbo_AspNetRoles_Role_Id" Association="Self.FK_dbo_GlobalUsers_dbo_AspNetRoles_Role_Id">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="GlobalUsers" EntitySet="GlobalUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUsers_dbo_Organizations_OrganizationGUID" Association="Self.FK_dbo_AspNetUsers_dbo_Organizations_OrganizationGUID">
+      <End Role="Organizations" EntitySet="Organizations" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExceptionsOrganizations_Organizations" Association="Self.FK_ExceptionsOrganizations_Organizations">
+      <End Role="Organizations" EntitySet="Organizations" />
+      <End Role="ExceptionsOrganizations" EntitySet="ExceptionsOrganizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExceptionsUsers_GlobalUsers" Association="Self.FK_ExceptionsUsers_GlobalUsers">
+      <End Role="GlobalUsers" EntitySet="GlobalUsers" />
+      <End Role="ExceptionsUsers" EntitySet="ExceptionsUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Markets_dbo_GlobalUsers_UserGUID" Association="Self.FK_dbo_Markets_dbo_GlobalUsers_UserGUID">
+      <End Role="GlobalUsers" EntitySet="GlobalUsers" />
+      <End Role="Markets" EntitySet="Markets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_People_dbo_GlobalUsers_UserGUID" Association="Self.FK_dbo_People_dbo_GlobalUsers_UserGUID">
+      <End Role="GlobalUsers" EntitySet="GlobalUsers" />
+      <End Role="People" EntitySet="People" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Places_dbo_GlobalUsers_UserGUID" Association="Self.FK_dbo_Places_dbo_GlobalUsers_UserGUID">
+      <End Role="GlobalUsers" EntitySet="GlobalUsers" />
+      <End Role="Places" EntitySet="Places" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_UserProfiles_dbo_GlobalUsers_UserGUID" Association="Self.FK_dbo_UserProfiles_dbo_GlobalUsers_UserGUID">
+      <End Role="GlobalUsers" EntitySet="GlobalUsers" />
+      <End Role="UserProfiles" EntitySet="UserProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationUsersMap_GlobalUsers" Association="Self.FK_OrganizationUsersMap_GlobalUsers">
+      <End Role="GlobalUsers" EntitySet="GlobalUsers" />
+      <End Role="OrganizationUsersMap" EntitySet="OrganizationUsersMaps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShiftsUsers_GlobalUsers" Association="Self.FK_ShiftsUsers_GlobalUsers">
+      <End Role="GlobalUsers" EntitySet="GlobalUsers" />
+      <End Role="ShiftsUsers" EntitySet="ShiftsUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSubscriptions_GlobalUsers" Association="Self.FK_UserSubscriptions_GlobalUsers">
+      <End Role="GlobalUsers" EntitySet="GlobalUsers" />
+      <End Role="UserSubscriptions" EntitySet="UserSubscriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkDaysUsers_GlobalUsers" Association="Self.FK_WorkDaysUsers_GlobalUsers">
+      <End Role="GlobalUsers" EntitySet="GlobalUsers" />
+      <End Role="WorkDaysUsers" EntitySet="WorkDaysUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobAssigned_Jobs" Association="Self.FK_JobAssigned_Jobs">
+      <End Role="Jobs" EntitySet="Jobs" />
+      <End Role="JobAssigned" EntitySet="JobAssigneds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Jobs_JobCostTypes" Association="Self.FK_Jobs_JobCostTypes">
+      <End Role="JobCostTypes" EntitySet="JobCostTypes" />
+      <End Role="Jobs" EntitySet="Jobs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobForums_Jobs" Association="Self.FK_JobForums_Jobs">
+      <End Role="Jobs" EntitySet="Jobs" />
+      <End Role="JobForums" EntitySet="JobForums" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobNotes_Jobs" Association="Self.FK_JobNotes_Jobs">
+      <End Role="Jobs" EntitySet="Jobs" />
+      <End Role="JobNotes" EntitySet="JobNotes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobOffers_Jobs" Association="Self.FK_JobOffers_Jobs">
+      <End Role="Jobs" EntitySet="Jobs" />
+      <End Role="JobOffers" EntitySet="JobOffers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobProgress_Jobs" Association="Self.FK_JobProgress_Jobs">
+      <End Role="Jobs" EntitySet="Jobs" />
+      <End Role="JobProgress" EntitySet="JobProgresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Markets_dbo_Regions_RegionGUID" Association="Self.FK_dbo_Markets_dbo_Regions_RegionGUID">
+      <End Role="Regions" EntitySet="Regions" />
+      <End Role="Markets" EntitySet="Markets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Markets_dbo_Territories_TerritoryGUID" Association="Self.FK_dbo_Markets_dbo_Territories_TerritoryGUID">
+      <End Role="Territories" EntitySet="Territories" />
+      <End Role="Markets" EntitySet="Markets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_OrganizationSubscriptions_dbo_Organizations_OrganizationGUID" Association="Self.FK_dbo_OrganizationSubscriptions_dbo_Organizations_OrganizationGUID">
+      <End Role="Organizations" EntitySet="Organizations" />
+      <End Role="OrganizationSubscriptions" EntitySet="OrganizationSubscriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Regions_dbo_Organizations_OrganizationGUID" Association="Self.FK_dbo_Regions_dbo_Organizations_OrganizationGUID">
+      <End Role="Organizations" EntitySet="Organizations" />
+      <End Role="Regions" EntitySet="Regions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationUsersMap_Organizations" Association="Self.FK_OrganizationUsersMap_Organizations">
+      <End Role="Organizations" EntitySet="Organizations" />
+      <End Role="OrganizationUsersMap" EntitySet="OrganizationUsersMaps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShiftsOrganizations_Organizations" Association="Self.FK_ShiftsOrganizations_Organizations">
+      <End Role="Organizations" EntitySet="Organizations" />
+      <End Role="ShiftsOrganizations" EntitySet="ShiftsOrganizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SkillsOrganizations_Organizations" Association="Self.FK_SkillsOrganizations_Organizations">
+      <End Role="Organizations" EntitySet="Organizations" />
+      <End Role="SkillsOrganizations" EntitySet="SkillsOrganizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkDaysOrganizations_Organizations" Association="Self.FK_WorkDaysOrganizations_Organizations">
+      <End Role="Organizations" EntitySet="Organizations" />
+      <End Role="WorkDaysOrganizations" EntitySet="WorkDaysOrganizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Regions_Regions" Association="Self.FK_Regions_Regions">
+      <End Role="Regions" EntitySet="Regions" />
+      <End Role="Regions1" EntitySet="Regions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Territories_Territories" Association="Self.FK_Territories_Territories">
+      <End Role="Regions" EntitySet="Regions" />
+      <End Role="Territories" EntitySet="Territories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShiftsUsers_ShiftsOrganizations" Association="Self.FK_ShiftsUsers_ShiftsOrganizations">
+      <End Role="ShiftsOrganizations" EntitySet="ShiftsOrganizations" />
+      <End Role="ShiftsUsers" EntitySet="ShiftsUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SkillsUsers_SkillsOrganizations" Association="Self.FK_SkillsUsers_SkillsOrganizations">
+      <End Role="SkillsOrganizations" EntitySet="SkillsOrganizations" />
+      <End Role="SkillsUsers" EntitySet="SkillsUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkDaysUsers_WorkDaysOrganizations" Association="Self.FK_WorkDaysUsers_WorkDaysOrganizations">
+      <End Role="WorkDaysOrganizations" EntitySet="WorkDaysOrganizations" />
+      <End Role="WorkDaysUsers" EntitySet="WorkDaysUsers" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <FunctionImport Name="SplitString" ReturnType="Collection(WorkersInMotionModel.SplitString_Result)" IsComposable="true">
+      <Parameter Name="pStringToSplit" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="p_GetJobs" ReturnType="Collection(WorkersInMotionModel.p_GetJobs_Result)">
+      <Parameter Name="pUserGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pStatusCode" Mode="In" Type="Int32" />
+      <Parameter Name="pErrorCode" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="p_GetJobStatistics" ReturnType="Collection(WorkersInMotionModel.p_GetJobStatistics_Result)">
+      <Parameter Name="pUserGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pStatsForManager" Mode="In" Type="Boolean" />
+      <Parameter Name="pUserType" Mode="In" Type="String" />
+      <Parameter Name="pRegionGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pTerritoryGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pDate" Mode="In" Type="DateTime" />
+      <Parameter Name="pErrorCode" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="p_GetOpenJobs" ReturnType="Collection(WorkersInMotionModel.p_GetOpenJobs_Result)">
+      <Parameter Name="pUserGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pOrganizationGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pRegionGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pTerritoryGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pUserType" Mode="In" Type="String" />
+      <Parameter Name="pStatusCode" Mode="In" Type="String" />
+      <Parameter Name="pErrorCode" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="p_GetOrganizationsForSkills" ReturnType="Collection(WorkersInMotionModel.p_GetOrganizationsForSkills_Result)">
+      <Parameter Name="pSkills" Mode="In" Type="String" />
+      <Parameter Name="pErrorCode" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="p_GetUsers" ReturnType="Collection(WorkersInMotionModel.p_GetUsers_Result)">
+      <Parameter Name="pSessionID" Mode="In" Type="String" />
+      <Parameter Name="pUserGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pErrorCode" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="p_GetUsersAvailability" ReturnType="Collection(WorkersInMotionModel.p_GetUsersAvailability_Result)">
+      <Parameter Name="pSkill" Mode="In" Type="String" />
+      <Parameter Name="pDate" Mode="In" Type="DateTime" />
+      <Parameter Name="pStartTime" Mode="In" Type="Time" />
+      <Parameter Name="pEndTime" Mode="In" Type="Time" />
+      <Parameter Name="pDuration" Mode="In" Type="Double" />
+      <Parameter Name="pOrganizationGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pRegionGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pTerritoryGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pLatitude" Mode="In" Type="Double" />
+      <Parameter Name="pLongitude" Mode="In" Type="Double" />
+      <Parameter Name="pSearchWithinZoneArea" Mode="In" Type="Boolean" />
+      <Parameter Name="pSearch" Mode="In" Type="Int16" />
+      <Parameter Name="pErrorCode" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="p_GetUsersLocationForADate" ReturnType="Collection(WorkersInMotionModel.p_GetUsersLocationForADate_Result)">
+      <Parameter Name="pOrganizationGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pDate" Mode="In" Type="DateTime" />
+      <Parameter Name="pStartTime" Mode="In" Type="Time" />
+      <Parameter Name="pEndTime" Mode="In" Type="Time" />
+      <Parameter Name="pDuration" Mode="In" Type="Double" />
+      <Parameter Name="pRegionGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pTerritoryGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pLatitude" Mode="In" Type="Double" />
+      <Parameter Name="pLongitude" Mode="In" Type="Double" />
+      <Parameter Name="pSearchWithinZoneArea" Mode="In" Type="Boolean" />
+      <Parameter Name="pSearch" Mode="In" Type="Int16" />
+      <Parameter Name="pErrorCode" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="p_Lognin">
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+      <Parameter Name="pPassword" Mode="In" Type="String" />
+      <Parameter Name="pLoginType" Mode="In" Type="Int16" />
+      <Parameter Name="pDeviceID" Mode="In" Type="String" />
+      <Parameter Name="pIPAddress" Mode="In" Type="String" />
+      <Parameter Name="pDeviceInfo" Mode="In" Type="String" />
+      <Parameter Name="pDeviceType" Mode="In" Type="Int16" />
+      <Parameter Name="pPhone" Mode="In" Type="String" />
+      <Parameter Name="pTimeZone" Mode="In" Type="String" />
+      <Parameter Name="pErrorCode" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="p_UpdateJob">
+      <Parameter Name="pJobGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pJobReferenceNo" Mode="In" Type="Int32" />
+      <Parameter Name="pOrganizationGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pRegionGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pTerritoryGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pLocationType" Mode="In" Type="Int16" />
+      <Parameter Name="pCustomerGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pCustomerStopGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pServicePointGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pServiceAddress" Mode="In" Type="String" />
+      <Parameter Name="pLatitude" Mode="In" Type="Double" />
+      <Parameter Name="pLongitude" Mode="In" Type="Double" />
+      <Parameter Name="pAssignedUserGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pManagerUserGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pIsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="pIsDeleted" Mode="In" Type="Boolean" />
+      <Parameter Name="pIsUrgent" Mode="In" Type="Boolean" />
+      <Parameter Name="pStatusCode" Mode="In" Type="Int32" />
+      <Parameter Name="pSubStatusCode" Mode="In" Type="Int32" />
+      <Parameter Name="pIsSecheduled" Mode="In" Type="Boolean" />
+      <Parameter Name="pJobName" Mode="In" Type="String" />
+      <Parameter Name="pPreferedStartTime" Mode="In" Type="DateTime" />
+      <Parameter Name="pPreferedEndTime" Mode="In" Type="DateTime" />
+      <Parameter Name="pScheduledStartTime" Mode="In" Type="DateTime" />
+      <Parameter Name="pScheduledEndTime" Mode="In" Type="DateTime" />
+      <Parameter Name="pActialStartTime" Mode="In" Type="DateTime" />
+      <Parameter Name="pActualEndTime" Mode="In" Type="DateTime" />
+      <Parameter Name="pEstimatedDutation" Mode="In" Type="Double" />
+      <Parameter Name="pQuotedDuration" Mode="In" Type="Double" />
+      <Parameter Name="pActualDuration" Mode="In" Type="Double" />
+      <Parameter Name="pCostType" Mode="In" Type="Int16" />
+      <Parameter Name="pQuotedCost" Mode="In" Type="Double" />
+      <Parameter Name="pActualCost" Mode="In" Type="Double" />
+      <Parameter Name="pJobForm" Mode="In" Type="String" />
+      <Parameter Name="pJobFormGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pSignOffRequired" Mode="In" Type="Int16" />
+      <Parameter Name="pSignoffName" Mode="In" Type="String" />
+      <Parameter Name="pPictureRequired" Mode="In" Type="Int16" />
+      <Parameter Name="pPictureDescription" Mode="In" Type="String" />
+      <Parameter Name="pLocationSpecific" Mode="In" Type="Boolean" />
+      <Parameter Name="pCreateDate" Mode="In" Type="DateTime" />
+      <Parameter Name="pCreateBy" Mode="In" Type="Guid" />
+      <Parameter Name="pLastModifiedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="pLastModifiedBy" Mode="In" Type="Guid" />
+      <Parameter Name="pErrorCode" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="p_UpdateJobStatus">
+      <Parameter Name="pJobProgressGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pJobGUID" Mode="In" Type="Guid" />
+      <Parameter Name="pJobStatus" Mode="In" Type="Int32" />
+      <Parameter Name="pJobSubStatus" Mode="In" Type="Int32" />
+      <Parameter Name="pStartTime" Mode="In" Type="DateTime" />
+      <Parameter Name="pEndTime" Mode="In" Type="DateTime" />
+      <Parameter Name="pDuration" Mode="In" Type="Double" />
+      <Parameter Name="pLatitude" Mode="In" Type="Double" />
+      <Parameter Name="pLongitude" Mode="In" Type="Double" />
+      <Parameter Name="pLastModifiedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="pLastModifiedBy" Mode="In" Type="Guid" />
+      <Parameter Name="pStatusNote" Mode="In" Type="String" />
+      <Parameter Name="pErrorCode" Mode="InOut" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="p_GetJobs_Result">
+    <Property Type="Guid" Name="UserGUID" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="false" />
+    <Property Type="String" Name="Password" Nullable="false" />
+    <Property Type="String" Name="Role_Id" Nullable="true" MaxLength="128" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="Int32" Name="ReportingPlaceType" Nullable="true" />
+    <Property Type="Guid" Name="ReportPlaceGUID" Nullable="true" />
+    <Property Type="Boolean" Name="IsExempt" Nullable="false" />
+    <Property Type="Boolean" Name="IsDelete" Nullable="true" />
+    <Property Type="Double" Name="Latitude" Nullable="true" />
+    <Property Type="Double" Name="Longitude" Nullable="true" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+    <Property Type="Guid" Name="CreateBy" Nullable="true" />
+    <Property Type="DateTime" Name="LastModifiedDate" Nullable="true" Precision="23" />
+    <Property Type="Guid" Name="LastModifiedBy" Nullable="true" />
+    <Property Type="String" Name="USERID" Nullable="true" MaxLength="50" />
+    <Property Type="Guid" Name="JobGUID" Nullable="true" />
+    <Property Type="String" Name="JobName" Nullable="true" />
+    <Property Type="Int32" Name="StatusCode" Nullable="true" />
+    <Property Type="Int32" Name="SubStatusCode" Nullable="true" />
+    <Property Type="Double" Name="QuotedCost" Nullable="true" />
+    <Property Type="Double" Name="ActualCost" Nullable="true" />
+    <Property Type="Double" Name="Latitude1" Nullable="true" />
+    <Property Type="Double" Name="Longitude1" Nullable="true" />
+    <Property Type="Boolean" Name="IsUrgent" Nullable="true" />
+    <Property Type="DateTime" Name="PreferedStartTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="PreferedEndTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ScheduledStartTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ScheduledEndTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ActualStartTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ActualEndTime" Nullable="true" Precision="23" />
+    <Property Type="String" Name="PlaceName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="HomePhone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="MobilePhone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Emails" Nullable="true" />
+    <Property Type="String" Name="ImageURL" Nullable="true" />
+    <Property Type="String" Name="MarketName" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="FirstName1" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName1" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MarketPhone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="MobilePhone1" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Emails1" Nullable="true" />
+    <Property Type="String" Name="ImageURL1" Nullable="true" />
+    <Property Type="Guid" Name="JobNoteGUID" Nullable="true" />
+    <Property Type="Int16" Name="NoteType" Nullable="true" />
+    <Property Type="String" Name="NoteText" Nullable="true" />
+    <Property Type="String" Name="FileURL" Nullable="true" />
+    <Property Type="String" Name="FileName" Nullable="true" />
+    <Property Type="Boolean" Name="Deletable" Nullable="true" />
+    <Property Type="DateTime" Name="CreateDate1" Nullable="true" Precision="23" />
+    <Property Type="Guid" Name="JobFormGUID" Nullable="true" />
+    <Property Type="String" Name="FriendlyName" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="p_GetJobStatistics_Result">
+    <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="JobCount" Nullable="true" />
+    <Property Type="Double" Name="QuotedCost" Nullable="true" />
+    <Property Type="Double" Name="ActualCost" Nullable="true" />
+    <Property Type="Double" Name="QuotedDuration" Nullable="true" />
+    <Property Type="Double" Name="ActualDuration" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="p_GetOpenJobs_Result">
+    <Property Type="Guid" Name="JobGUID" Nullable="false" />
+    <Property Type="String" Name="JobName" Nullable="true" />
+    <Property Type="Int32" Name="StatusCode" Nullable="true" />
+    <Property Type="Int32" Name="SubStatusCode" Nullable="true" />
+    <Property Type="Double" Name="QuotedCost" Nullable="true" />
+    <Property Type="Double" Name="ActualCost" Nullable="true" />
+    <Property Type="Double" Name="Latitude" Nullable="true" />
+    <Property Type="Double" Name="Longitude" Nullable="true" />
+    <Property Type="Boolean" Name="IsUrgent" Nullable="true" />
+    <Property Type="DateTime" Name="PreferedStartTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="PreferedEndTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ScheduledStartTime" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ScheduledEndTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ActualStartTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ActualEndTime" Nullable="true" Precision="23" />
+    <Property Type="String" Name="PlaceName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="HomePhone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="MobilePhone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Emails" Nullable="true" />
+    <Property Type="String" Name="ImageURL" Nullable="true" />
+    <Property Type="String" Name="MarketName" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="FirstName1" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName1" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MarketPhone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="MobilePhone1" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Emails1" Nullable="true" />
+    <Property Type="String" Name="ImageURL1" Nullable="true" />
+    <Property Type="Guid" Name="JobNoteGUID" Nullable="true" />
+    <Property Type="Int16" Name="NoteType" Nullable="true" />
+    <Property Type="String" Name="NoteText" Nullable="true" />
+    <Property Type="String" Name="FileURL" Nullable="true" />
+    <Property Type="String" Name="FileName" Nullable="true" />
+    <Property Type="Boolean" Name="Deletable" Nullable="true" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+    <Property Type="Guid" Name="JobFormGUID" Nullable="true" />
+    <Property Type="String" Name="FriendlyName" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="p_GetOrganizationsForSkills_Result">
+    <Property Type="Guid" Name="OrganizationGUID" Nullable="false" />
+    <Property Type="Guid" Name="OrganizationGUID1" Nullable="true" />
+    <Property Type="String" Name="Skill" Nullable="true" />
+    <Property Type="String" Name="SkillLevel" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="p_GetUsers_Result">
+    <Property Type="Guid" Name="UserGUID" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="false" />
+    <Property Type="String" Name="EmailID" Nullable="true" />
+    <Property Type="String" Name="MobilePhone" Nullable="true" />
+    <Property Type="String" Name="ImageURL" Nullable="true" />
+    <Property Type="Guid" Name="RegionGUID" Nullable="true" />
+    <Property Type="Guid" Name="TerritoryGUID" Nullable="true" />
+    <Property Type="Int32" Name="Role" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="p_GetUsersAvailability_Result">
+    <Property Type="Guid" Name="UserGUID" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="false" />
+    <Property Type="String" Name="Password" Nullable="false" />
+    <Property Type="String" Name="Role_Id" Nullable="true" MaxLength="128" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="Int32" Name="ReportingPlaceType" Nullable="true" />
+    <Property Type="Guid" Name="ReportPlaceGUID" Nullable="true" />
+    <Property Type="Boolean" Name="IsExempt" Nullable="false" />
+    <Property Type="Boolean" Name="IsDelete" Nullable="true" />
+    <Property Type="Double" Name="Latitude" Nullable="true" />
+    <Property Type="Double" Name="Longitude" Nullable="true" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+    <Property Type="Guid" Name="CreateBy" Nullable="true" />
+    <Property Type="DateTime" Name="LastModifiedDate" Nullable="true" Precision="23" />
+    <Property Type="Guid" Name="LastModifiedBy" Nullable="true" />
+    <Property Type="String" Name="USERID" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="p_GetUsersLocationForADate_Result">
+    <Property Type="Guid" Name="JobAssignGUID" Nullable="false" />
+    <Property Type="Guid" Name="JobGUID" Nullable="true" />
+    <Property Type="Guid" Name="UserGUID" Nullable="true" />
+    <Property Type="DateTime" Name="StartTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="EndTime" Nullable="true" Precision="23" />
+    <Property Type="Double" Name="Latitude" Nullable="true" />
+    <Property Type="Double" Name="Longitude" Nullable="true" />
+    <Property Type="DateTime" Name="LastModifiedDate" Nullable="true" Precision="23" />
+    <Property Type="Guid" Name="LastModifiedBy" Nullable="true" />
+  </ComplexType>
+</Schema>

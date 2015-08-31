@@ -1,0 +1,236 @@
+﻿@model PagedList.IPagedList<WorkersInMotion.Model.ViewModel.GroupModel>
+
+@{
+    // Layout = null;
+    @Html.Raw(TempData["msg"]);
+}
+@using PagedList.Mvc;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+
+        .mask2 {
+            background-color: #000;
+            display: block;
+            height: 100%;
+            left: 0;
+            opacity: .8;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div id="divmask" class="mask2" style="display:none;"></div>
+    <div id="pnlSuccess" style="display:none;width: 300px; background-color: white; border: 2px solid rgb(208, 230, 255); padding: 20px; position: fixed; z-index: 1000; left: 533px; top: 101.5px;">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>
+                    <td align="center" style="color: #34819D; font-family: Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, Sans-Serif;
+                        font-size: 12px; font-style: normal; font-weight: normal;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 70px; text-align: left; padding-right: 10px;">
+                                        Groups :
+                                    </td>
+                                    <td style="width: 75%; text-align: left;">
+                                        @Html.DropDownList("DropGroupGUID", (SelectList)ViewBag.GroupDetails)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 15px">
+                            <tbody>
+                                <tr>
+                                    <td align="left">
+                                        <input type="submit" name="btnChange" value="Change" id="btnChange" class="btn red" onclick="return btnChangeGroupclick();">
+                                    </td>
+                                    <td align="left">
+                                        <input type="submit" name="btnCancel" value="Cancel" id="btnCancel" class="btn red" onclick="return btncancelclick();">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                Worker Groups
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="/User/DashBoard">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="#">Worker Groups</a></li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to create a Worker Group.</div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-toolbar">
+                        <div class="btn-group">
+                            <a href="@Url.Action("Create", "Group")" class="btn red">
+                                Add New Worker Group <i class='icon-plus'></i>
+                            </a>
+                            @*@Html.ActionLink("Create New  <i class='icon-plus'></i>", "Create", null, new { @class = "btn red" })*@
+                        </div>
+                    </div>
+
+                    <table class="table table-striped table-bordered table-hover ">
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th></th>
+                        </tr>
+                        @if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr class="odd gradeX">
+                                    <td>
+                                        @Html.RadioButton("rdoGroup", item.GroupGUID, new { @id = "rdo_btn_" + item.GroupGUID })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.GroupGUID }, new { @class = "label label-sm label-info", @style = "border-radius:0px;" })
+                                        @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+
+                                        @if (item.Name != "Default")
+                                        {
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.GroupGUID }, new { @class = "label label-sm label-warning", @style = "border-radius:0px;", @onclick = "return deleteconfirm();" })
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="2" align="center" style="color:red">
+                                    No Data Found
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                    <div id='Paging' style="text-align:center">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                        of @Model.PageCount
+
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!-- END PAGE -->
+        </div>
+    </div>
+    <div id="GroupUserDiv" style="display:none">
+        <input type="hidden" id="changeUserGUID" value="" />
+        <span style="font-size:20px;font-weight:bold"> Group Users</span>
+        <div id="GroupUser">
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("input[type = radio]").on("change", function () {
+                //  alert($(this).val());
+                $.ajax({
+                    type: "POST",
+                    url: "/Group/GroupUsers",
+                    data: {
+                        GroupGuid: $(this).val()
+                    },
+                    async: true,
+                    success: function (data) {
+                        $("#GroupUserDiv").css("display", "block");
+                        $("#GroupUser").html("");
+                        if (data != null) {
+                            $("#GroupUser").append(data);
+                        }
+                    },
+                    error: function (x, e) {
+                        alert("error occur");
+                        return false;
+                    }
+                });
+
+            });
+        });
+        function btnChangeGroupclick() {
+            window.location.href = "/Group/ChangeGroup/" + $('#changeUserGUID').val() + "?DropGroupGUID=" + $('#DropGroupGUID').val() + "";
+            return false;
+        }
+        function btngroupclick(object) {
+            //alert(object.id);
+            $("#changeUserGUID").val(object.id);
+            $('#DropGroupGUID').val($("input[type = radio]:checked").val());
+            $("#divmask").css("display", "block");
+            $("#pnlSuccess").css("display", "block");
+            return false;
+        }
+        function btncancelclick() {
+            $("#divmask").css("display", "none");
+            $("#pnlSuccess").css("display", "none");
+            return false;
+        }
+    </script>
+</body>
+</html>

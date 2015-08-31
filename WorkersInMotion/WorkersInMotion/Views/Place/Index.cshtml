@@ -1,0 +1,204 @@
+﻿@model WorkersInMotion.Model.ViewModel.PlaceViewModel
+@{
+    // Layout = null;
+    ViewBag.Title = "Place";
+}
+@using PagedList.Mvc;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            @if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+            {
+                <h3 class="page-title">
+
+                    Add / Manage Clients
+
+                </h3>
+            }
+            else
+            {
+                <h3 class="page-title">
+
+                    View Clients
+
+                </h3>
+            }
+            <ul class="page-breadcrumb breadcrumb">
+
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">
+                        Home
+                    </a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        <a href="@Url.Action("Index","MyCompany")">@Session["OrganizationName"].ToString()</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+
+                    <li>
+                        <a href="#">Clients</a>
+                    </li>
+                }
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="portlet box grey">
+        <div class="portlet-title">
+            @if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+            {
+                <div class="caption"><i class="icon-globe"></i>You can use this page to review all clients in your profile and make necessary changes or add new clients.</div>
+            }
+            else
+            {
+                <div class="caption"><i class="icon-globe"></i>You can use this page to review all clients.</div>
+            }
+        </div>
+        <div class="portlet-body">
+            <div class="table-toolbar">
+                <div class="btn-group">
+                    @if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+                    {
+                        <a href="@Url.Action("Create", "Place")" class="btn green">
+                            Add Client <i class='icon-plus'></i>
+                        </a>
+                    }
+                </div>
+            </div>
+            <div id="sample_editable_1_wrapper" class="dataTables_wrapper" role="grid">
+                <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_1" aria-describedby="sample_editable_1_info" style="width: 1065px;">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 233px;" aria-label="
+                                         Customer
+                                    : activate to sort column ascending">
+                                Client Name
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        Client Contact
+                                    : activate to sort column ascending">
+                                Client Contact
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        Phone
+                                    : activate to sort column ascending">
+                                Phone
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        EmailID
+                                    : activate to sort column ascending">
+                                EmailID
+                            </th>
+                            <th class="sorting-disabled" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        Actions
+                                    : activate to sort column ascending">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                        @if (Model.Place != null && Model.Place.Count() > 0)
+                        {
+                            foreach (var item in Model.Place)
+                            {
+                                <tr class="odd gradeX">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PlaceName)
+                                    </td>
+                                    <td>
+
+                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                        &nbsp;
+                                        @Html.DisplayFor(modelItem => item.LastName)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PlacePhone)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Emails)
+
+                                    </td>
+                                    <td>
+                                        <div style="padding:5px">
+                                            @Html.ActionLink("View", "Index", "CustomerView", new { customerid = item.PlaceGUID }, new { @class = "label label-sm label-success", @style = "border-radius:0px;margin-right:4px" })
+                                            @if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+                                            {
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.PlaceGUID }, new { @class = "label label-sm label-warning", @style = "border-radius:0px;margin-right:4px", @onclick = "return deleteconfirm();" })
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" align="center" style="color:red">
+                                    No Data Found
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+            </div><div class="row"></div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            TableEditable.init();
+            $("input[type = radio]").on("change", function () {
+                //  alert($(this).val());
+                var val = $(this).val();
+                window.location = "/Place/Index/" + val + "";
+            });
+            $("input[type = radio]").each(function () {
+                var val = $(this).val();
+                var UserID = '@ViewBag.UserID';
+                if (UserID != "") {
+                    if (val == UserID) {
+                        $(this).prop('checked', true);
+                        return false;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

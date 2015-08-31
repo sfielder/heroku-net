@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="42539c35008148d8a2e2b4dce22966c8" Name="Diagram1">
+        <EntityTypeShape EntityType="WorkersInMotionModel.AspNetRole" Width="1.5" PointX="0.75" PointY="28" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.AspNetUser" Width="1.5" PointX="3" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.ExceptionsOrganization" Width="1.5" PointX="3" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.ExceptionsUser" Width="1.5" PointX="5.25" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.GlobalUser" Width="1.5" PointX="3" PointY="31.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobAssigned" Width="1.5" PointX="13.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobCostType" Width="1.5" PointX="8.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobForum" Width="1.5" PointX="13.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobNote" Width="1.5" PointX="13.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobOffer" Width="1.5" PointX="13.25" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobProgress" Width="1.5" PointX="13.25" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.Job" Width="1.5" PointX="11" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.Market" Width="1.5" PointX="5.25" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.MasterLogin" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.Organization" Width="1.5" PointX="0.75" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.OrganizationSubscription" Width="1.5" PointX="3" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.OrganizationUsersMap" Width="1.5" PointX="8.25" PointY="32.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.Person" Width="1.5" PointX="5.25" PointY="40.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.Place" Width="1.5" PointX="5.25" PointY="47" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.POs" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.Region" Width="1.5" PointX="3" PointY="39" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.ShiftsOrganization" Width="1.5" PointX="6" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.ShiftsUser" Width="1.5" PointX="8.25" PointY="28.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.SkillsOrganization" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.SkillsUser" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.Territory" Width="1.5" PointX="3" PointY="42.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.UserDevice" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.UserHeartBeat" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.UserProfile" Width="1.5" PointX="5.25" PointY="59.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.UserSubscription" Width="1.5" PointX="5.25" PointY="56.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.WorkDaysOrganization" Width="1.5" PointX="6" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.WorkDaysUser" Width="1.5" PointX="8.25" PointY="38.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobFormData" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobForm" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobForumStatu" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobStatu" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobStatusOrganization" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobSubStatu" Width="1.5" PointX="15.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.JobSubStatusOrganization" Width="1.5" PointX="15.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkersInMotionModel.OptionList" Width="1.5" PointX="15.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_GlobalUsers_dbo_AspNetRoles_Role_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_AspNetUsers_dbo_Organizations_OrganizationGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_ExceptionsOrganizations_Organizations" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_ExceptionsUsers_GlobalUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_Markets_dbo_GlobalUsers_UserGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_People_dbo_GlobalUsers_UserGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_Places_dbo_GlobalUsers_UserGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_UserProfiles_dbo_GlobalUsers_UserGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_OrganizationUsersMap_GlobalUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_ShiftsUsers_GlobalUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_UserSubscriptions_GlobalUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_WorkDaysUsers_GlobalUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_JobAssigned_Jobs" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_Jobs_JobCostTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_JobForums_Jobs" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_JobNotes_Jobs" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_JobOffers_Jobs" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_JobProgress_Jobs" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_Markets_dbo_Regions_RegionGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_Markets_dbo_Territories_TerritoryGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_OrganizationSubscriptions_dbo_Organizations_OrganizationGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_dbo_Regions_dbo_Organizations_OrganizationGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_OrganizationUsersMap_Organizations" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_ShiftsOrganizations_Organizations" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_SkillsOrganizations_Organizations" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_WorkDaysOrganizations_Organizations" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_Regions_Regions" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_Territories_Territories" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_ShiftsUsers_ShiftsOrganizations" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_SkillsUsers_SkillsOrganizations" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.FK_WorkDaysUsers_WorkDaysOrganizations" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkersInMotionModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

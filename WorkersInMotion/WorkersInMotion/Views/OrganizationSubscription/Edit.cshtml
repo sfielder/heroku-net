@@ -1,0 +1,201 @@
+﻿@model WorkersInMotion.Model.ViewModel.OrganizationSubscriptionView
+
+@{
+    // Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Edit</title>
+
+    <link href="~/Content/JqueryUI.css" rel="stylesheet" />
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            @if (Session["UserType"] != null && Session["UserType"].ToString() != "WIM_A")
+            {
+                <h3 class="page-title">
+                    ' @ViewBag.OrganizationName ' Organization's Subscription
+                </h3>
+            }
+            else
+            {
+                <h3 class="page-title">
+                    Update ' @ViewBag.OrganizationName ' Organization's Subscription
+                </h3>
+            }
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="#">Organization Subscription</a></li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    @if (Session["UserType"] != null && Session["UserType"].ToString() != "WIM_A")
+                    {
+                        <div class="caption"><i class="icon-cog"></i>This page will allow you to view an Organization Subscription.</div>
+                    }
+                    else
+                    {
+                        <div class="caption"><i class="icon-cog"></i>This page will allow you to update an Organization Subscription.</div>
+                    }
+
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            @*@Html.ValidationSummary(true)*@
+                            @Html.HiddenFor(model => model.OrganizationGUID)
+                            @Html.HiddenFor(model => model.OrganizationSubscriptionGUID)
+                            @Html.HiddenFor(model => model.Version)
+                            <div class="form-body">
+                                <h3 class="form-section">Subscription Details</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                                            @if (ViewBag.UserType == "WIM_A")
+                                            {
+                                                @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.IsActive)
+                                            }
+                                            else
+                                            {
+                                                @Html.CheckBoxFor(model => model.IsActive, new { @disabled = "disabled", @class = "form-control" })
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SubscriptionPurchased, new { @class = "control-label" })
+                                            @if (ViewBag.UserType == "WIM_A")
+                                            {
+                                                @Html.TextBoxFor(model => model.SubscriptionPurchased, new { @readonly = "readonly", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.SubscriptionPurchased)
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(model => model.SubscriptionPurchased, new { @disabled = "disabled", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.SubscriptionPurchased)
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SubscriptionConsumed, new { @class = "control-label" })
+                                            @if (ViewBag.UserType == "WIM_A")
+                                            {
+                                                @Html.TextBoxFor(model => model.SubscriptionConsumed, new { @readonly = "readonly", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.SubscriptionConsumed)
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(model => model.SubscriptionConsumed, new { @disabled = "disabled", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.SubscriptionConsumed)
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ExpiryDate, new { @class = "control-label" })
+                                            @if (ViewBag.UserType == "WIM_A")
+                                            {
+                                                @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.ExpiryDate)
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(model => model.ExpiryDate, new { @disabled = "disabled", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.ExpiryDate)
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div class="form-actions right">
+                                @if (Session["UserType"] != null && Session["UserType"].ToString() == "WIM_A")
+                                {
+                                    <a href="@Url.Action("Index","Organization")" class="btn default">Cancel</a>
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i> Update</button>
+                                }
+                            </div>
+                            @*<div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Create" class="btn btn-default" />
+                                    </div>
+                                </div>*@
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- END PAGE -->
+    <script type="text/javascript">
+        $(function () {
+            $("#ExpiryDate").datepicker(
+                          {
+                              dateFormat: 'dd-M-yy',
+                              // showAnim: 'slide',
+                              changeMonth: true,
+                              changeYear: true,
+                              yearRange: '1990:2020'
+
+                          }
+                         );
+        });
+
+    </script>
+</body>
+</html>

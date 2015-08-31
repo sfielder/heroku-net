@@ -1,0 +1,763 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+        Softtrends PVRtracks LivePVR Phone Call Recorder, Audio, Meeting, Mobile Content
+        Recorder Server
+    </title>
+    <link href="~/CSS/reset.css" rel="stylesheet" />
+    <link href="~/CSS/stcss.css" rel="stylesheet" />
+    <link href="~/CSS/styles.css" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        #header-container {
+            width: 100%;
+            background: #222;
+            position: fixed;
+            z-index: 4;
+            box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        #header-contact-container {
+            width: 100%;
+            background: #444;
+        }
+
+        .clearfix {
+            display: block;
+        }
+
+        #header-contacts {
+            max-width: 1000px;
+            margin: auto;
+            padding: 5px 10px;
+            overflow: hidden;
+            color: #999;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .header-contact {
+            float: left;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        .header-contact .header-number {
+            padding-left: 25px;
+            font-weight: bold;
+            padding-top: 3px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: url(../images/phone20.png) 0px 4px no-repeat;
+        }
+
+        .header-contact .header-email {
+            padding-left: 30px;
+            font-weight: bold;
+            padding-top: 3px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: url(../images/email-header.png) 0px 1px no-repeat;
+        }
+
+        .header-contact li {
+            float: left;
+            list-style-type: none;
+            margin-right: 30px;
+        }
+
+        .header-contact .header-email a {
+            color: #999;
+            text-decoration: none;
+        }
+
+        .header-social {
+            float: right;
+            overflow: hidden;
+        }
+
+            .header-social li {
+                float: left;
+                margin-left: 20px;
+                text-indent: -99999px;
+            }
+
+            .header-social .header-facebook a {
+                background: url(../images/facebook16.png) center no-repeat;
+            }
+
+            .header-social li a {
+                display: block;
+                width: 20px;
+                height: 20px;
+            }
+
+        a {
+            color: #1ABC9C;
+            text-decoration: none;
+            -webkit-transition: all .15s ease-in-out;
+            -moz-transition: all .15s ease-in-out;
+        }
+
+        .header-social .header-twitter a {
+            background: url(../images/twitter20.png) center no-repeat;
+        }
+
+        .header-social .header-linkedin a {
+            background: url(../images/linkedin20.png) center no-repeat;
+        }
+
+        #header {
+            width: 98%;
+            margin: 0;
+            padding: 9px;
+            position: relative;
+        }
+
+        .logo {
+            float: left;
+        }
+
+            .logo h1, .logo img {
+                margin: 0px 0px 10px 0px;
+                padding: 0px;
+                display: block;
+            }
+
+        a {
+            color: #1ABC9C;
+            text-decoration: none;
+            -webkit-transition: all .15s ease-in-out;
+            -moz-transition: all .15s ease-in-out;
+        }
+
+        .logo h1, .logo img {
+            margin: 0px;
+            padding: 0px;
+            display: block;
+            padding-left: 77px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        ul#nav {
+            float: right;
+            margin: 0px 0px 0px 40px;
+            position: absolute;
+            right: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+            ul#nav li {
+                float: left;
+                margin-left: 70px;
+                position: relative;
+            }
+
+                ul#nav li a {
+                    display: block;
+                    margin: 0px 0px;
+                    border-radius: 5px;
+                    color: #fff;
+                    text-transform: uppercase;
+                }
+
+        #title-container {
+            background: #1ABC9C;
+        }
+
+        .title-block {
+            max-width: 1000px;
+            padding: 20px 20px;
+            margin: auto;
+        }
+
+            .title-block h2 {
+                color: #fff;
+                font-size: 40px;
+                line-height: 65px;
+                font-weight: 600;
+                padding-top: 70px;
+            }
+
+
+        #footer-container {
+            padding: 40px 20px 20px;
+            background: #333;
+            position: relative;
+            z-index: 2;
+        }
+
+        #footer {
+            font-size: 13px;
+            overflow: hidden;
+        }
+
+        #footer {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-widgets {
+            color: #ddd;
+        }
+
+        .four-column .column {
+            float: left;
+            width: 22.75%;
+            margin-right: 3%;
+            margin-bottom: 30px;
+        }
+
+        .footer-widgets .widgettitle {
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .footer-widgets .chirp span.meta, .footer-widgets .widget li {
+            padding: 0 0 8px;
+            margin: 0 0 8px;
+            border-bottom: 2px solid #444;
+        }
+
+        .widget_popular_posts li a {
+            display: block;
+        }
+
+        .footer-widgets a {
+            color: #eee;
+        }
+
+        .four-column .column {
+            float: left;
+            width: 22.75%;
+            margin-right: 3%;
+            margin-bottom: 30px;
+        }
+
+            .four-column .column:nth-child(3n+4) {
+                clear: none;
+            }
+
+            .four-column .column:nth-child(4n+4) {
+                margin-right: 0;
+            }
+
+
+        ol, ul {
+            list-style: none outside none;
+            margin-left: -40px;
+        }
+
+        .dater {
+            margin: 0;
+            padding: 0;
+        }
+
+        #footer-base-container {
+            padding: 10px;
+            background: #252525;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-text {
+            margin: auto;
+            padding: 0;
+            overflow: hidden;
+            clear: both;
+            color: #999;
+            font-size: 11px;
+        }
+
+        #footer-navigation-container {
+            display: block;
+            overflow: hidden;
+            margin-bottom: 3px;
+        }
+
+        .footer-text p {
+            float: left;
+        }
+
+        .obox-credit {
+            float: right;
+        }
+
+        .footer-text p {
+            float: left;
+        }
+
+        .footer-text a {
+            color: #ccc;
+        }
+
+
+        #comments {
+            background: none repeat scroll 0 0 #F4F4F4;
+            clear: both;
+            margin: 30px auto;
+            max-width: 930px;
+            padding: 30px;
+        }
+
+        #respond {
+            background: #1ABC9C;
+            padding: 30px;
+            margin: 0px -30px -30px;
+        }
+
+            #respond #reply-title {
+                padding: 0;
+                margin-bottom: 20px;
+                color: #fff;
+                font-size: 24px;
+                font-weight: 600;
+            }
+
+        small {
+            font-size: 75%;
+        }
+
+        #respond .comment-notes, #respond .logged-in-as {
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        #respond p {
+            margin-bottom: 10px;
+        }
+
+        #respond .required {
+            color: #34495E;
+        }
+
+        #respond label {
+            color: #fff;
+        }
+
+        #respond input[type=text] {
+            border: none;
+        }
+
+        input[type=text], input[type=password] {
+            width: 90%;
+            max-width: 280px;
+            border: 1px solid #e0e0e0;
+        }
+
+
+        #respond .form-submit {
+            margin: 0;
+        }
+
+        #respond #submit:hover {
+            background: #446380;
+            color: #fff;
+        }
+
+        .pvrtracksdesc {
+            display: block;
+            margin: 0px 0px;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        #footer-base-container {
+            width: 99%;
+            background: #252525;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-text {
+            margin: auto;
+            overflow: hidden;
+            clear: both;
+            color: #999;
+            font-size: 11px;
+        }
+
+        #footer-navigation-container {
+            display: block;
+            overflow: hidden;
+        }
+
+        .obox-credit {
+            float: right;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#featured ul').roundabout({
+                easing: 'easeOutInCirc',
+                duration: 1000
+            });
+        });
+        function newCookie(name, value, days) {
+            var days = 10;   // the number at the left reflects the number of days for the cookie to last
+            // modify it according to your needs
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                var expires = "; expires=" + date.toGMTString();
+            }
+            else var expires = "";
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        function readCookie(name) {
+            var nameSG = name + "=";
+            var nuller = '';
+            if (document.cookie.indexOf(nameSG) == -1)
+                return nuller;
+
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameSG) == 0) return c.substring(nameSG.length, c.length);
+            }
+            return null;
+        }
+
+        function eraseCookie(name) {
+            newCookie(name, "", 1);
+        }
+
+        function toMem(a) {
+            newCookie('txtUserName', document.getElementById('txtUserName').value);     // add a new cookie as shown at left for every
+        }
+
+        function delMem(a) {
+            eraseCookie('txtUserName');   // make sure to add the eraseCookie function for every field
+        }
+
+        function remCookie() {
+            if (null != document.getElementById('txtUserName')) {
+                document.getElementById('txtUserName').value = readCookie("txtUserName");
+                if (document.getElementById('txtUserName').value != "") {
+                    document.getElementById('chkRememberMe').checked = true;
+                }
+            }
+        }
+
+        function CheckData() {
+            var d = new Date();
+            var gmtHours = -d.getTimezoneOffset();
+            var lUsername = document.getElementById('txtUserName').value;
+            var lPassword = document.getElementById('txtPassword').value;
+            var lremb = document.getElementById('chkRememberMe').checked;
+            if (lUsername == "") {
+                alert('User name is required');
+                //ModalPopupsAlert("Softtrends Server - User name","User name is required.");
+                return;
+            }
+
+            else if (lPassword == "") {
+                alert('Password is required');
+                return;
+            }
+            else {
+                if (lremb == true) {
+                    toMem(this);
+                }
+                else {
+                    delMem(this);
+                }
+                document.hiidenlogin.action = "UI/HiddenLogin.aspx?z=" + gmtHours + "&un=" + lUsername + "&pwd=" + lPassword;
+                document.hiidenlogin.method = "POST";
+            }
+        }
+
+        function getQuerystring(key, default_) {
+            var search = unescape(location.search);
+            search = search.substr(1);
+            var params = search.split("&");
+            for (var i = 0; i < params.length; i++) {
+                var pairs = params[i].split("=");
+                if (pairs[0] == key) {
+                    return pairs[1];
+                }
+            }
+        }
+
+        function CheckInvalidUser() {
+            remCookie();
+            var lIsSet = false;
+            var lUserName = "";
+            var lPassword = "";
+            var search = unescape(location.search);
+
+            search = search.substr(1);
+            var params = search.split("&");
+            for (var i = 0; i < params.length; i++) {
+                var pairs = params[i].split("=");
+                if (pairs[0] == "txtUserName") {
+                    lUserName = pairs[1];
+                }
+                if (pairs[0] == "txtPassword") {
+                    lPassword = pairs[1];
+                }
+            }
+            var urlString = unescape(window.location)
+
+            if (lUserName != "") {
+                document.getElementById('txtUserName').value = lUserName;
+            }
+            else {
+                document.forms['hiidenlogin'].elements['txtUserName'].focus();
+                lIsSet = true;
+            }
+            if (lPassword != "") {
+
+                document.getElementById('txtPassword').value = lPassword;
+            }
+            else {
+                if (lIsSet == false) {
+                    document.forms['hiidenlogin'].elements['txtPassword'].focus();
+                }
+            }
+            var a = urlString.substr(urlString.indexOf("a=") + 2, urlString.length)
+            if (a == 1) {
+                //alert('user name or password entered is wrong. If you have forgotten your user name or password please use forgot password to retrieve your user name and password ');
+                ModalPopupsAlert("Workers-In-Motion - Login error", "User name or password entered is wrong.<br /> If you have forgotten your user name or password please use forgot password to retrieve your user name and password.");
+            }
+            if (a == 3) {
+                //alert("Your session has expired. Please login again");
+                document.forms['hiidenlogin'].elements['txtUserName'].focus();
+                ModalPopupsAlert("Workers-In-Motion - Session expired", "Your session has expired. Please login again.");
+            }
+            if (a == 4) {
+                //alert("You have changed your subscription information, so your session is expired. Please login to take the changes in effect");
+                ModalPopupsAlert("Workers-In-Motion - Subscription modified", "You have changed your subscription information, so your session is expired. Please login to take the changes in effect.");
+            }
+        }
+        function ModalPopupsAlert(headerText, Message) {
+            ModalPopups.Alert("jsAlert1", headerText,
+                "<div style='padding:25px;'>" + Message + "</div>",
+                {
+                    okButtonText: "OK"
+                }
+            );
+        }
+        function CreateAccount() {
+            window.location = 'UI/TrialSubscription.htm';
+        }
+        function CreateOrganization() {
+            window.location = 'UI/contactus.aspx?type=Organization';
+        }
+    </script>
+</head>
+<body>
+    <div id="header-container">
+        <div id="header-contact-container" class="clearfix">
+            <div id="header-contacts">
+                <ul class="header-contact">
+                    <li class="header-number">+(91) 80-25255087</li>
+                    <li class="header-email"><a href="mailto:info@softtrends.com">info@softtrends.com</a></li>
+                </ul>
+                <ul class="header-social">
+                    <li class="header-facebook">
+                        <a href="https://www.facebook.com/Softtrends.Software?ref=ts&amp;fref=ts">
+                            Facebook
+                        </a>
+                    </li>
+                    <li class="header-twitter"><a href="https://twitter.com/Softtrends">Twitter</a></li>
+                    <li class="header-linkedin">
+                        <a href="http://www.linkedin.com/company/softtrends-software-pvt.-ltd.?trk=top_nav_home">
+                            LinkedIn
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="header" class="clearfix">
+            <div class="logo">
+                <h1>
+                    <a href="http://mjclients.in/workers-in-motion-2">
+                        <img src="http://mjclients.in/workers-in-motion-2/wp-content/uploads/2013/05/logo1-1.png"
+                             alt="Field Force Management App">
+                    </a>
+                </h1>
+            </div>
+            <a id="menu-drop-button" href="#"></a>
+            <div id="navigation-container" class="clearfix">
+                <ul id="nav" class="clearfix sf-js-enabled sf-shadow" style="">
+                    <li id="menu-item-1202" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1202">
+                        <a href="http://mjclients.in/workers-in-motion-2">Home</a>
+                    </li>
+                    <li id="menu-item-1214" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1214">
+                        <a href="http://mjclients.in/workers-in-motion-2/?page_id=94">Features</a>
+                    </li>
+                    <li id="menu-item-1218" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-1216 current_page_item menu-item-1218">
+                        <a href="http://mjclients.in/workers-in-motion-2/?page_id=1216">Pricing</a>
+                    </li>
+                    <li id="menu-item-1285" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1285">
+                        <a href="http://mjclients.in/workers-in-motion-2/?cat=2">Blog</a>
+                    </li>
+                    <li id="menu-item-1203" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1203">
+                        <a href="http://mjclients.in/workers-in-motion-2/?page_id=9">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="clear">
+        </div>
+        <div>
+        </div>
+        <form id="form1">
+            <table>
+                <tr>
+                    <td style="width: 5px;"></td>
+                    <td valign="top">
+                        <fieldset style="vertical-align: top; padding-top: 100px;" id="fldNullContent">
+                            <h2 class="largeheading">
+                                User Agreement
+                                <hr />
+                            </h2>
+                            <p class="leftbar-heading">
+                                Thank you signing up to use PVRtracks LivePVR. The following agreement terms (the
+                                &#8220;USER AGREEMENT&#8221;) governs your use of this Softtrends PVRtracks LivePVR
+                                web application and the associated mobile software (the &#8220;PRODUCTS&#8221;)
+                                as a User.
+                            </p>
+                            <p class="leftbar-heading">
+                                By creating an account at this web site, or downloading, installing and using the
+                                PRODUCTS confirms your agreement to the terms of this USER AGREEMENT with Softtrends
+                                LLC and Softtrends Software Pvt Ltd (together known as &#8220;Softtrends&#8221;).
+                                This includes your agreement with all the disclaimers, warranties, and limitations
+                                of liabilities described in the various sections below.
+                            </p>
+                            <p class="leftbar-heading">
+                                Do not sign up as a user of this web site, and do not download, install and use
+                                any of the PRODUCTS if you do not agree to the terms of this USER AGREEMENT.
+                            </p>
+                            <p class="leftbar-heading">
+                                <b>1. GRANT OF LIMITED LICENSE.</b> Softtrends Grants you a limited, non-exclusive,
+                                non-transferable license to use the PRODUCTS for a limited time in order to evaluate
+                                (during evaluation period) and use (when you pay and subscribe) provided you have
+                                a valid identity and password at this site, and you agree to the terms of this USER
+                                AGREEMENT. The title, ownership rights, and intellectual property rights in the
+                                PRODUCTS, including but not limited to components and algorithms, shall remain the
+                                property of Softtrends. You may not use the PRODUCTS for any purpose other than
+                                trial and your own use. Softtrends reserves the right to change features, licensing
+                                terms, of PRODUCTS.
+                            </p>
+                            <p class="leftbar-heading">
+                                <b>2. NO GUARANTEE OF QUALITY OF SOFTWARE AND SERVICES.</b> You acknowledge that
+                                the PRODUCTS may have defects, bugs, and may produce unexpected results. Softtrends
+                                will make it best effort to provide you upgrades but it is under no obligation to
+                                provide you with any error corrections, updates, upgrades, bug fixes. You have the
+                                sole responsibility for full protection and backup of your data and equipment used
+                                with the PRODUCTS.
+                            </p>
+                            <p class="leftbar-heading">
+                                <b>3. YOUR USE OF THE PRODUCTS IS AT YOUR SOLE RISK.</b> THE PRODUCTS ARE PROVIDED
+                                &#8220;AS IS,&#8221; &#8220;WITH ALL FAULTS&#8221; AND &#8220;AS AVAILABLE&#8221;
+                                FOR YOUR USE, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED, UNLESS
+                                SUCH WARRANTIES ARE LEGALLY INCAPABLE OF EXCLUSION. SPECIFICALLY, SOFTTRENDS DISCLAIMS
+                                IMPLIED WARRANTIES THAT THE PRODUCTS ARE MERCHANTABLE, OF SATISFACTORY QUALITY,
+                                ACCURATE, FIT FOR A PARTICULAR PURPOSE OR NEED, OR NON-INFRINGING. SOFTTRENDS DOES
+                                NOT WARRANT THAT THE FUNCTIONS CONTAINED IN THE PRODUCTS WILL MEET YOUR REQUIREMENTS
+                                OR THAT THE OPERATION OF THE PRODUCTS WILL BE UNINTERRUPTED OR ERROR-FREE, OR THAT
+                                DEFECTS IN THE PRODUCTS WILL BE CORRECTED. SOFTTRENDS DOES NOT WARRANT OR MAKE ANY
+                                REPRESENTATIONS REGARDING THE USE OR THE RESULTS OF THE USE OF THE PRODUCTS IN TERMS
+                                OF THEIR CORRECTNESS, ACCURACY, RELIABILITY, OR OTHERWISE. NO ORAL OR WRITTEN INFORMATION
+                                OR ADVICE GIVEN BY SOFTTRENDS OR A SOFTTRENDS AUTHORIZED REPRESENTATIVE SHALL CREATE
+                                A WARRANTY OR IN ANY WAY INCREASE THE SCOPE OF ANY WARRANTY THAT CANNOT BE DISCLAIMED
+                                UNDER APPLICABLE LAW. YOU BEAR THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+                                OF THE PRODUCTS AND ASSUME THE ENTIRE COST OF ANY SERVICE AND REPAIR. THIS DISCLAIMER
+                                OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS AGREEMENT. NO USE OF THE PRODUCTS
+                                IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER.
+                            </p>
+                            <p class="leftbar-heading">
+                                YOUR SOLE AND EXCLUSIVE REMEDIES IN THE EVENT OF ANY DISPUTE WITH SOFTTRENDS UNDER
+                                OR RELATING TO THIS USER AGREEMENT ARE TO DISCONTINUE THE USE OF PRODUCTS AS A USER.
+                                SOFTTRENDS SHALL NOT BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL
+                                OR EXEMPLARY DAMAGE ARISING FROM YOUR USE OF THE PRODUCTS OR FOR ANY OTHER CLAIM
+                                RELATED IN ANY WAY TO YOUR PARTICIPATION AS A USER. THESE EXCLUSIONS FOR INDIRECT,
+                                SPECIAL, INCIDENTAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES INCLUDE, WITHOUT LIMITATION,
+                                DAMAGES FOR LOST PROFITS, LOST DATA, LOSS OF GOODWILL, WORK STOPPAGE, OR ANY OTHER
+                                COMMERCIAL DAMAGES OR LOSSES, EVEN IF SOFTTRENDS HAD BEEN ADVISED OF THE POSSIBILITY
+                                THEREOF AND REGARDLESS OF THE LEGAL OR EQUITABLE THEORY UPON WHICH THE CLAIM IS
+                                BASED. BECAUSE SOME STATES OR JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR THE LIMITATION
+                                OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, IN SUCH STATES OR JURISDICTIONS,
+                                SOFTTRENDS' LIABILITY SHALL BE LIMITED TO THE EXTENT PERMITTED BY LAW.
+                            </p>
+                            <p class="leftbar-heading">
+                                <b>4. ENTIRE AGREEMENT.</b> This USER AGREEMENT, constitute the entire and only
+                                agreement regarding your use of the PRODUCTS as a USER. This Agreement supersedes
+                                all representations, agreements and other communications regarding your use of the
+                                PRODUCTS as a USER. Only Softtrends can amend this Agreement by posting the changes
+                                on the website. If any term of this Agreement is found by a court of competent jurisdiction
+                                to be invalid, illegal or unenforceable, the term shall be considered to be stricken
+                                from this Agreement as if it had not been included from the beginning and the remainder
+                                of the Agreement enforced according to its terms.
+                            </p>
+                            <table width="100%">
+                                <tr align="center">
+                                    <td>
+                                        <br />
+                                        <input type="button" id="m_cbtnAccept" value="Accept" class="btnAgreement"
+                                               onclick="m_cbtnAccept_Click();" />
+                                        <input type="button" id="m_cbtnCancel" class="btnAgreement" onclick="m_cbtnCancel_Click();"
+                                               value="Do not accept" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </td>
+                    <td style="width: 5px; height: 100%;">
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div id="footer-base-container">
+        <div class="footer-text">
+            <div id="footer-navigation-container">
+            </div>
+            <p>
+                &copy; 2013 SoftTrends LLC. | All Rights Reserved
+            </p>
+            <div class="obox-credit">
+                <p style="padding-right: 100px;">
+                    <a href="http://www.MediaJackers.com">Digital Marketing Partner</a> - <a href="http://www.MediaJackers.com">
+                        MediaJackers
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function m_cbtnAccept_Click() {
+            window.location.href = "/Organization/Create";
+        }
+        function m_cbtnCancel_Click() {
+            window.location.href = "/User/Login";
+        }
+    </script>
+</body>
+</html>
+

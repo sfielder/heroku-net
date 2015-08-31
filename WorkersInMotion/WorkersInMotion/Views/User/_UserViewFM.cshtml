@@ -1,0 +1,57 @@
+﻿@model WorkersInMotion.Model.ViewModel.MarketViewForCreate
+@{
+    //  Layout = "~/Views/Shared/MasterPage.cshtml";
+    Layout = null;
+}
+
+<div class="col-md-12">
+    <div class="portlet box grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="icon-group"></i>Choose a Field Manager Below:</div>
+        </div>
+        <div class="portlet-body">
+            <table class="table table-striped table-bordered table-hover ">
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+                        Users
+                    </th>
+                </tr>
+                @if (Model.FMUser != null && Model.FMUser.Count() > 0)
+                {
+                    foreach (var item in Model.FMUser)
+                    {
+                        <tr class="odd gradeX">
+                            <td>
+                                @Html.HiddenFor(modelitem => item.OrganizationGUID, new { @id = "hdn_orgguid_FM_" + item.UserGUID })
+                                @Html.HiddenFor(modelitem => item.UserGUID, new { @id = "hdn_userguid_FM_" + item.UserGUID })
+                                @Html.HiddenFor(modelitem => item.FirstName, new { @id = "hdn_firstname_FM_" + item.UserGUID })
+                                @Html.HiddenFor(modelitem => item.LastName, new { @id = "hdn_lastname_FM_" + item.UserGUID })
+                                @Html.RadioButton("rdoFMUser", item.UserGUID, new { @id = "rdo_btn_FM_" + item.UserGUID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2" align="center" style="color:red">
+                            No Data Found
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div class="form-actions right">
+                <button id="btncancelpicker" type="button" onclick="return pickerCancelFMClick();" class="btn default">Cancel</button>
+                <button id="btnfmcontinuepicker" type="submit" onclick="return pickerContinueFMClick();" class="btn blue"><i class="icon-ok"></i> Continue</button>
+            </div>
+        </div>
+    </div>
+</div>

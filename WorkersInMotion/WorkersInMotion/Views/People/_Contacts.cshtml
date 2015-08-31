@@ -1,0 +1,134 @@
+﻿@model WorkersInMotion.Model.ViewModel.MarketViewForCreate
+<div class="col-md-4">
+    <div class="portlet box grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="icon-group"></i>Choose a Customer Below:</div>
+        </div>
+        <div class="portlet-body">
+            <table class="table table-striped table-bordered table-hover ">
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+                        Customers
+                    </th>
+                </tr>
+                @if (Model.PeopleViewModel.Place != null && Model.PeopleViewModel.Place.Count() > 0)
+                {
+                    foreach (var item in Model.PeopleViewModel.Place)
+                    {
+                        <tr class="odd gradeX">
+                            <td>
+                                @Html.HiddenFor(modelitem => item.OrganizationGUID)
+                                @Html.HiddenFor(modelitem => item.UserGUID)
+                                @Html.HiddenFor(modelitem => item.PlaceGUID)
+                                @Html.RadioButton("rdoPlace", item.PlaceGUID, new { @id = "rdo_btn_" + item.PlaceGUID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PlaceName)
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2" align="center" style="color:red">
+                            No Data Found
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="portlet box grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="icon-user"></i>Contacts</div>
+        </div>
+        <div class="portlet-body">
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <th></th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Location
+                    </th>
+                    <th>
+                        Location Address
+                    </th>
+                    <th>
+                        Contact Info
+                    </th>
+                    @*<th></th>*@
+                </tr>
+                @if (Model.PeopleViewModel.People != null && Model.PeopleViewModel.People.Count() > 0)
+                {
+                    foreach (var item in Model.PeopleViewModel.People)
+                    {
+                        <tr class="odd gradeX">
+                            <td>
+                                @Html.RadioButton("rdoPeople", item.PeopleGUID, new { @id = "rdo_btn_people_" + item.PeopleGUID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                                @Html.DisplayFor(modelItem => item.LastName)
+                                @Html.HiddenFor(modelItem => item.FirstName, new { @id = "btn_people_" + item.PeopleGUID })
+                                @Html.HiddenFor(modelItem => item.PlaceGUID, new { @id = "hdn_placeguid_" + item.PeopleGUID })
+                                @Html.HiddenFor(modelItem => item.UserGUID, new { @id = "hdn_userguid_" + item.PeopleGUID })
+                                @Html.HiddenFor(modelItem => item.OrganizationGUID, new { @id = "hdn_orgguid_" + item.PeopleGUID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.AddressLine1)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.AddressLine2)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.City)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.State)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.Country)
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.BusinessPhone)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.MobilePhone)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.Emails)
+
+                            </td>
+                            @*<td>
+                                    @Html.ActionLink("Edit", "Edit", new { peopleguid = item.PeopleGUID }, new { @class = "label label-sm label-success", @style = "border-radius:0px;" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.PeopleGUID }, new { @class = "label label-sm label-warning", @style = "border-radius:0px;", @onclick = "return deleteconfirm();" })
+                                </td>*@
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" align="center" style="color:red">
+                            No Data Found
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div class="form-actions right">
+                <button id="btncancelpicker" type="button" onclick="return pickerCancelClick();" class="btn default">Cancel</button>
+                <button id="btncontinuepicker" type="submit" onclick="return pickerContinueClick();" class="btn blue"><i class="icon-ok"></i> Continue</button>
+            </div>
+        </div>
+    </div>
+</div>

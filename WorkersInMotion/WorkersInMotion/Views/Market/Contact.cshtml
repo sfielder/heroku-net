@@ -1,0 +1,356 @@
+﻿@model WorkersInMotion.Model.ViewModel.PeopleViewForCreate
+@{
+    ViewBag.Title = "Add";
+    // Layout = "~/Views/MasterPage.cshtml";
+    @Html.Raw(TempData["msg"])
+
+}
+
+<html>
+<head>
+
+    <title>Edit</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+
+        .mask2 {
+            background-color: #000;
+            display: block;
+            height: 100%;
+            left: 0;
+            opacity: .8;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                Add Contacts
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","People")">Contacts</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="#">Details</a></li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to add contact information</div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <div class="form-body">
+                                <h3 class="form-section">Contact Information</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.FirstName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.FirstName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.FirstName)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.LastName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.LastName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.LastName)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.MobilePhone, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.MobilePhone, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.MobilePhone)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.BusinessPhone, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.BusinessPhone, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.BusinessPhone)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.HomePhone, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.HomePhone, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.HomePhone)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.Emails, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.Emails, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.Emails)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.CompanyName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.CompanyName, new { @readonly = "readonly", @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.CompanyName)
+                                            @Html.HiddenFor(model => model.PeopleModel.PlaceGUID)
+                                            @Html.HiddenFor(model => model.PeopleModel.UserGUID)
+                                            @Html.HiddenFor(model => model.PeopleModel.OrganizationGUID)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <br />
+                                            <br />
+                                            <a href="#" onclick="return pickcustomerclick();">
+                                                Pick Customer
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (@ViewBag.UserID == null)
+                                {
+                                    <div id="divmask" class="mask2" style="display:none;"></div>
+                                    <div id="divconpicker" style="position: absolute; display: none; z-index: 1000; background-color: White; padding: 25px; top: 0px; width: 80%">
+                                        @Html.Partial("~/Views/Place/_customer.cshtml")
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div id="divmask" class="mask2" style="display:block;"></div>
+                                    <div id="divconpicker" style="position: absolute; display: block; z-index: 1000; background-color: White; padding: 25px; top: 0px; width: 80%">
+                                        @Html.Partial("~/Views/Place/_customer.cshtml")
+                                    </div>
+                                }
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.AddressLine1, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.AddressLine1, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.AddressLine1)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.AddressLine2, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.AddressLine2, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.AddressLine2)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.City, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.City, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.City)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.State, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.State, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.State)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.Country, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.Country, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.Country)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeopleModel.ZipCode, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PeopleModel.ZipCode, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PeopleModel.ZipCode)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions right">
+                            <a href="@Url.Action("Index")" class="btn default">Cancel</a>
+                            <button type="submit" class="btn blue"><i class="icon-ok"></i> Add</button>
+                        </div>
+                    }
+                    <!-- END PORTLET-->
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!-- END PAGE -->
+        </div>
+    </div>
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+
+    <script type="text/javascript">
+        var people = {};
+        $(document).ready(function () {
+            //   people = JSON.parse('@ViewBag.PeopleModelItem');
+            //alert('@ViewBag.PeopleModelItem');
+            $("input[name = rdoUser]").on("change", function () {
+                //  alert($(this).val());
+                var val = $(this).val();
+
+                people["FirstName"] = $("#PeopleModel_FirstName").val();
+                people["LastName"] = $("#PeopleModel_LastName").val();
+                people["MobilePhone"] = $("#PeopleModel_MobilePhone").val();
+                people["BusinessPhone"] = $("#PeopleModel_BusinessPhone").val();
+                people["HomePhone"] = $("#PeopleModel_HomePhone").val();
+                people["Email"] = $("#PeopleModel_Emails").val();
+                people["Address1"] = $("#PeopleModel_AddressLine1").val();
+                people["Address2"] = $("#PeopleModel_AddressLine2").val();
+                people["City"] = $("#PeopleModel_City").val();
+                people["State"] = $("#PeopleModel_State").val();
+                people["Country"] = $("#PeopleModel_Country").val();
+                people["ZipCode"] = $("#PeopleModel_ZipCode").val();
+                people["ID"] = val;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Market/SaveItemContact",
+                    data: {
+                        _peopleModel: JSON.stringify(people).toString()
+                    },
+                    async: true,
+                    success: function (data) {
+                        if (data == "success") {
+                            window.location = "/Market/Contact/" + val + "";
+                        }
+                    },
+                    error: function (x, e) {
+                        alert("error occur");
+                    }
+                });
+                return false;
+
+                // window.location = "/People/Create/" + val + "";
+                //return false;
+            });
+            $("input[name = rdoUser]").each(function () {
+                var val = $(this).val();
+                var UserID = '@ViewBag.UserID';
+                if (UserID != "") {
+                    if (val == UserID) {
+                        $(this).prop('checked', true);
+                        return false;
+                    }
+                }
+            });
+            if ($("input[name = rdoUser]:radio:checked").length == 0)
+                $("#rdo_btn_00000000-0000-0000-0000-000000000000").prop('checked', true)
+        });
+
+
+        //$("input[name = rdoPlace]").on("change", function () {
+        //    //  alert($(this).val());
+        //    var val = $(this).val();
+        //    $("#PeopleModel_PlaceGUID").val($(this).val());
+        //    $("#PeopleModel_CompanyName").val($("#hdn_placename_" + val).val());
+        //    $("#PeopleModel_UserGUID").val($("#hdn_userguid_" + val).val());
+        //    $("#PeopleModel_OrganizationGUID").val($("#hdn_orgguid_" + val).val());
+
+        //});
+
+        function pickcustomerclick() {
+
+            $("#divmask").css("display", "block");
+            $("#divconpicker").css("display", "block");
+
+
+            //people["FirstName"] = $("#PeopleModel_FirstName").val();
+            //people["LastName"] = $("#PeopleModel_LastName").val();
+
+            ////alert(JSON.stringify(people));
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/People/SaveItem",
+            //    data: {
+            //        _peopleModel: JSON.stringify(people).toString()
+            //    },
+            //    async: true,
+            //    success: function (data) {
+            //        if (data != null) {
+            //            if (data == "success")
+            //                $("#Div" + valueid).remove();
+            //        }
+            //    },
+            //    error: function (x, e) {
+            //        alert("error occur");
+            //    }
+            //});
+            return false;
+        }
+        function pickerCancelClick() {
+            //$("#PeopleModel_PlaceGUID").val("");
+            //$("#PeopleModel_CompanyName").val("");
+            $("#divmask").css("display", "none");
+            $("#divconpicker").css("display", "none");
+            return false;
+        }
+
+        function pickerContinueClick() {
+            $("input[name = rdoPlace]:radio:checked").each(function () {
+                var val = $(this).val();
+                $("#PeopleModel_PlaceGUID").val($(this).val());
+                $("#PeopleModel_CompanyName").val($("#hdn_placename_" + val).val());
+                $("#PeopleModel_UserGUID").val($("#hdn_userguid_" + val).val());
+                $("#PeopleModel_OrganizationGUID").val($("#hdn_orgguid_" + val).val());
+            });
+            $("#divmask").css("display", "none");
+            $("#divconpicker").css("display", "none");
+            return false;
+        }
+    </script>
+
+</body>
+</html>

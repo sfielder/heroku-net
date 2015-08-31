@@ -1,0 +1,120 @@
+﻿@model List<WorkersInMotion.Model.ViewModel.StoreVisit>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PDFStoreVisit</title>
+</head>
+<body>
+    <div class="portlet box grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="icon-globe"></i>Store Visit Reports</div>
+        </div>
+        <div class="portlet-body">
+            <div id="sample_editable_2_wrapper" class="dataTables_wrapper" role="grid">
+                <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_2" aria-describedby="sample_editable_2_info" style="width: 1065px;">
+                    <thead>
+                        <tr role="row">
+                            <th>
+
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 233px;" aria-label="
+                                         Region
+                                    : activate to sort column ascending">
+                                Region
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        Store
+                                    : activate to sort column ascending">
+                                Store
+                            </th>
+
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 101px;" aria-label="
+                                         Visit Type
+                                    : activate to sort column ascending">
+                                Visit Type
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 141px;" aria-label="
+                                        Field Manager
+                                    : activate to sort column ascending">
+                                Field Manager
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 141px;" aria-label="
+                                        Date
+                                    : activate to sort column ascending">
+                                Date
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 141px;" aria-label="
+                                       Status
+                                    : activate to sort column ascending">
+                                Status
+                            </th>
+                            @*<th class="sorting-disabled" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 141px;" aria-label="
+                                   Details
+                                : activate to sort column ascending">
+                                                    Details
+                                                </th>*@
+                        </tr>
+                    </thead>
+
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                        @if (Model.Count > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr class="odd gradeX">
+                                    <td style="width:20px">
+                                        @if (item.LocationMismatch)
+                                        {
+                                            <span style="color:red;font-weight:bold">!</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RegionName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CustomerStopName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.JobName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CustomerFirstName)
+                                        &nbsp;
+                                        @Html.DisplayFor(modelItem => item.CustomerLastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Date)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    @*<td>
+                                            @Html.ActionLink("Details", "JobForm", new { id = item.JobGUID }, new { @class = "label label-sm label-info", @style = "border-radius:0px;" })
+                                        </td>*@
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" align="center" style="color:red">
+                                    No Data Found
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+            </div><div class="row"></div>
+        </div>
+    </div>
+
+</body>
+</html>

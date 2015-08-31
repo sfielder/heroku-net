@@ -1,0 +1,104 @@
+﻿@{
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"].ToString();
+
+    if (controller == "User" || controller == "UserActivities" || controller == "MyCompany" || controller == "StoreVisit" || controller == "SiteVisit" || controller == "CustomerView" || controller == "JobDetails" || controller == "PO" || controller == "Place" || controller == "Job" || controller == "JobSchema" || controller == "AssignJob" || controller == "JobStatus" || controller == "ServicePoint" || controller == "People" || controller == "Market" || controller == "Region" || controller == "Territory" || controller == "Group" || controller == "OrganizationSubscription")
+    {
+        Layout = "~/Views/Masters/MasterPage.cshtml";
+    }
+    else if (Session["OrganizationGUID"] != null)
+    {
+        Layout = "~/Views/Masters/MasterPage.cshtml";
+    }
+    else if (controller == "Organization")
+    {
+        Layout = "~/Views/Masters/Master.cshtml";
+    }
+}
+<html>
+<body>
+    <div id="divmasknew" class="masknew" style="display:none;">
+        <img src="~/assets/img/ajaxLoader.gif" alt="Loading..." />
+    </div>
+</body>
+</html>
+<style type="text/css">
+    input {
+        border: 1px solid #e5e5e5;
+    }
+</style>
+<script src="~/assets/plugins/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    var minutes;
+    function calculate_time_zone() {
+        //alert('hi');
+        var rightNow = new Date();
+        var jan1 = new Date(rightNow.getFullYear(), 0, 1, 0, 0, 0, 0);  // jan 1st
+        var june1 = new Date(rightNow.getFullYear(), 6, 1, 0, 0, 0, 0); // june 1st
+        var temp = jan1.toGMTString();
+        var jan2 = new Date(temp.substring(0, temp.lastIndexOf(" ") - 1));
+        temp = june1.toGMTString();
+        var june2 = new Date(temp.substring(0, temp.lastIndexOf(" ") - 1));
+        var std_time_offset = (jan1 - jan2) / (1000 * 60 * 60);
+        var daylight_time_offset = (june1 - june2) / (1000 * 60 * 60);
+        //alert(std_time_offset + '/' + daylight_time_offset);
+        var dst;
+        if (std_time_offset == daylight_time_offset) {
+            dst = "0"; // daylight savings time is NOT observed
+        } else {
+            // positive is southern, negative is northern hemisphere
+            var hemisphere = std_time_offset - daylight_time_offset;
+            if (hemisphere >= 0)
+                std_time_offset = daylight_time_offset;
+            dst = "1"; // daylight savings time is observed
+        }
+        var i;
+        // Here set the value of hidden field to the ClientTimeZone.
+        minutes = convert(std_time_offset);
+        //alert(minutes);
+    }
+    // This function is to convert the timezoneoffset to Standard format
+    function convert(value) {
+        var hours = parseInt(value);
+        value -= parseInt(value);
+        value *= 60;
+        var mins = parseInt(value);
+        value -= parseInt(value);
+        value *= 60;
+        var secs = parseInt(value);
+        var display_hours = hours;
+        // handle GMT case (00:00)
+        if (hours == 0) {
+            display_hours = "00";
+        } else if (hours > 0) {
+            // add a plus sign and perhaps an extra 0
+            display_hours = (hours < 10) ? "+0" + hours : "+" + hours;
+        } else {
+            // add an extra 0 if needed
+            display_hours = (hours > -10) ? "-0" + Math.abs(hours) : hours;
+        }
+        mins = (mins < 10) ? "0" + mins : mins;
+        return display_hours + ":" + mins;
+    }
+    // Adding the funtion to onload event of document object
+    //window.onload = calculate_time_zone;
+
+    $(function () {
+        //alert(/\((.*)\)/.exec(new Date().toString())[1]);
+        calculate_time_zone();
+        $.ajax({
+            type: "POST",
+            url: "/User/GetTimeZoneID",
+            data: {
+                // TimeZoneID: (/\((.*)\)/.exec(new Date().toString())) != null ? (/\((.*)\)/.exec(new Date().toString())[1]) : ""
+                TimeZoneID: minutes
+            },
+            async: true,
+            success: function (data) {
+            },
+            error: function (x, e) {
+                //  alert("error occur");
+            }
+        });
+    });
+</script>

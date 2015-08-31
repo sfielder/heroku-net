@@ -1,0 +1,651 @@
+﻿@model WorkersInMotion.Model.ViewModel.mycompany
+
+
+@{
+    @Html.Raw(TempData["msg"])
+}
+
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Index</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body class="page-header-fixed" style="">
+    @if (TempData["TabName"] == null)
+    {
+        TempData["TabName"] = "";
+    }
+    <div class="clearfix">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                @Session["OrganizationName"].ToString()
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">
+                        Home
+                    </a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        <a href="#">@Session["OrganizationName"].ToString()</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    if (TempData["TabName"] != null && !string.IsNullOrEmpty(TempData["TabName"].ToString()))
+                    {
+                        <li>
+                            <a href="#" id="bredcrumbend">@TempData["TabName"].ToString()</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="#" id="bredcrumbend">Details</a>
+                        </li>
+                    }
+                }
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="tabbable-custom ">
+                <ul class="nav nav-tabs ">
+                    <li class="@(TempData["TabName"].ToString() == "Details" ? "active" : "")" onclick="return actionmethod('Details');">
+                        <a href="#tab_5_1" data-toggle="tab">
+                            Details
+                        </a>
+                    </li>
+                    <li class="@(TempData["TabName"].ToString() == "Regions" ? "active" : "")">
+                        <a href="#tab_5_2" data-toggle="tab" onclick="return actionmethod('Regions');">
+                            Regions
+                        </a>
+                    </li>
+                    <li class="@(TempData["TabName"].ToString() == "Markets" ? "active" : "")">
+                        <a href="#tab_5_3" data-toggle="tab" onclick="return actionmethod('Markets');">
+                            Markets
+                        </a>
+                    </li>
+                    <li class="@(TempData["TabName"].ToString() == "Users" ? "active" : "")">
+                        <a href="#tab_5_4" data-toggle="tab" onclick="return actionmethod('Users');">
+                            Users
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="@(TempData["TabName"].ToString() == "Details" ? "tab-pane active" : "tab-pane")" id="tab_5_1">
+                        @if (Model.OrganizationEditView != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                                    @*<ul class="page-breadcrumb breadcrumb">
+                                            <li>
+                                                <i class="icon-home"></i>
+                                                <a href="/User/DashBoard">Home</a>
+                                                <i class="icon-angle-right"></i>
+                                            </li>
+                                            <li>
+                                                <a href="/MyCompany/Index">Organizations</a>
+                                                <i class="icon-angle-right"></i>
+                                            </li>
+                                            @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                                            {
+                                            <li>
+                                                <a href="#">@Session["OrganizationName"].ToString()</a>
+                                            </li>
+                                            }
+                                        </ul>*@
+                                    <!-- END PAGE TITLE & BREADCRUMB-->
+                                </div>
+                            </div>
+                            <div class="row">
+                            </div>
+                        <!-- END DASHBOARD STATS -->
+
+
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <!-- BEGIN PORTLET-->
+                                    <div class="portlet box grey">
+                                        <div class="portlet-title">
+                                            @if (Session["UserType"] != null && Session["UserType"].ToString() != "ENT_A")
+                                            {
+                                                <div class="caption"><i class="icon-cog"></i>This page will allow you to view an Organization.</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="caption"><i class="icon-cog"></i>This page will allow you to update an Organization.</div>
+                                            }
+                                        </div>
+                                        <div class="portlet-body form">
+                                            @using (Html.BeginForm("EditOrg", "MyCompany", FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+
+                                                <div class="form-horizontal">
+
+
+                                                    @Html.HiddenFor(model => model.OrganizationEditView.OrganizationGUID)
+                                                    <div class="form-body">
+                                                        <h3 class="form-section">Organization Information</h3>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.OrganizationFullName, new { @class = "control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.OrganizationFullName, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.OrganizationFullName)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.Website, new { @class = "control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.Website, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.Website)
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.Phone, new { @class = "control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.Phone, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.Phone)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.AddressLine1, new { @class = "control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.AddressLine1, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.AddressLine1)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.AddressLine2, new { @class = "control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.AddressLine2, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.AddressLine2)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.City, new { @class = "control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.City, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.City)
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.State, new { @class = " control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.State, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.State)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.Country, new { @class = "control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.Country, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.Country)
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.ZipCode, new { @class = "control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.ZipCode, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.ZipCode)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.EmailID, new { @class = "control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.EmailID, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.EmailID)
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    @Html.LabelFor(model => model.OrganizationEditView.ImageURL, new { @class = "control-label" })
+                                                                    @Html.TextBoxFor(model => model.OrganizationEditView.ImageURL, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.OrganizationEditView.ImageURL)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                                    {
+                                                        <div class="form-actions right">
+                                                            @*<a href="@Url.Action(" index", "MyCompany" , new { id="Details" })" class="btn default">Cancel</a>*@
+                                                            <button type="submit" class="btn blue"><i class="icon-ok"></i> Update</button>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <!-- END PORTLET-->
+                                </div>
+                                <div class="clearfix"></div>
+
+                            </div>
+                        }
+                    </div>
+                    <div class="@(TempData["TabName"].ToString() == "Regions" ? "tab-pane active" : "tab-pane")" id="tab_5_2">
+                        @if (Model.RegionViewModel != null && Model.RegionViewModel.Region != null)
+                        {
+                            <div class="portlet box grey">
+                                <div class="portlet-title">
+                                    @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                    {
+                                        <div class="caption"><i class="icon-cog"></i>This page will allow you to add a region.</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="caption"><i class="icon-cog"></i> This page displays the regions of the organization.</div>
+                                    }
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-toolbar">
+                                        <div class="btn-group">
+                                            @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                            {
+                                                <a href="@Url.Action("Create", "Region" )" class="btn green">
+                                                    Add New Region <i class='icon-plus'></i>
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div id="sample_editable_2_wrapper" class="dataTables_wrapper" role="grid">
+                                        <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_2" aria-describedby="sample_editable_2_info" style="width: 1065px;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 233px;" aria-label="
+                                         Name
+                                    : activate to sort column ascending">
+                                                        Name
+                                                    </th>
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        Description
+                                    : activate to sort column ascending">
+                                                        Description
+                                                    </th>
+                                                    <th class="sorting-disabled" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 101px;" aria-label="
+                                         Actions
+                                    : activate to sort column ascending">
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                @if (Model.RegionViewModel != null && Model.RegionViewModel.Region.Count() > 0)
+                                                {
+                                                    foreach (var item in Model.RegionViewModel.Region)
+                                                    {
+                                                        <tr class="odd gradeX">
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Name)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Description)
+                                                            </td>
+                                                            <td>
+                                                                @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                                                {
+
+                                                                    @Html.ActionLink("Edit", "Edit", "Region", new { id = item.RegionGUID }, new { @class = "label label-sm label-info", @style = "border-radius:0px;" })
+                                                                }
+                                                                @Html.ActionLink("Markets", "Index", "MyCompany", new { regionguid = item.RegionGUID }, new { @class = "label label-sm label-default", @style = "border-radius:0px;" })
+                                                                @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                                                {
+                                                                    @Html.ActionLink("Delete", "Delete", "Region", new { id = item.RegionGUID }, new { @class = "label label-sm label-warning", @style = "border-radius:0px;", @onclick = "return deleteconfirm();" })
+                                                                }
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3" align="center" style="color:red">
+                                                            No Data Found
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+
+                                    </div><div class="row"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="@(TempData["TabName"].ToString() == "Markets" ? "tab-pane active" : "tab-pane")" id="tab_5_3">
+                        @if (Model.TerritoryViewModel != null && Model.TerritoryViewModel.Territory != null)
+                        {
+                            <div class="portlet box grey">
+                                <div class="portlet-title">
+                                    @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                    {
+                                        <div class="caption"><i class="icon-cog"></i>This page will allow you to add a market.</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="caption"><i class="icon-cog"></i>This page displays the markets of the organization.</div>
+                                    }
+                                    @Html.Raw(@ViewBag.RegionList)
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-toolbar">
+                                        <div class="btn-group">
+                                            @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                            {
+                                                if (ViewBag.AddTerritory != null && ViewBag.AddTerritory == "true")
+                                                {
+                                                    <a href="@Url.Action("Create", "Territory" , new { id=ViewBag.Id })" class="btn green">
+                                                        Add New Market <i class='icon-plus'></i>
+                                                    </a>
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div id="sample_editable_3_wrapper" class="dataTables_wrapper" role="grid">
+                                        <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_3" aria-describedby="sample_editable_3_info" style="width: 1065px;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_3" rowspan="1" colspan="1" style="width: 233px;" aria-label="
+                                         Name
+                                    : activate to sort column ascending">
+                                                        Name
+                                                    </th>
+
+                                                    @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                                    {
+                                                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_3" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        Description
+                                    : activate to sort column ascending">
+                                                            Description
+                                                        </th>
+                                                        <th class="sorting-disabled" role="columnheader" tabindex="0" aria-controls="sample_editable_3" rowspan="1" colspan="1" style="width: 101px;" aria-label="
+                                         Actions
+                                    : activate to sort column ascending">
+                                                            Actions
+                                                        </th>
+                                                    }
+                                                    else
+                                                    {
+                                                        <th class="sorting-disabled" role="columnheader" tabindex="0" aria-controls="sample_editable_3" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        Description
+                                    : activate to sort column ascending">
+                                                            Description
+                                                        </th>
+                                                    }
+                                                </tr>
+                                            </thead>
+
+                                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                @if (Model.TerritoryViewModel != null && Model.TerritoryViewModel.Territory.Count() > 0)
+                                                {
+                                                    foreach (var item in Model.TerritoryViewModel.Territory)
+                                                    {
+                                                        <tr class="odd gradeX">
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Name)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Description)
+                                                            </td>
+                                                            @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                                            {
+                                                                <td>
+                                                                    @*@Html.ActionLink("Service Points", "Index", "ServicePoint", new { id = item.TerritoryGUID, regionguid = item.RegionGUID }, new { @class = "label label-sm label-default", @style = "border-radius:0px;" })*@
+
+
+                                                                    @Html.ActionLink("Edit", "Edit", "Territory", new { id = item.TerritoryGUID }, new { @class = "label label-sm label-info", @style = "border-radius:0px;margin-right:3px" })
+
+                                                                    @Html.ActionLink("Delete", "Delete", "Territory", new { id = item.RegionGUID, id1 = item.TerritoryGUID }, new { @class = "label label-sm label-warning", @style = "border-radius:0px;", @onclick = "return deleteconfirm();" })
+
+                                                                </td>
+                                                            }
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3" align="center" style="color:red">
+                                                            No Data Found
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+
+                                    </div><div class="row"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="@(TempData["TabName"].ToString() == "Users" ? "tab-pane active" : "tab-pane")"  id="tab_5_4">
+                        @if (Model.AspNetUserViewModel != null && Model.AspNetUserViewModel.Users != null)
+                        {
+                            <div class="portlet box grey">
+                                <div class="portlet-title">
+                                    <div class="caption"><i class="icon-cog"></i>This page displays the user list of the organization</div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-toolbar">
+                                        <div class="btn-group">
+                                            @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                            {
+                                                if (ViewBag.EnableCreateUserButton != null && ViewBag.EnableCreateUserButton != "false")
+                                                {
+                                                    <a href="@Url.Action("Create", "User" )" class="btn green">
+                                                        Add New User <i class='icon-plus'></i>
+                                                    </a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div id="sample_editable_1_wrapper" class="dataTables_wrapper" role="grid">
+                                        <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_1" aria-describedby="sample_editable_1_info" style="width: 1065px;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 233px;" aria-label="
+                                         Name
+                                    : activate to sort column ascending">
+                                                        Name
+                                                    </th>
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        Role
+                                    : activate to sort column ascending">
+                                                        Role
+                                                    </th>
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        EmailID
+                                    : activate to sort column ascending">
+                                                        EmailID
+                                                    </th>
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        Region
+                                    : activate to sort column ascending">
+                                                        Region
+                                                    </th>
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                        Territory
+                                    : activate to sort column ascending">
+                                                        Market
+                                                    </th>
+                                                    @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                                    {
+                                                        <th class="sorting-disabled" role="columnheader" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" style="width: 101px;" aria-label="
+                                         Actions
+                                    : activate to sort column ascending">
+                                                            Actions
+                                                        </th>
+                                                    }
+                                                </tr>
+                                            </thead>
+
+                                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                @if (Model.AspNetUserViewModel != null && Model.AspNetUserViewModel.Users.Count() > 0)
+                                                {
+                                                    foreach (var item in Model.AspNetUserViewModel.Users)
+                                                    {
+                                                        <tr class="odd gradeX">
+                                                            <td>
+                                                                @Html.HiddenFor(modelItem => item.Id)
+                                                                @Html.HiddenFor(modelItem => item.UserGUID)
+                                                                @Html.HiddenFor(modelItem => item.SubscriptionGUID)
+                                                                @Html.HiddenFor(modelItem => item.IsActive)
+                                                                @Html.HiddenFor(modelItem => item.OrganizationSubscriptionGUID)
+                                                                @Html.DisplayFor(modelItem => item.FirstName)
+                                                                @Html.DisplayFor(modelItem => item.LastName)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.UserTypeName)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.EmailID)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.RegionName)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.TerritoryName)
+                                                            </td>
+
+
+                                                            @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                                            {
+                                                                <td>
+                                                                    @Html.ActionLink("Edit", "Edit", "User", new { id = item.Id }, new { @class = "label label-sm label-info", @style = "border-radius:0px;margin-right:4px" })
+                                                                    @if (Session["UserType"].ToString() != "WIM_A")
+                                                                    {
+
+                                                                        if (item.UserType != "ENT_A")
+                                                                        {
+                                                                            if (item.IsActive)
+                                                                            {
+                                                                                @Html.ActionLink("UnSubscribe", "UnSubscribe", "User", new { id = item.SubscriptionGUID }, new { @class = "label label-sm label-default", @style = "border-radius:0px;margin-right:4px", @onclick = "return Unsubscribeconfirm();" })
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.ActionLink("Subscribe", "Subscribe", "User", new { id = item.SubscriptionGUID }, new { @class = "label label-sm label-default", @style = "border-radius:0px;margin-right:4px", @onclick = "return subscribeconfirm();" })
+                                                                            }
+
+                                                                        }
+                                                                    }
+                                                                    @if (item.UserType != "ENT_A")
+                                                                    {
+                                                                        @Html.ActionLink("Delete", "Delete", "User", new { id = item.Id }, new { @id = "delete", @class = "label label-sm label-warning", @style = "border-radius:0px;margin-right:4px", @onclick = "return deleteconfirm();" })
+                                                                    }
+                                                                </td>
+                                                            }
+
+
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="6" align="center" style="color:red">
+                                                            No Data Found
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+
+                                    </div><div class="row"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            TableEditable.init();
+            @*var tabname = "@TempData["TabName"]";
+            $('a[data-toggle=tab]').each(function () {
+                var _id = $(this).attr("href").substring(1);
+                if ($(this).text().trim() == tabname.trim()) {
+                    $(this).parent('li').addClass("active");
+                    $("#" + _id).addClass("active");
+                }
+                else {
+                    $(this).parent('li').removeClass("active");
+                    $("#" + _id).removeClass("active");
+                }
+            });*@
+            //$("th[sortremove=true]").each(function () {
+            //    $(this).removeClass();
+            //    $(this).addClass("sorting-disabled");
+            //});
+        });
+
+        function actionmethod(name) {
+            switch (name) {
+                case 'Details':
+                    $("#bredcrumbend").text("Details");
+                    break;
+                case 'Markets':
+                    $("#bredcrumbend").text("Markets");
+                    break;
+                case 'Regions':
+                    $("#bredcrumbend").text("Regions");
+                    break;
+                case 'Users':
+                    $("#bredcrumbend").text("Users");
+                    break;
+            }
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,374 @@
+﻿@model WorkersInMotion.Model.ViewModel.AspUser
+
+@{
+    ViewBag.Title = "Edit";
+    // Layout = "~/Views/MasterPage.cshtml";
+}
+
+<html>
+<head>
+    <title>Edit</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                Account Details for '@ViewBag.UserName'
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        @if (Session["UserType"] != null && Session["UserType"].ToString() != "WIM_A")
+                        {
+                            <a href="@Url.Action("Index","MyCompany")">@Session["OrganizationName"].ToString()</a>
+                        }
+                        else
+                        {
+                            <a href="#">@Session["OrganizationName"].ToString()</a>
+                        }
+                        <i class="icon-angle-right"></i>
+
+                    </li>
+                    if (ViewBag.BreadCrumbUserName != null && !string.IsNullOrEmpty(ViewBag.BreadCrumbUserName))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index","MyCompany")">Users</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li>
+                            <a href="#">@ViewBag.BreadCrumbUserName</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            @if (Session["UserName"] != null && !string.IsNullOrEmpty(Session["UserName"].ToString()))
+                            {
+                                <a href="#">@Session["UserName"].ToString()</a>
+                            }
+                        </li>
+                    }
+                }
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to Update an User.</div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.OrganizationGUID)
+                        @Html.HiddenFor(model => model.UserGUID)
+                        @Html.HiddenFor(model => model.ProfileGUID)
+                        @Html.HiddenFor(model => model.OrganizationUserMapGUID)
+                        <div class="form-horizontal">
+                            <div class="form-body">
+                                <h3 class="form-section">Account Information</h3>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.UserName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(model => model.UserName)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.UserID, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.UserID, new { @class = "form-control", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(model => model.UserID)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PasswordHash, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PasswordHash, new { @class = "form-control", @type = "password" })
+                                            @Html.ValidationMessageFor(model => model.PasswordHash)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ConfirmPassword, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", @type = "password" })
+                                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-body">
+                                <h3 class="form-section">Department Information</h3>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RoleGUID, new { @class = "control-label" })
+                                            @*@Html.DropDownList("GroupGUID", (SelectList)ViewBag.GroupDetails)*@
+                                            @if ((Session["UserType"] != null && Session["UserType"].ToString() != "ENT_A"))
+                                            {
+                                                @Html.DropDownListFor(model => model.RoleGUID, (SelectList)ViewBag.RoleDetails, "Select", new { @disabled = "disabled", @class = "form-control" })
+                                            }
+                                            else
+                                            {
+                                                @Html.DropDownListFor(model => model.RoleGUID, (SelectList)ViewBag.RoleDetails, "Select", new { @class = "form-control" })
+                                            }
+
+                                            @Html.HiddenFor(model => model.RoleGUID)
+                                            @Html.ValidationMessageFor(model => model.RoleGUID)
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.GroupGUID, new { @class = "control-label" })
+                                                @if ((Session["UserType"] != null && Session["UserType"].ToString() != "ENT_A"))
+                                                {
+                                                    @Html.DropDownListFor(model => model.GroupGUID, (SelectList)ViewBag.GroupDetails, "Select", new { @disabled = "disabled", @class = "form-control" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.DropDownListFor(model => model.GroupGUID, (SelectList)ViewBag.GroupDetails, "Select", new { @class = "form-control" })
+                                                }
+                                                @Html.ValidationMessageFor(model => model.GroupGUID)
+                                                @Html.HiddenFor(model => model.GroupGUID)
+                                            </div>
+                                        </div>*@
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RegionGUID, new { @class = "control-label" })
+                                            @if (Session["UserType"] != null && Session["UserType"].ToString() != "ENT_A")
+                                            {
+                                                @Html.DropDownListFor(model => model.RegionGUID, (SelectList)ViewBag.RegionDetails, "Select", new { @onchange = "RegionSelectedIndexChanged()", @disabled = "disabled", @class = "form-control" })
+                                            }
+                                            else
+                                            {
+                                                @Html.DropDownListFor(model => model.RegionGUID, (SelectList)ViewBag.RegionDetails, "Select", new { @onchange = "RegionSelectedIndexChanged()", @class = "form-control" })
+                                            }
+                                            @Html.ValidationMessageFor(model => model.RegionGUID)
+                                            @Html.HiddenFor(model => model.RegionGUID)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.TerritoryGUID, new { @class = "control-label" })
+                                            @if (Session["UserType"] != null && Session["UserType"].ToString() != "ENT_A")
+                                            {
+                                                @Html.DropDownListFor(model => model.TerritoryGUID, (SelectList)ViewBag.TerritoryDetails, "Select", new { @disabled = "disabled", @class = "form-control" })
+
+                                            }
+                                            else
+                                            {
+                                                @Html.DropDownListFor(model => model.TerritoryGUID, (SelectList)ViewBag.TerritoryDetails, "Select", new { @class = "form-control" })
+                                            }
+
+                                            @Html.ValidationMessageFor(model => model.TerritoryGUID)
+                                            @Html.HiddenFor(model => model.TerritoryGUID)
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-body">
+                                <h3 class="form-section">Profile Information</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.FirstName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.FirstName)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.LastName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.LastName)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MobilePhone, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MobilePhone, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MobilePhone)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.BusinessPhone, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.BusinessPhone, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.BusinessPhone)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.HomePhone, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.HomePhone, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.HomePhone)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.EmailID, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.EmailID, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.EmailID)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.AddressLine1, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.AddressLine1, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.AddressLine1)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.AddressLine2, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.AddressLine2, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.AddressLine2)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.City, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.City, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.City)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.State, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.State, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.State)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Country, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.Country, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Country)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ZipCode, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.ZipCode, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.ZipCode)
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-actions right">
+                            @*@if (Session["UserType"] != null && Session["UserType"].ToString() == "WIM_A")
+                                {
+                                    <a href="@Url.Action("Index","Organization")" class="btn default">Cancel</a>
+                                }
+                                else if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+                                {
+                                    <a href="@Url.Action("Index")" class="btn default">Cancel</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("DashBoard")" class="btn default">Cancel</a>
+                                }*@
+                            @if (ViewBag.BreadCrumbUserName != null)
+                            {
+                                <a href="@Url.Action("Index", "MyCompany", new { id="Users"})" class="btn default">Cancel</a>
+                            }
+                            <button type="submit" class="btn blue"><i class="icon-ok"></i> Update</button>
+                        </div>
+                    }
+                    <!-- END PORTLET-->
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+            <!-- END PAGE -->
+        </div>
+    </div>
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+</body>
+</html>
+<script type="text/javascript">
+    $('#UserName').keydown(function (event) {
+        var key = event.keyCode || event.charCode;
+        if (key == 32)
+            return false;
+    });
+    //$('#PasswordHash').keydown(function (event) {
+    //    var key = event.keyCode || event.charCode;
+    //    if (key == 32)
+    //        return false;
+    //});
+    //$('#ConfirmPassword').keydown(function (event) {
+    //    var key = event.keyCode || event.charCode;
+    //    if (key == 32)
+    //        return false;
+    //});
+    function RegionSelectedIndexChanged() {
+        $.ajax({
+            type: "POST",
+            url: "/User/Region",
+            data: {
+                RegionGUID: $("#RegionGUID").val()
+            },
+            async: true,
+            success: function (data) {
+                $("#TerritoryGUID").empty();
+                if (data.length != 1)
+                    $("#TerritoryGUID").append("<option value>Select</option>");
+                $.each(data, function (index, optionData) {
+                    $("#TerritoryGUID").append("<option value='" + optionData.Value + "'>" + optionData.Text + "</option>");
+                });
+            },
+            error: function (x, e) {
+                alert("error occur");
+            }
+        });
+    }
+</script>

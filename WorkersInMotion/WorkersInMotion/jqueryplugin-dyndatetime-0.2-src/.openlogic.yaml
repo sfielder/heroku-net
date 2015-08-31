@@ -1,0 +1,19 @@
+--- 
+name: JQuery dyndatetime 0.2 Source
+platform_id: all
+platform_version: all
+distribution_file_uuid_string: openlogic-jqueryplugin-dyndatetime-0.2-all-src-2
+platform_vendor: all
+version_visibility: public
+description: JQuery dyndatetime 0.2 Source
+platform_arch: all
+distribution_file_uuid: 8216e5f3de030568ac0b538c28d023bd100f97628c6e7ef50f73d4db3d1150ea
+distribution_version: 2
+distribution_flavor: ""
+distribution_raw_file: 0.2/jquery.dynDateTime-0.2.zip
+notify: "yes"
+package_version: "0.2"
+package_id: jqueryplugin-dyndatetime
+release_date: "2010-01-07"
+distribution_notes: ""
+distribution_type: src

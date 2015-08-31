@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AF53FA2B-CF48-4CD3-B2E0-ADE4E4792180}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WorkersInMotion.DataAccess</RootNamespace>
+    <AssemblyName>WorkersInMotion.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WorkersInMotion.Log, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WorkersInMotion.Log\bin\Debug\WorkersInMotion.Log.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\AspNetRole.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AspNetUser.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AspNetUserClaim.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AspNetUserLogin.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ExceptionsOrganization.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ExceptionsUser.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GlobalUser.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Job.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobAssigned.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobCostType.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobForm.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobFormData.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobForum.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobForumStatu.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobNote.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobOffer.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobProgress.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobStatu.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobStatusOrganization.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobSubStatu.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JobSubStatusOrganization.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Market.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MasterLogin.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OptionList.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Organization.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrganizationSubscription.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrganizationUsersMap.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Person.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Place.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\POs.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\p_GetJobStatistics_Result.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\p_GetJobs_Result.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\p_GetOpenJobs_Result.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\p_GetOrganizationsForSkills_Result.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\p_GetUsersAvailability_Result.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\p_GetUsersLocationForADate_Result.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\p_GetUsers_Result.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Region.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ShiftsOrganization.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ShiftsUser.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SkillsOrganization.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SkillsUser.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SplitString_Result.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Territory.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserDevice.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserHeartBeat.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserProfile.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserSubscription.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ViewModel\LatLong.cs" />
+    <Compile Include="Model\WorkDaysOrganization.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WorkDaysUser.cs">
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WorkersInMotionContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkersInMotionContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WorkersInMotionContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkersInMotionContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WorkersInMotionContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkersInMotionContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\GlobalUserRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\IGlobalUserRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\IJobRepository.cs" />
+    <Compile Include="Repository\IJobSchemaRepository.cs" />
+    <Compile Include="Repository\IMarketRepository.cs" />
+    <Compile Include="Repository\IOrganizationRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\IOrganizationSubscriptionRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\IPeopleRepository.cs" />
+    <Compile Include="Repository\IPlaceRepository.cs" />
+    <Compile Include="Repository\IPORepository.cs" />
+    <Compile Include="Repository\IRegionRepository.cs" />
+    <Compile Include="Repository\ITerritoryRepository.cs" />
+    <Compile Include="Repository\IUserProfileRepository.cs" />
+    <Compile Include="Repository\IUserRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\IUserSubscriptionRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\JobRepository.cs" />
+    <Compile Include="Repository\JobSchemaRepository.cs" />
+    <Compile Include="Repository\MarketRepository.cs" />
+    <Compile Include="Repository\OrganizationRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\OrganizationSubscriptionRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\PeopleRepository.cs" />
+    <Compile Include="Repository\PlaceRepository.cs" />
+    <Compile Include="Repository\PORepository.cs" />
+    <Compile Include="Repository\RegionRepository.cs" />
+    <Compile Include="Repository\sftMail.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\TerritoryRepository.cs" />
+    <Compile Include="Repository\UserProfileRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\UserSubscriptionRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Model\WorkersInMotionContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WorkersInMotionContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\WorkersInMotionContext.edmx.diagram">
+      <DependentUpon>WorkersInMotionContext.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\WorkersInMotionContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WorkersInMotionContext.edmx</DependentUpon>
+      <LastGenOutput>WorkersInMotionContext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\WorkersInMotionContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WorkersInMotionContext.edmx</DependentUpon>
+      <LastGenOutput>WorkersInMotionContext.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

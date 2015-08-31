@@ -1,0 +1,679 @@
+﻿@model WorkersInMotion.Model.ViewModel.customerview
+@{
+    @Html.Raw(TempData["msg"])
+}
+
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Index</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <style type="text/css">
+        #divmask img {
+            position: relative;
+            top: 45%;
+            left: 50%;
+        }
+
+        #divmask span {
+            position: relative;
+            top: 50%;
+            left: 45%;
+        }
+        .gridFooter td {
+            padding: 10px;
+            color: #999;
+            font-size: 10pt;
+            text-align: left;
+        }
+
+        .gridFooter a:hover {
+            color: #333;
+            border: 1px green solid;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        .gridFooter a {
+            color: #333;
+            border: 1px #ddd solid;
+            padding: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+    jQuery(document).ready(function () {
+        TableEditable.init();
+        $("#divmasknew").css("display", "none");
+        @*var tabname = "@TempData["TabName"]";
+            $('a[data-toggle=tab]').each(function () {
+                var _id = $(this).attr("href").substring(1);
+                if ($(this).text().trim() == tabname.trim()) {
+                    $(this).parent('li').addClass("active");
+                    $("#" + _id).addClass("active");
+                }
+                else {
+                    $(this).parent('li').removeClass("active");
+                    $("#" + _id).removeClass("active");
+                }
+            });*@
+
+        $("#rdoCSV").change(function () {
+            $("#divCSV").css("display", "block");
+            $("#divURL").css("display", "none");
+        });
+        $("#rdoURL").change(function () {
+            $("#divCSV").css("display", "none");
+            $("#divURL").css("display", "block");
+        });
+    });
+
+    function actionmethod(name) {
+        switch (name) {
+            case 'Details':
+                $("#bredcrumbend").text("Details");
+                $("#breadcrumbli").css("display", "none");
+                break;
+            case 'Contacts':
+                $("#bredcrumbend").text("Contacts");
+                $("#breadcrumbli").css("display", "none");
+                break;
+            case 'Stores':
+                $("#bredcrumbend").text("Stores");
+                $("#breadcrumbli").css("display", "inline-block");
+                break;
+        }
+    }
+
+    function enablemask() {
+        $("#divmask").css("display", "block");
+    }
+
+
+    $("#ulworkgroup").click(function () {
+        $("#divmasknew").css("display", "block");
+    });
+
+    </script>
+
+</head>
+<body class="page-header-fixed" style="">
+    @if (TempData["TabName"] == null)
+    {
+        TempData["TabName"] = "";
+    }
+    <div class="clearfix">
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                @if (Model != null && Model.PlaceModel != null)
+                {
+                    @Model.PlaceModel.PlaceName
+                }
+            </h3>
+
+            <ul class="page-breadcrumb breadcrumb">
+
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">
+                        Home
+                    </a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        <a href="@Url.Action("Index","MyCompany")">@Session["OrganizationName"].ToString()</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","Place")">Clients</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    if (Session["PlaceName"] != null && !string.IsNullOrEmpty(Session["PlaceName"].ToString()))
+                    {
+                        if (TempData["TabName"] != null && !string.IsNullOrEmpty(TempData["TabName"].ToString()) && TempData["TabName"].ToString() == "Stores")
+                        {
+                            <li>
+                                <a href="#">@Session["PlaceName"].ToString()</a>
+
+                            </li>
+                            <li id="breadcrumbli">
+                                <i class="icon-angle-right"></i>
+                                <a href="#" id="bredcrumbend">@TempData["TabName"].ToString()</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#">@Session["PlaceName"].ToString()</a>
+
+                            </li>
+                            <li style="display:none" id="breadcrumbli">
+                                <i class="icon-angle-right"></i>
+                                <a href="#" id="bredcrumbend">@TempData["TabName"].ToString()</a>
+                            </li>
+                        }
+                    }
+                }
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="tabbable-custom ">
+                <ul class="nav nav-tabs ">
+                    <li class="@(TempData["TabName"].ToString() == "Details" ? "active" : "")" onclick="return actionmethod('Details');">
+                        <a href="#tab_5_1" data-toggle="tab">
+                            Details
+                        </a>
+                    </li>
+                    <li class="@(TempData["TabName"].ToString() == "Contacts" ? "active" : "")">
+                        <a href="#tab_5_2" data-toggle="tab" onclick="return actionmethod('Contacts');">
+                            Contacts
+                        </a>
+                    </li>
+                    <li class="@(TempData["TabName"].ToString() == "Stores" ? "active" : "")">
+                        <a href="#tab_5_3" data-toggle="tab" onclick="return actionmethod('Stores');">
+                            Stores
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="@(TempData["TabName"].ToString() == "Details" ? "tab-pane active" : "tab-pane")" id="tab_5_1">
+                        
+                        @if (Model.PlaceModel != null)
+                        {
+                                <!-- BEGIN PAGE HEADER-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                </div>
+                            </div>
+                                <!-- END PAGE HEADER-->
+                            <!-- BEGIN DASHBOARD STATS -->
+                            <div class="row">
+                            </div>
+                             <!-- END DASHBOARD STATS -->
+
+
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <!-- BEGIN PORTLET-->
+                                    <div class="portlet box grey">
+                                        <div class="portlet-title">
+                                            @if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+                                            {
+                                                <div class="caption"><i class="icon-cog"></i>This page will allow you to update client information</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="caption"><i class="icon-cog"></i>This page will allow you to view client information</div>
+                                            }
+                                        </div>
+                                        <div class="portlet-body form">
+                                            @using (Html.BeginForm("EditCustomer", "CustomerView", FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                if (Model != null && Model.PlaceModel != null)
+                                                {
+                                                    @Html.HiddenFor(model => model.PlaceModel.OrganizationGUID)
+                                                    @Html.HiddenFor(model => model.PlaceModel.UserGUID)
+                                                    @Html.HiddenFor(model => model.PlaceModel.PlaceGUID)
+                                                    <div class="form-horizontal">
+                                                        <div class="form-body">
+                                                            <h3 class="form-section">Client Information</h3>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.PlaceName, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.PlaceName, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.PlaceName)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.PlaceID, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.PlaceID, new { @class = "form-control", @readonly = "readonly" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.PlaceID)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.FirstName, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.FirstName, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.FirstName)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.LastName, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.LastName, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.LastName)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.MobilePhone, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.MobilePhone, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.MobilePhone)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.PlacePhone, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.PlacePhone, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.PlacePhone)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.HomePhone, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.HomePhone, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.HomePhone)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.Emails, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.Emails, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.Emails)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.AddressLine1, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.AddressLine1, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.AddressLine1)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.AddressLine2, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.AddressLine2, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.AddressLine2)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.City, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.City, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.City)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.State, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.State, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.State)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.Country, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.Country, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.Country)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.PlaceModel.ZipCode, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.PlaceModel.ZipCode, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.PlaceModel.ZipCode)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                <div class="form-actions right">
+                                                    <a href="@Url.Action("Index", "Place")" class="btn default">Cancel</a>
+                                                    @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                                    {
+
+                                                        <button type="submit" class="btn blue"><i class="icon-ok"></i> Update</button>
+                                                    }
+                                                </div>
+                                            }
+                                            <!-- END PORTLET-->
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                    </div>
+                                    <!-- END PAGE -->
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="@(TempData["TabName"].ToString() == "Contacts" ? "tab-pane active" : "tab-pane")" id="tab_5_2">
+@{
+    var redirectstr = @Request.Url.AbsoluteUri.ToString();
+    if (!redirectstr.Contains("?"))
+        redirectstr += "?Contact&Contact_RowCount=" + ViewBag.pageContactCountValue + "&Contact_Search=" + ViewBag.Contact_Search;
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @action = redirectstr, customerid = ViewBag.PlaceGUID }))
+{
+    if (Model.PeopleViewModel != null && Model.PeopleViewModel.People != null)
+    {
+                            <div class="portlet box grey">
+                                <div class="portlet-title">
+                                    @if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+                                    {
+                                        <div class="caption"><i class="icon-globe"></i>You can use this page to review all contacts in your profile and make necessary changes or add new contacts.</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="caption"><i class="icon-globe"></i>You can use this page to review all contacts in your profile.</div>
+                                    }
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-toolbar">
+                                        <div class="btn-group">
+                                            @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                            {
+                                                <a href="@Url.Action("Create", "People", new { customerid = Model.PlaceModel.PlaceGUID.ToString() })" class="btn green">
+                                                    Add Contact <i class='icon-plus'></i>
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div id="sample_editable_2_wrapper" class="dataTables_wrapper" role="grid">                                        
+                                        @if (ViewBag.Contact_TotalRows > 0)
+                                        {
+                                            <div class="col-md-6 col-sm-12">
+                                                <div id="sample_1_length" class="dataTables_length">
+                                                    <label style="margin-left:-15px;">
+                                                        @Html.DropDownList("Contact_RowCount", (SelectList)ViewBag.Contact_pCountList, new { @onchange = "RedirectAction('Contacts','','" + @ViewBag.CustomerID + "');", @class = "form-control input-small" })
+                                                        records
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="dataTables_filter" id="sample_1_filter">
+                                                    <label style="margin-right:-15px;">
+                                                        Search:
+                                                        @Html.TextBox("Contact_Search", "", new { @style = "padding-right:1%", @class = "form-control input-medium input-inline" })
+                                                        <button type="submit" class="btn green pull-right">
+                                                            Submit <i class="m-icon-swapright m-icon-white"></i>
+                                                        </button>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="table-scrollable">
+                                                @{
+                                            var obj = new WebGrid(rowsPerPage: ViewBag.pageContactCountValue, canPage: true);
+                                            obj.Bind(source: Model.PeopleViewModel.People, rowCount: ViewBag.Contact_TotalRows, autoSortAndPage: false);
+                                                }
+                                                @obj.GetHtml(htmlAttributes: new { @class = "table table-striped table-hover table-bordered", @id = "sample_1_info", @style = "overflow-y:scroll" },
+                                                                                          mode: WebGridPagerModes.Numeric | WebGridPagerModes.NextPrevious,
+                                                                                          nextText: "Next",
+                                                                                          previousText: "Previous",
+                                                                            footerStyle: "gridFooter",
+                                                                            alternatingRowStyle: "gradeX even",
+                                                                     rowStyle: "gradeX odd",
+                                                                            columns: obj.Columns(
+                                                                    obj.Column("FirstName", header: "Name", style: "action",
+                                                                                format:
+                                                                                @<text>
+                                                                                    @(item.FirstName + " " + item.LastName)
+                                                                                </text>),
+                                                                    obj.Column("BusinessPhone", header: "Phone"),
+                                                                    obj.Column("MobilePhone", header: "Cell Phone"),
+                                                                    obj.Column("Emails", header: "Email ID"),
+                                                                    obj.Column("", header: "Actions", style: "action",
+                                                                                        format:
+                                                                                        @<text>
+                                                                                            @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                                                                            {
+                                                                                                @Html.ActionLink("Edit", "Edit", "People", new { peopleguid = item.PeopleGUID }, new { @class = "label label-sm label-success", @style = "border-radius:0px;" })
+                                                                                                @Html.ActionLink("Delete", "Delete", "People", new { id = item.PeopleGUID, customerguid = item.PlaceGUID }, new { @class = "label label-sm label-warning", @style = "border-radius:0px;", @onclick = "return deleteconfirm();" })
+                                                                                            }
+                                                                                        </text>
+
+                                                         )
+                                                         ))
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <label>No Data Found</label>
+                                        }
+                                    </div><div class="row"></div>
+                                </div>
+                            </div>
+    }
+}
+                    </div>
+                    <div class="@(TempData["TabName"].ToString() == "Stores" ? "tab-pane active" : "tab-pane")" id="tab_5_3">
+                        @{
+                            redirectstr = @Request.Url.AbsoluteUri.ToString();
+                            if (!redirectstr.Contains("?"))
+                                redirectstr += "?Stores&Store_RowCount=" + ViewBag.pageStoreCountValue + "&Store_Search=" + ViewBag.Store_Search;
+                        }
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @action = redirectstr, customerid = ViewBag.PlaceGUID }))
+{
+                        if (Model.MarketViewModel != null && Model.MarketViewModel.Market != null)
+                        {
+                            <div class="portlet box grey">
+                                <div class="portlet-title">
+                                    @if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+                                    {
+                                        <div class="caption"><i class="icon-globe"></i>View, Add and Manage Stores.</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="caption"><i class="icon-globe"></i>View and Upload Stores.</div>
+                                    }
+                                    @Html.Raw(@ViewBag.RegionList)
+                                </div>
+                                <div id="divmask" class="masknew" style="display:none;">
+                                    <img src="~/assets/img/ajaxLoader.gif" alt="Loading..." />
+                                    <br />
+                                    <span style="color:red">Don't do back or refresh and close</span>
+                                </div>
+
+                                <div class="portlet-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="radio" id="rdoCSV" name="import" @(Session["OutputBuffer"] != null ? "checked" : "") /><span style="padding-left:5px">Import Stores From CSV</span><br />
+                                                <input type="radio" id="rdoURL" name="import" @(Session["OutputBufferURL"] != null ? "checked" : "") /><span style="padding-left:5px">Import Stores From RFI</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <div class="table-toolbar" id="divCSV" style="@(Session["OutputBuffer"] != null ? "display:block" : "display:none")">
+                                                    <div class="btn-group" style="width:100%">
+                                                        @using (Html.BeginForm("ImportCSV", "CustomerView", new { customerguid = ViewBag.ClientID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                        {
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <span>Import Store From CSV</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="file" name="fileInput" id="fileInput" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="submit" class="btn blue" onclick="enablemask();"><i class="icon-ok"></i> Submit</button>
+                                                                    </td>
+                                                                    <td>
+                                                                        @if (Session["OutputBuffer"] != null)
+                                                                        {
+                                                                            <a href="@Url.Action("NotInsert", "CustomerView", new { customerid = Model.PlaceModel.PlaceGUID.ToString() })">
+                                                                                Download Not Inserted Store List
+                                                                            </a>
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="table-toolbar" id="divURL" style="@(Session["OutputBufferURL"] != null ? "display:block" : "display:none")">
+                                                    <div class="btn-group" style="width:100%">
+                                                        @using (Html.BeginForm("ImportStore", "CustomerView", new { customerguid = Model.PlaceModel.PlaceGUID.ToString() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                        {
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <button type="submit" class="btn green" onclick="enablemask();"><i class="icon-ok"></i> Update Stores From RFI</button>
+                                                                    </td>
+                                                                    <td>
+                                                                        @if (Session["OutputBufferURL"] != null)
+                                                                        {
+                                                                            <a href="@Url.Action("NotInsertFromURL", "CustomerView", new { customerid = Model.PlaceModel.PlaceGUID.ToString() })">
+                                                                                Download Not Inserted Store List
+                                                                            </a>
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="table-toolbar">
+                                        <div class="btn-group" style="width:100%">
+                                            @if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+                                            {
+                                                <a href="@Url.Action("Create", "Market", new { customerid = Model.PlaceModel.PlaceGUID.ToString() })" class="btn green">
+                                                    Add Store <i class='icon-plus'></i>
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div id="sample_editable_3_wrapper" class="dataTables_wrapper" role="grid">
+                                        @Html.ValidationSummary(false)
+                                        @if (ViewBag.Store_TotalRows > 0)
+                                        {
+                                            <div class="col-md-6 col-sm-12">
+                                                <div id="sample_1_length" class="dataTables_length">
+                                                    <label style="margin-left:-15px;">
+                                                        @Html.DropDownList("Store_RowCount", (SelectList)ViewBag.Store_pCountList, new { @onchange = "RedirectAction('Stores','" + @ViewBag.RegionGUID + "','" + @ViewBag.ClientID + "');", @class = "form-control input-small" })
+                                                        records
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="dataTables_filter" id="sample_1_filter">
+                                                    <label style="margin-right:-15px;">
+                                                        Search:
+                                                        @Html.TextBox("Store_Search", "", new { @style = "padding-right:1%", @class = "form-control input-medium input-inline" })
+                                                        <button type="submit" class="btn green pull-right">
+                                                            Submit <i class="m-icon-swapright m-icon-white"></i>
+                                                        </button>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="table-scrollable">
+                                                @{
+                                            var obj = new WebGrid(rowsPerPage: ViewBag.pageStoreCountValue, canPage: true);
+                                            obj.Bind(source: Model.MarketViewModel.Market, rowCount: ViewBag.Store_TotalRows, autoSortAndPage: false);
+                                                }
+                                                @obj.GetHtml(htmlAttributes: new { @class = "table table-striped table-hover table-bordered", @id = "sample_1_info", @style = "overflow-y:scroll" },
+                                                                                          mode: WebGridPagerModes.Numeric | WebGridPagerModes.NextPrevious,
+                                                                                          nextText: "Next",
+                                                                                          previousText: "Previous",
+                                                                            footerStyle: "gridFooter",
+                                                                            alternatingRowStyle: "gradeX even",
+                                                                     rowStyle: "gradeX odd",
+                                                                                          columns: obj.Columns(
+
+                                                               obj.Column("MarketName", header: "Store Name"),
+                                                               obj.Column("MarketID", header: "Store ID"),
+                                                               obj.Column("RMName", header: "Manager"),
+                                                                obj.Column("MarketPhone", header: "Phone"),
+                                                                obj.Column("Emails", header: "Email ID"),
+                                                                                    obj.Column("",
+                                                                           header: "Actions", style: "action",
+                                                                                        format:
+                                                                                        @<text>
+                                                                                            @if (Session["UserType"] != null && !string.IsNullOrEmpty(Session["UserType"].ToString()) && Session["UserType"].ToString() == "ENT_A")
+                                                                                            {
+                                                                                                @Html.ActionLink("Edit", "Edit", "Market", new { marketguid = item.MarketGUID }, new { @class = "label label-sm label-success", @style = "border-radius:0px;" })
+                                                                                                @Html.ActionLink("Delete", "Delete", "Market", new { id = item.MarketGUID, customerguid = item.OwnerGUID }, new { @class = "label label-sm label-warning", @style = "border-radius:0px;", @onclick = "return deleteconfirm();" })
+                                                                                            }
+                                                                                        </text>
+
+                                                                                                              )
+                                                                                                              ))
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <label>No Data Found</label>
+                                        }
+                                    </div>
+                                    <div class="row"></div>
+                                </div>
+                            </div>
+                        }
+}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <script type="text/javascript">
+        function RedirectAction(type, id, custid) {
+            var redirectstr = document.location.href;
+            redirectstr = redirectstr.substring(0, redirectstr.indexOf("?"));
+            if (type === "Contacts") {
+                redirectstr += "?Contacts&Contact_RowCount=" + $('#Contact_RowCount').val() + "&Contact_Search=" + $('#Contact_Search').val();
+
+                if (custid !== '' && custid !== undefined) {
+                    redirectstr += '&customerid=' + custid;
+                }
+            }
+            else if (type === "Stores") {
+                redirectstr += "?Stores&Store_RowCount=" + $('#Store_RowCount').val() + "&Store_Search=" + $('#Store_Search').val();
+                if (id !== '' && id !== undefined) {
+                    redirectstr += '&regionguid=' + id;
+                }
+                if (custid !== '' && custid !== undefined) {
+                    redirectstr += '&customerid=' + custid;
+                }
+            }
+            document.location.href = redirectstr;
+        }
+    </script>
+</body>
+</html>

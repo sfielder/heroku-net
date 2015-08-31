@@ -1,0 +1,277 @@
+﻿@model WorkersInMotion.Model.ViewModel.JobSchemaEditView
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                View Job Form
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="@Url.Action("Index","JobSchema")">Job Form</a></li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to view a Job Form.</div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <div style="padding:15px">
+                                <fieldset style="padding-left:20px;width:98%;padding-top:20px;padding-bottom:20px;border:solid 1px #CBCDCF;">
+                                    <legend style="padding-left:10px;padding-left:10px;border:1px solid #CBCDCF; font-size:13px;font-weight:bold;height:20px;vertical-align:middle;background-color:#F5F5F6;">@ViewBag.JobName</legend>
+                                    <div id="SelectBoxDiv" style="float:left;width:100%">
+                                        @if (Model.JobPageSchemaModel != null)
+                                        {
+                                            foreach (var item in Model.JobPageSchemaModel)
+                                            {
+                                                <div id="Div@(item.PageLogicalID)">
+                                                    <fieldset style="padding-left:20px;width:98%;padding-top:20px;padding-bottom:20px;border:solid 1px #CBCDCF;">
+                                                        <legend style="padding-left:10px;padding-left:10px;border:1px solid #CBCDCF; font-size:13px;font-weight:bold;height:20px;vertical-align:middle;background-color:#F5F5F6;">@(item.PageSchemaName)</legend>
+                                                        <div id="Div_@(item.PageLogicalID)">
+                                                            @foreach (var item1 in Model.JobPageItemModel.Where(x => x.PageLogicalID == item.PageLogicalID))
+                                                            {
+                                                                if (item1.ItemControlType == "text" || item1.ItemControlType == "decimal" || item1.ItemControlType == "image" || item1.ItemControlType == "audio" || item1.ItemControlType == "number" || item1.ItemControlType == "phone" || item1.ItemControlType == "date" || item1.ItemControlType == "email")
+                                                                {
+                                                                    <div id="Div@(item1.ItemLogicalID)" class="leftbar-heading">
+                                                                        <table style="width:100%" align="left">
+                                                                            <tr>
+                                                                                <td align="left">
+                                                                                    <label>@item1.ItemName</label><label>:</label>
+                                                                                    <input type="text" disabled="disabled" />&nbsp;
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                }
+                                                                if (item1.ItemControlType == "check")
+                                                                {
+                                                                    if (item1.ItemValue == "1")
+                                                                    {
+                                                                        <div id="Div@(item1.ItemLogicalID)" class="leftbar-heading">
+                                                                            <table style="width:100%" align="left">
+                                                                                <tr>
+                                                                                    <td align="left">
+                                                                                        <label>@item1.ItemName</label>
+                                                                                        <label>:</label>
+                                                                                        <input type="checkbox" disabled="disabled" checked="checked" style="background-color:#FFFFFD;" />&nbsp;
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div id="Div@(item1.ItemLogicalID)" class="leftbar-heading">
+                                                                            <table style="width:100%" align="left">
+                                                                                <tr>
+                                                                                    <td align="left">
+                                                                                        <label>@item1.ItemName</label>
+
+                                                                                        <label>:</label>
+
+                                                                                        <input type="checkbox" disabled="disabled" />&nbsp;
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    }
+                                                                }
+                                                                if (item1.ItemControlType == "multitext")
+                                                                {
+                                                                    <div id="Div@(item1.ItemLogicalID)" class="leftbar-heading">
+                                                                        <table style="width:100%" align="left">
+                                                                            <tr>
+                                                                                <td align="left">
+                                                                                    <label>@item1.ItemName</label>
+
+                                                                                    <label>:</label>
+
+                                                                                    @*@Html.TextArea(item1.ItemName)*@
+                                                                                    <textarea cols="20" rows="2" style="background-color:#FFFFFD;"></textarea>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                }
+                                                                if (item1.ItemControlType == "label")
+                                                                {
+                                                                    <div id="Div@(item1.ItemLogicalID)" class="leftbar-heading">
+                                                                        <table style="width:100%" align="left">
+                                                                            <tr>
+                                                                                <td align="left">
+                                                                                    <label>@item1.ItemName</label>
+
+                                                                                    <label>:</label>
+
+                                                                                    <label>&nbsp;&nbsp;@item1.ItemValue</label>&nbsp;
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+
+
+                                                                    </div>
+                                                                }
+                                                                if (item1.ItemControlType == "dropdown")
+                                                                {
+                                                                    <div id="Div@(item1.ItemLogicalID)" class="leftbar-heading">
+                                                                        <table style="width:100%" align="left">
+                                                                            <tr>
+                                                                                <td align="left" style="width:100px">
+                                                                                    <label>@item1.ItemName</label>
+                                                                                </td>
+                                                                                <td align="left">
+                                                                                    <label>:</label>
+                                                                                </td>
+                                                                                <td align="left" class="dropdownbtn" data-value="@item1.ItemValueType$@item1.ItemName$@item1.ItemLogicalID"></td>
+                                                                            </tr>
+
+                                                                        </table>
+                                                                    </div>
+                                                                }
+                                                                if (item1.ItemControlType == "radio")
+                                                                {
+                                                                    <div id="Div@(item1.ItemLogicalID)" class="leftbar-heading">
+                                                                        <table style="width:100%" align="left">
+                                                                            <tr>
+                                                                                <td align="left" style="width:100px">
+                                                                                    <label>@item1.ItemName</label>&nbsp;
+                                                                                </td>
+                                                                                <td align="left"><label>:</label></td>
+                                                                                <td align="left" class="radiobtn" data-value="@item1.ItemValueType$@item1.ItemName$@item1.ItemLogicalID"></td>
+                                                                            <tr>
+                                                                        </table>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </fieldset>
+
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+            <!-- END PORTLET-->
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- END PAGE -->
+    <div>
+        @if (Session["UserType"] != null && Session["UserType"].ToString() == "ENT_A")
+        {
+            @Html.ActionLink("Back to List", "Index")
+        }
+        else
+        {
+            @Html.ActionLink("Back to List", "Index", "JobStatus")
+        }
+
+    </div>
+    <script type="text/javascript">
+        var pagename = "";
+        var pgname = "";
+        $(document).ready(function () {
+
+            $("td.radiobtn").each(function () {
+                var result = $(this).attr("data-value");
+                $(this).html(getRadioBoxValueforEdit(result));
+
+            });
+            $("td.dropdownbtn").each(function () {
+                var result = $(this).attr("data-value");
+                $(this).html(getDropdownValueforEdit(result));
+
+            });
+        });
+
+
+
+        function getDropdownValueforEdit(valueid) {
+            var value = valueid.split('$');
+            var createdrop = '';
+            if (value.length > 1) {
+                if (value[0] != "") {
+                    var s = value[0].split('txt="');
+                    for (var i = 1; i < s.length; i++) {
+                        var temp = s[i].split('/&gt;')[0].replace('"', ' ').trim();
+                        if (temp != '')
+                            createdrop = createdrop + '<option id=' + i + '> ' + temp + '</option>';
+                    }
+                    createdrop = '<select>' + createdrop + '</select>';
+                }
+            }
+            return createdrop;
+        }
+        function getRadioBoxValueforEdit(valueid) {
+            var value = valueid.split('$');
+            var createradio = '';
+            if (value.length > 1) {
+                if (value[0] != "") {
+                    createradio = '<table>';
+                    var s = value[0].split('txt="');
+                    for (var i = 1; i < s.length; i++) {
+                        var temp = s[i].split('/&gt;')[0].replace('"', ' ').trim();
+                        if (temp != '')
+                            createradio = createradio + '<tr><td><input type="radio" name=' + value[1] + ' id=' + i + ' value=' + temp + '/><label for=' + i + '>' + temp + '</label></td></tr>';
+                    }
+                    createradio = createradio + '</table>';
+                }
+            }
+            return createradio;
+        }
+
+    </script>
+</body>
+</html>

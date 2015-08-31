@@ -1,0 +1,135 @@
+﻿@model WorkersInMotion.Model.ViewModel.TerritoryModel
+
+@{
+    @Html.Raw(TempData["msg"])
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                Add Market
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        <a href="@Url.Action("Index","MyCompany")">@Session["OrganizationName"].ToString()</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="/MyCompany/Index/Markets">Markets</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#" id="bredcrumbend">New</a>
+                    </li>
+                }
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to add a Market.</div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            @*@Html.ValidationSummary(true)*@
+
+                            <div class="form-body">
+                                <h3 class="form-section">Market Information</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Name)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.TerritoryID, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.TerritoryID, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.TerritoryID)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Description, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Description)
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-actions right">
+                                <a href="@Url.Action("Index", "MyCompany", new { id = "Markets" })" class="btn default">Cancel</a>
+                                <button type="submit" class="btn blue"><i class="icon-ok"></i> Add</button>
+                            </div>
+                            @*<div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Create" class="btn btn-default" />
+                                    </div>
+                                </div>*@
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- END PAGE -->
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+</body>
+</html>

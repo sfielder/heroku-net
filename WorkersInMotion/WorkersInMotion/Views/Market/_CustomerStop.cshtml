@@ -1,0 +1,133 @@
+﻿@model WorkersInMotion.Model.ViewModel.JobViewModel
+<div class="col-md-4">
+    <div class="portlet box grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="icon-group"></i>Choose a Customer Below:</div>
+        </div>
+        <div class="portlet-body">
+            <table class="table table-striped table-bordered table-hover ">
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+                        Clients
+                    </th>
+                </tr>
+                @if (Model.Place != null && Model.Place.Count() > 0)
+                {
+                    foreach (var item in Model.Place.AsEnumerable())
+                    {
+                        <tr class="odd gradeX">
+                            <td>
+                                @Html.HiddenFor(modelitem => item.OrganizationGUID)
+                                @Html.HiddenFor(modelitem => item.UserGUID)
+                                @Html.HiddenFor(modelitem => item.PlaceGUID)
+                                @Html.RadioButton("rdoPlace", item.PlaceGUID, new { @id = "rdo_btn_" + item.PlaceGUID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PlaceName)
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2" align="center" style="color:red">
+                            No Data Found
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="portlet box grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="icon-user"></i>Customer Stop</div>
+        </div>
+        <div class="portlet-body">
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+                        Customer Stop
+                    </th>
+                    @*<th>
+                            Address
+                        </th>*@
+                    <th>
+                        Primary Contact
+                    </th>
+                    <th>
+                        Area
+                    </th>
+                    <th>
+                        Zone
+                    </th>
+
+                </tr>
+                @if (Model.Market != null && Model.Market.Count() > 0)
+                {
+                    foreach (var item in Model.Market.AsEnumerable())
+                    {
+                        <tr class="odd gradeX">
+                            <td>
+                                @Html.RadioButton("rdoCusStop", item.MarketGUID, new { @id = "rdo_btn_custop_" + item.MarketGUID })
+                                @Html.HiddenFor(modelItem => item.OwnerGUID, new { @id = "hdnPlaceGUID_" + item.MarketGUID })
+                                @Html.HiddenFor(modelItem => item.MarketName, new { @id = "hdnMarketName_" + item.MarketGUID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MarketName)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.MarketID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.MarketPhone)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.Emails)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.City)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.State)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Index", "Region")">
+                                    @Html.DisplayFor(modelItem => item.RegionName)
+                                </a>
+
+                                @Html.HiddenFor(modelItem => item.RegionGUID, new { @id = "hdnRegion_" + item.MarketGUID })
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Index", "Territory", new { id = item.RegionGUID })">
+                                    @Html.DisplayFor(modelItem => item.TerritoryName)
+                                </a>
+                                @Html.HiddenFor(modelItem => item.TerritoryGUID, new { @id = "hdnTerritory_" + item.MarketGUID })
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" align="center" style="color:red">
+                            No Data Found
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <div class="form-actions right">
+                <button id="btncancelpicker" type="button" onclick="return pickerCancelClick();" class="btn default">Cancel</button>
+                <button id="btncontinuepicker" type="submit" onclick="return pickerContinueClick();" class="btn blue"><i class="icon-ok"></i> Continue</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1953 @@
+﻿@model WorkersInMotion.Model.ViewModel.JobSchemaModel
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                Add Job Form
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="@Url.Action("Index","JobSchema")">Job Form</a></li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to add a Job Form.</div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            @*@Html.ValidationSummary(true)*@
+                            @if (@ViewBag.BasicDetails == null)
+                            {
+                                <div class="form-body">
+                                    <h3 class="form-section">Job Form Creation</h3>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.JobSchemaName, new { @class = "leftbar-heading control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    @Html.EditorFor(model => model.JobSchemaName)
+                                                    @Html.ValidationMessageFor(model => model.JobSchemaName)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.JobClass, new { @class = "leftbar-heading control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    @Html.EditorFor(model => model.JobClass)
+                                                    @Html.ValidationMessageFor(model => model.JobClass)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.GroupCode, new { @class = "leftbar-heading  control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.DropDownListFor(model => model.GroupCode, (SelectList)ViewBag.GroupDetails, "Select")
+                                                        @Html.ValidationMessageFor(model => model.GroupCode)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    @*<div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.EstimatedDuration, new { @class = "leftbar-heading control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.EstimatedDuration)
+                                                        @Html.ValidationMessageFor(model => model.EstimatedDuration)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                </div>
+                                <div class="form-actions right">
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i> Next</button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <div class="leftbar-heading-border" style="width: 40%; padding: 10px; float: left">
+                                        <input type="hidden" id="joblogicalid" value="@ViewBag.JobLogicalID" />
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <tr>
+                                                <td>
+                                                    Job Class Name:
+
+                                                    @ViewData["JobName"].ToString()
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Job Form ID : @ViewData["JobClass"].ToString()
+                                                </td>
+                                            </tr>
+                                            @*<tr>
+                                                    <td>
+                                                        Worker Group :
+
+                                                        @ViewData["GroupName"].ToString()
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Estimated Duration :
+
+                                                        @ViewData["EstimatedDuration"].ToString()
+                                                    </td>
+                                                </tr>*@
+                                        </table>
+                                    </div>
+                                    <div id="pagedetails" class="leftbar-heading-border" style="display:none;float:left;width:50%;padding:20px;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    @Html.Label("Page Name", new { @Style = "padding-right:5px" })
+                                                </td>
+                                                <td>
+                                                    @Html.Editor("Page_Name")
+                                                    @Html.ValidationMessage("Page_Name")
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <br />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.Label("Page Order", new { @Style = "padding-right:5px" })
+                                                </td>
+                                                <td>
+                                                    @Html.Editor("Page_Order")
+                                                    @Html.ValidationMessage("Page_Order")
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.Label("Can Repeat Page", new { @Style = "padding-right:5px" })
+                                                </td>
+                                                <td>
+                                                    @Html.CheckBox("Can_Repeat")
+                                                    @Html.ValidationMessage("Can_Repeat")
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="form-actions right" align="right">
+                                    <button type="submit" id="btnaddPage" style="display:block" class="btn blue" onclick="return displaypageentry();"><i class="icon-ok"></i> Add Page</button>
+                                    <button type="submit" id="btnsavePage" style="display:none" class="btn blue" onclick="return savePageDetails();"><i class="icon-ok"></i> Save Page</button>
+                                    <button type="submit" id="btnaddItem" style="display:none" class="btn blue"><i class="icon-ok"></i> Add Item </button><br />
+                                    <button type="submit" id="btndeletePage" style="display:none" class="btn blue" onclick="return deletePageDetails();"><i class="icon-ok"></i> Delete Page</button><br />
+                                    <div>
+                                        <a href="@Url.Action("createjob", "JobSchema" )" id="btnFinish" class="btn blue">
+                                            Finish
+                                        </a>
+                                    </div>
+                                </div>
+                                <div id="pageListDetails" style="display:block">
+
+                                </div>
+                                <div id="SelectButtonGroup" style="float:left;width:60%"></div>
+                                <div id="SelectBoxDiv" style="float:left"></div>
+                            }
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- END PAGE -->
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    <script type="text/javascript">
+        var pagename = "";
+        var pgname = "";
+        $(document).ready(function () {
+            $("input[name = rdoPageList]").on("change", function () {
+                $("#btnaddPage").css("display", "none");
+                $("#btnsavePage").css("display", "none");
+                $("#btndeletePage").css("display", "block");
+                $("#btnaddItem").css("display", "block");
+                $("#pagedetails").css("display", "none");
+                pagename = $(this).val();
+                pgname = $(this).val();
+            });
+
+            var counter = 1;
+
+            $("#btnaddItem").click(function () {
+                if (counter > 10) {
+                    alert("Only 10 SelectBoxes allow");
+                    return false;
+                }
+                $("#btnaddItem").css("display", "none");
+                $("#btnaddPage").css("display", "block");
+                $("#btnfinish").css("display", "none");
+                //$('#lblPageItem').css("display", "block");
+                //$("#lblPageName").text('Page Name : ' + $('#hdnPageName').val());
+                //$("div[id^='SelectBxDiv']").remove();
+                //$("div[id^='AddPageDiv']").remove();
+                var newSelectBoxDiv = $(document.createElement("div"))
+        .attr("id", 'SelectBxDiv' + counter);
+                newSelectBoxDiv.css("padding-bottom", "10px");
+                newSelectBoxDiv.html('<table>' +
+        '<tr>' +
+            '<td align="left" style="vertical-align:top;">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr id="trControlTypes">' +
+                        '<td style="vertical-align:top;">' +
+                            '<table>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgTextBox.png" id="textbox" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgCheckbox.png" id="check" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgRadioButton.png" id="radio" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgEmailBox.png" id="email" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgNumberBox.png" id="number" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgDecimal.png" id="decimal" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgAudioUpload.png" id="audio" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                            '</table>' +
+                        '</td>' +
+                        '<td style="padding-left:10px;">' +
+                            '<table>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgPhoneBox.png" id="phone" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgLabel.png" id="label" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgDateTime.png" id="date" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgMultitext.png" id="multitext" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgDropdown.png" id="dropdown" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td style="padding-bottom:5px;">' +
+                                        '<img src="/images/imgFileUpload.png" id="upload" style="cursor:pointer;" onclick="ShowDynsmicControl(this)" />' +
+                                    '</td>' +
+                                '</tr>' +
+                            '</table>' +
+                        '</td>' +
+                    '</tr>' +
+               ' </table>' +
+            '</td>' +
+                //            TEXTBOX
+            '</tr><tr><td align="left" id="tdTextBoxControl" style="display:none;padding-left:10px;vertical-align:top;">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient">' +
+                            'Textbox Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td  style="vertical-align:top;">' +
+                            '<label>Name : </label>' +
+                            '<input type="text" id="txtName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td style="vertical-align:top;padding-left:10px;display:none;">' +
+                                '<label>Value : </label>' +
+                                '<input type="text" id="textBox' + counter + '" value="" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreateText" class="btnsmall" onclick="getTextBoxValue(txtName' + counter + ',textBox' + counter + ',' + counter + ',SelectBxDiv' + counter + ',textBoxIsRequired' + counter + ',textBoxCanEdit' + counter + ',textBoxCanView' + counter + ', textBoxCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="textBoxIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="textBoxCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="textBoxCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="textBoxCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td></tr>' +
+                //            EMAIL
+            '<td align="left" id="tdEmailBoxControl" style="display:none;padding-left:10px;vertical-align:top;">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient">' +
+                            'Email Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td  style="vertical-align:top;">' +
+                            '<label>Name : </label>' +
+                            '<input type="text" id="EmailName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td style="vertical-align:top;padding-left:10px;display:none;">' +
+                                '<label>Value : </label>' +
+                                '<input type="text" id="EmailBox' + counter + '" value="" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreateEmail" class="btnsmall" onclick="getEmailtBoxValue(EmailName' + counter + ',EmailBox' + counter + ',' + counter + ',SelectBxDiv' + counter + ',EmailBoxIsRequired' + counter + ',EmailBoxCanEdit' + counter + ',EmailBoxCanView' + counter + ', EmailBoxCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="EmailBoxIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="EmailBoxCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="EmailBoxCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="EmailBoxCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                //            PHONE
+            '<td align="left" id="tdPhoneBoxControl" style="display:none;padding-left:10px;vertical-align:top;">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient">' +
+                            'Phone Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td  style="vertical-align:top;">' +
+                            '<label>Name : </label>' +
+                            '<input type="text" id="PhoneName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td style="vertical-align:top;padding-left:10px;display:none;">' +
+                                '<label>Value : </label>' +
+                                '<input type="text" id="PhoneBox' + counter + '" value="" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreatePhone" class="btnsmall" onclick="getPhoneBoxValue(PhoneName' + counter + ',PhoneBox' + counter + ',' + counter + ',SelectBxDiv' + counter + ',PhoneBoxIsRequired' + counter + ',PhoneBoxCanEdit' + counter + ',PhoneBoxCanView' + counter + ',PhoneBoxCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="PhoneBoxIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="PhoneBoxCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="PhoneBoxCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="PhoneBoxCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                //            DECIMAL
+            '<td align="left" id="tdDecimalBoxControl" style="display:none;padding-left:10px;vertical-align:top;">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient">' +
+                            'Decimal Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td  style="vertical-align:top;">' +
+                            '<label>Name : </label>' +
+                            '<input type="text" id="DecimalName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td style="vertical-align:top;padding-left:10px;display:none;">' +
+                                '<label>Value : </label>' +
+                                '<input type="text" id="DecimalBox' + counter + '" value="" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreateDecimal" class="btnsmall" onclick="getDecimalBoxValue(DecimalName' + counter + ',DecimalBox' + counter + ',' + counter + ',SelectBxDiv' + counter + ',DecimalBoxIsRequired' + counter + ',DecimalBoxCanEdit' + counter + ',DecimalBoxCanView' + counter + ', DecimalBoxCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="DecimalBoxIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="DecimalBoxCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="DecimalBoxCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="DecimalBoxCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                // NUMBER
+            '<td align="left" id="tdNumberBoxControl" style="display:none;padding-left:10px;vertical-align:top;">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient">' +
+                            'Number Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td  style="vertical-align:top;">' +
+                            '<label>Name : </label>' +
+                            '<input type="text" id="NumberName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td style="vertical-align:top;padding-left:10px;display:none;">' +
+                                '<label>Value : </label>' +
+                                '<input type="text" id="NumberBox' + counter + '" value="" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreateNumber" class="btnsmall" onclick="getNumberBoxValue(NumberName' + counter + ',NumberBox' + counter + ',' + counter + ',SelectBxDiv' + counter + ',NumberBoxIsRequired' + counter + ',NumberBoxCanEdit' + counter + ',NumberBoxCanView' + counter + ',NumberBoxCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="NumberBoxIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="NumberBoxCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="NumberBoxCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="NumberBoxCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                //            RADIO
+            '<td id="tdRadioControl" style="display:none;vertical-align:top;padding-left:10px;">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient" colspan="2">' +
+                            'Radio Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                     '<td>' +
+                      '<table>' +
+                         '<tr>' +
+                        '<td style="vertical-align:top;">Name : ' +
+                        '</td>' +
+                        '<td>' +
+                            '<input type="text" id="txtRdoName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                           '</tr>' +
+                         '</table>' +
+                         '</td>' +
+                          '</tr>' +
+                //                        '<td>'+
+                //                            '<input type="radio" id="rdo'+counter+'" name="Selected'+counter+'" />'+
+                //                        '</td>'+
+                 '<tr>' +
+                        '<td style="vertical-align:top;padding-top:10px;" colspan="2">' +
+                            '<table id="tblOtherDropDown">' +
+                                '<tr>' +
+                                    '<td style="vertical-align:top;">' +
+                                        '<table>' +
+                                            '<tr>' +
+                                                '<td style="vertical-align:top;">' +
+                                                    '<span style="vertical-align:top;">Value:</span>' +
+                                                    '<input class="leftbar-heading-border" type="text" id="txtRadioOption" />' +
+                                                '</td>' +
+                                                 '</tr>' +
+                                                  '<tr>' +
+                                                '<td style="padding-left:5px;vertical-align:top;">' +
+                                                    '<input type="button" id="btnAddRadioOption" value=">" onclick="addDropOption(txtRadioOption, selectedRadioOption, btnDeleteRadioOption)" />&nbsp;' +
+                                                     '<input type="button" id="btnDeleteRadioOption" disabled="disabled" value="<" onclick="DeleteDropOption(selectedRadioOption, btnDeleteRadioOption)" />' +
+                                                '</td>' +
+                                                 '</tr>' +
+                                                  '<tr>' +
+                                                '<td style="vertical-align:top;">' +
+                                                    '<select class="leftbar-heading-border" id="selectedRadioOption" multiple="multiple" style="height:100px;width: 150px;overflow:auto;"></select>' +
+                                                '</td>' +
+                                            '</tr>' +
+                                        '</table>' +
+                                    '</td>' +
+                                     '</tr>' +
+                                     '<tr>' +
+                                    '<td  align="right" style="padding-left:10px;">' +
+                                        '<input type="button" value="Create" id="btnCreateRadio" class="btnsmall" onclick="getOptionValuesRadio(selectedRadioOption,txtRdoName' + counter + ', rdoIsRequired' + counter + ', rdoCanEdit' + counter + ', rdoCanView' + counter + ', rdoCanRepeat' + counter + ')" />' +
+                                    '</td>' +
+                                '</tr>' +
+                            '</table>' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="rdoIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="rdoCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="rdoCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="rdoCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                //            CHECK
+            '<td id="tdCheckControl" style="display:none;vertical-align:top;padding-left:10px;">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient">' +
+                            'Check Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td>Name : ' +
+                        '</td>' +
+                        '<td>' +
+                            '<input type="text" id="txtchkName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td>' +
+                            '<input type="checkbox" id="chk' + counter + '" />&nbsp;&nbsp;' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreateCheck" class="btnsmall" onclick="getCheckBoxValue(txtchkName' + counter + ',chk' + counter + ',' + counter + ',SelectBxDiv' + counter + ',chkIsRequired' + counter + ',chkCanEdit' + counter + ',chkCanView' + counter + ', chkCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="chkIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="chkCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="chkCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="chkCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                //           MULTITEXT
+            '<td style="display:none;vertical-align:top;padding-left:10px;" id="tdMultiTextControl">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient" colspan="3">' +
+                            'Multitext Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td style="vertical-align:top;">Name : ' +
+                        '</td>' +
+                        '<td style="vertical-align:top;">' +
+                            '<input type="text" id="txtmultitextName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td style="vertical-align:top;padding-left:10px;display:none;">' +
+                            '<label>Value : </label>' +
+                        '</td>' +
+                        '<td style="vertical-align:top;display:none;">' +
+                            '<textarea id="txtmultitext' + counter + '" cols="40" rows="5"></textarea>' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreateMultiText" class="btnsmall" onclick="getMultiTextValue(txtmultitextName' + counter + ',txtmultitext' + counter + ',' + counter + ',SelectBxDiv' + counter + ',multitextIsRequired' + counter + ',multitextCanEdit' + counter + ',multitextCanView' + counter + ', multitextCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="5">' +
+                            '<input type="checkbox" id="multitextIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="multitextCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="multitextCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="multitextCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                //           DROPDOWN
+            '<td align="left" style="display:none;vertical-align:top;padding-left:10px;" id="tdDropDownControl">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient" colspan="3">' +
+                            'Dropdown Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td colspan="3">' +
+                            '<table>' +
+                                '<tr>' +
+                        '<td style="vertical-align:top;" align="left">Name :' +
+                        '</td>' +
+                        '<td style="vertical-align:top;" align="left">' +
+                            '<input type="text" id="txtdropdownName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                       '</tr>' +
+                        '</table>' +
+                         '</td>' +
+                           '</tr>' +
+
+                  '<tr>' +
+                   '<td colspan="3">' +
+                            '<table>' +
+                                '<tr>' +
+
+                     '<td style="vertical-align:top;">' +
+                                '<table id="tblOtherDropDown">' +
+                                    '<tr>' +
+
+                                        '<td style="vertical-align:top;" colspan="3">' +
+                                            '<table>' +
+                                                '<tr>' +
+
+                                                    '<td style="vertical-align:top;">' +
+                                                      '<label>Value : </label>' +
+                                                        '<input class="leftbar-heading-border" type="text" id="txtOther" />' +
+                                                    '</td>' +
+                                                     '</tr>' +
+                                                      '<tr>' +
+                                                    '<td style="vertical-align:top;padding-left:5px;">' +
+                                                        '<input type="button" id="btnAddDropOption" value=">" onclick="addDropOption(txtOther, selectedOther, btnDeleteDropOption)" />&nbsp;' +
+                                                          '<input type="button" id="btnDeleteDropOption" disabled="disabled" value="<" onclick="DeleteDropOption(selectedOther, btnDeleteDropOption)" />' +
+                                                    '</td>' +
+                                                     '</tr>' +
+
+                                                      '<tr>' +
+                                                    '<td style="padding-left:5px;vertical-align:top;">' +
+                                                        '<select class="leftbar-heading-border" id="selectedOther" multiple="multiple" style="height:200px;width: 200px;overflow:auto;"></select>' +
+                                                    '</td>' +
+                                                '</tr>' +
+                                            '</table>' +
+                                        '</td>' +
+                                          '</tr>' +
+                                    '<tr style="height:5px;"></tr>' +
+                                    '<tr>' +
+                                        '<td style="padding-left:5px;vertical-align:top;" colspan="3">' +
+                                            '<input class="btnsmall" type="button" id="btnAddOther" value="Create" onclick="getOptionValues(selectedOther,  txtdropdownName' + counter + ', dropIsRequired' + counter + ', droptCanEdit' + counter + ', dropCanView' + counter + ', dropCanRepeat' + counter + ')" />' +
+                                        '</td>' +
+                                    '</tr>' +
+                                    '<tr style="height:5px;"></tr>' +
+                                    '<tr>' +
+                                        '<td align="left" colspan="3">' +
+                                            '<input type="checkbox" id="dropIsRequired' + counter + '" />' +
+                                            '<label>Is Required </label>' +
+                                            '<input style="padding-left:10px;" type="checkbox" id="droptCanEdit' + counter + '" />' +
+                                            '<label>Can Edit </label>' +
+                                            '<input style="padding-left:10px;" type="checkbox" id="dropCanView' + counter + '" />' +
+                                            '<label>Can View</label>' +
+                                            '<input style="padding-left:10px;" type="checkbox" id="dropCanRepeat' + counter + '" />' +
+                                            '<label>Can Repeat</label>' +
+                                        '</td>' +
+                                    '</tr>' +
+                                '</table>' +
+                            '</td>' +
+                             '</tr>' +
+                        '</table>' +
+                         '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                //           DATE
+           '<td style="display:none;vertical-align:top;padding-left:10px;" id="tdDateControl">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient">' +
+                            'Date Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td style="vertical-align:top;">Name : ' +
+                        '</td>' +
+                        '<td style="vertical-align:top;">' +
+                            '<input type="text" id="dateName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td align="left" style="vertical-align:top;padding-left:10px;display:none;"><label>Value : </label>' +
+                        '</td>' +
+                        '<td align="left" style="vertical-align:top;display:none;">' +
+                            '<input id="datepick" type="text" onfocus="showCalendarControl(this);" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreateDate" class="btnsmall" onclick="getDateControlValue(dateName' + counter + ',datepick,' + counter + ',SelectBxDiv' + counter + ',dateIsRequired' + counter + ',dateCanEdit' + counter + ',dateCanView' + counter + ',dateCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="dateIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="dateCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="dateCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="dateCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                //           LABEL
+           '<td style="display:none;vertical-align:top;padding-left:10px;" id="tdLabelControl">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient">' +
+                            'Label Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td style="vertical-align:top;">Name : ' +
+                        '</td>' +
+                        '<td style="vertical-align:top;">' +
+                            '<input type="text" id="txtLabelName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td align="left" style="vertical-align:top;padding-left:10px;display:none;"><label>Value : </label>' +
+                        '</td>' +
+                        '<td align="left" style="vertical-align:top;display:none;">' +
+                            '<input id="txtLabelValue' + counter + '" type="text" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreateLabel" class="btnsmall" onclick="getLabelControlValue(txtLabelName' + counter + ',txtLabelValue' + counter + ',' + counter + ',SelectBxDiv' + counter + ',labelIsRequired' + counter + ',labelCanEdit' + counter + ',labelCanView' + counter + ',labelCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="labelIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="labelCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="labelCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="labelCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                //           FILE UPLOAD
+           '<td style="display:none;vertical-align:top;padding-left:10px;" id="tdFileUploadControl">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient">' +
+                            'Image Upload Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td style="vertical-align:top;">Name : ' +
+                        '</td>' +
+                        '<td style="vertical-align:top;">' +
+                            '<input type="text" id="txtFileUploadName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td align="left" style="vertical-align:top;padding-left:10px;display:none;"><label>Value : </label>' +
+                        '</td>' +
+                        '<td align="left" style="vertical-align:top;display:none;">' +
+                            '<input id="txtFileUploadValue" type="text" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreateFileUpload" class="btnsmall" onclick="getFileUploadControlValue(txtFileUploadName' + counter + ',txtFileUploadValue,' + counter + ',SelectBxDiv' + counter + ',uploadIsRequired' + counter + ',uploadCanEdit' + counter + ',uploadCanView' + counter + ',uploadCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="uploadIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="uploadCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="uploadCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="uploadCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+                //           AUDIO FILE UPLOAD
+           '<td style="display:none;vertical-align:top;padding-left:10px;" id="tdAudioFileUploadControl">' +
+                '<table border="0" cellpadding="0" cellspacing="0">' +
+                    '<tr>' +
+                        '<td style="font-weight:bold;" class="LeftToRightGradient">' +
+                            'Audio Upload Control' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:10px;"></tr>' +
+                    '<tr>' +
+                        '<td style="vertical-align:top;">Name : ' +
+                        '</td>' +
+                        '<td style="vertical-align:top;">' +
+                            '<input type="text" id="txtAudioFileUploadName' + counter + '" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td align="left" style="vertical-align:top;padding-left:10px;display:none;"><label>Value : </label>' +
+                        '</td>' +
+                        '<td align="left" style="vertical-align:top;display:none;">' +
+                            '<input id="txtAudioFileUploadValue" type="text" class="leftbar-heading-border" />' +
+                        '</td>' +
+                        '<td colspan="3" align="right" style="padding-left:10px;">' +
+                            '<input type="button" value="Add" id="btnCreateAudioFileUpload" class="btnsmall" onclick="getAudioFileUploadControlValue(txtAudioFileUploadName' + counter + ',txtAudioFileUploadValue,' + counter + ',SelectBxDiv' + counter + ',AudiouploadIsRequired' + counter + ',AudiouploadCanEdit' + counter + ',AudiouploadCanView' + counter + ', AudiouploadCanRepeat' + counter + ')" />' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr style="height:5px;"></tr>' +
+                    '<tr>' +
+                        '<td align="left" colspan="3">' +
+                            '<input type="checkbox" id="AudiouploadIsRequired' + counter + '" />' +
+                            '<label>Is Required </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="AudiouploadCanEdit' + counter + '" />' +
+                            '<label>Can Edit </label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="AudiouploadCanView' + counter + '" />' +
+                            '<label>Can View</label>' +
+                            '<input style="padding-left:10px;" type="checkbox" id="AudiouploadCanRepeat' + counter + '" />' +
+                            '<label>Can Repeat</label>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</td>' +
+        '</tr>' +
+    '</table>');
+                newSelectBoxDiv.appendTo("#SelectButtonGroup");
+                counter++;
+                return false;
+                //$("#addButton").attr("disabled", "disabled");
+                //$("#removeButton").removeAttr("disabled");
+            });
+
+            $("td.radiobtn").each(function () {
+                var result = $(this).attr("data-value");
+                $(this).html(getRadioBoxValueforEdit(result));
+
+            });
+            $("td.dropdownbtn").each(function () {
+                var result = $(this).attr("data-value");
+                $(this).html(getDropdownValueforEdit(result));
+
+            });
+        });
+        function displaypageentry() {
+            $("#pagedetails").css("display", "block");
+            $("#btnaddPage").css("display", "none");
+            $("#btnsavePage").css("display", "block");
+            $("#btnaddItem").css("display", "none");
+            return false;
+        }
+        function savePageDetails() {
+            if ($("#Page_Name").val() != "" && $("#Page_Order").val() != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "/JobSchema/Page",
+                    data: {
+                        joblogicalID: $("#joblogicalid").val(),
+                        pageName: $("#Page_Name").val(),
+                        pageOrder: $("#Page_Order").val(),
+                        canrepeat: $("#Can_Repeat").is(":checked")
+                    },
+                    async: true,
+                    success: function (data) {
+                        if (data != null) {
+                            $("#pageListDetails").append("<input id='rdoPageList_" + data.ID + "' type='radio' name='rdoPageList' value='" + data.ID + "'><label for='rdoPageList_" + data.ID + "'>" + data.Name + "</label><br/>");
+                            $("#Can_Repeat").prop("checked", false);
+                            $("#Can_Repeat").parent("span").removeClass();
+                            $("#pagedetails").css("display", "none");
+                            $("#btnaddPage").css("display", "block");
+                            $("#btnsavePage").css("display", "none");
+                            $("#btnaddItem").css("display", "none");
+                            $("#Page_Name").val("");
+                            $("#Page_Order").val("");
+                            $('#SelectBoxDiv').append('<div id="Div' + data.ID + '"><fieldset style="padding-left:20px;width:98%;padding-top:20px;padding-bottom:20px;border:solid 1px #CBCDCF;"><legend style="padding-left:10px;padding-right:10px;border:1px solid #CBCDCF; font-size:13px;font-weight:bold;height:20px;vertical-align:middle;background-color:#F5F5F6;">' + data.Name + '</legend><div id="Div_' + data.ID + '"></div></fieldset></div>');
+                            $("#SelectBoxDiv").css("display", "none");
+
+                        }
+                    },
+                    error: function (x, e) {
+                        alert("error occur");
+                    }
+                });
+                return false;
+            }
+            else if ($("#Page_Name").val() == "" && $("#Page_Order").val() != "") {
+                alert("Enter Page Name");
+                return false;
+            }
+            else if ($("#Page_Name").val() != "" && $("#Page_Order").val() == "") {
+                alert("Enter Page Order");
+                return false;
+            }
+            else {
+                alert("Enter Page Name and Order");
+                return false;
+            }
+        }
+
+
+        function deletePageDetails() {
+            $.ajax({
+                type: "POST",
+                url: "/JobSchema/DeletePage",
+                data: {
+                    PageID: $("input[name = rdoPageList]:radio:checked").val()
+                },
+                async: true,
+                success: function (data) {
+                    if (data != null) {
+                        $("#Div" + ($("input[name = rdoPageList]:radio:checked").val())).remove();
+                        $("input[name = rdoPageList]:radio:checked").next().remove();
+                        $("input[name = rdoPageList]:radio:checked").next().remove();
+                        $("input[name = rdoPageList]:radio:checked").remove();
+                        $("input[name = rdoPageList]:radio:checked").remove();
+                        $("#btnaddPage").css("display", "block");
+                        $("#btndeletePage").css("display", "none");
+                        $("#btnaddItem").css("display", "none");
+
+                    }
+                },
+                error: function (x, e) {
+                    alert("error occur");
+                }
+            });
+            return false;
+        }
+
+
+        function savePageItemDetails(nameid, type, isRequired, canEdit, canView, canRepeat, valueid) {
+            var value_id;
+            var itemvaluetype = "";
+            var CreateButton = "";
+            if (type == "radio" || type == "dropdown") {
+                itemvaluetype = valueid[0];
+                CreateButton = valueid[1];
+            }
+            if (type == "date") {
+                itemvaluetype = "date";
+            }
+            if (type == "multitext") {
+                itemvaluetype = "multitext";
+            }
+            if (type == "check") {
+                value_id = $(valueid).is(":checked");
+            }
+            else {
+                value_id = false
+            }
+            $.ajax({
+                type: "POST",
+                url: "/JobSchema/PageItem",
+                data: {
+                    joblogicalID: $("#joblogicalid").val(),
+                    pageLogicalID: $("input[name = rdoPageList]:radio:checked").val(),
+                    itemName: $(nameid).val(),
+                    type: type,
+                    isRequired: $(isRequired).is(":checked"),
+                    canEdit: $(canEdit).is(":checked"),
+                    canView: $(canView).is(":checked"),
+                    itemvalue: value_id,
+                    itemvaluetype: itemvaluetype,
+                    canRepeat: $(canRepeat).is(":checked")
+
+
+                },
+                async: true,
+                success: function (data) {
+                    $("#SelectBoxDiv").css("display", "block");
+                    if (data != null) {
+                        data = data.split('$');
+                        if (data.length > 1) {
+                            if (data[0] == "text") {
+                                $('#Div_' + $("input[name = rdoPageList]:radio:checked").val()).append('<div id="Div' + data[1] + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input type="text" class="delete" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn"  type="button" class="btnsmall" onclick="deletepageItem(\'' + data[1] + '\')" value="Remove" /><br /><br /></div>');
+                            }
+                            if (data[0] == "check") {
+                                if ($(valueid).attr("checked") == "checked") {
+                                    $('#Div_' + $("input[name = rdoPageList]:radio:checked").val()).append('<div id="Div' + data[1] + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" checked="checked" style="background-color:#FFFFFD;" />&nbsp;<input id="btn" type="button" class="btnsmall" onclick="deletepageItem(\'' + data[1] + '\')" value="Remove" /><br /><br /></div>');
+                                }
+                                else {
+                                    $('#Div_' + $("input[name = rdoPageList]:radio:checked").val()).append('<div id="Div' + data[1] + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn" type="button" class="btnsmall" onclick="deletepageItem(\'' + data[1] + '\')" value="Remove" /><br /><br /></div>');
+                                }
+                            }
+                            if (data[0] == "multitext") {
+                                $('#Div_' + $("input[name = rdoPageList]:radio:checked").val()).append('<div id="Div' + data[1] + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><textarea class="delete" cols="20" rows="2" style="background-color:#FFFFFD;" />&nbsp;<input id="btn" type="button" class="btnsmall" onclick="deletepageItem(\'' + data[1] + '\')" value="Remove" /><br /><br /></div>');
+                            }
+                            if (data[0] == "label") {
+                                $('#Div_' + $("input[name = rdoPageList]:radio:checked").val()).append('<div id="Div' + data[1] + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><label class="delete">&nbsp;&nbsp;' + $(valueid).val() + '</label>&nbsp;<input id="btn" type="button" class="btnsmall" onclick="deletepageItem(\'' + data[1] + '\')" value="Remove" /><br /><br /></div>');
+                            }
+                            if (data[0] == "dropdown") {
+                                $('#Div_' + $("input[name = rdoPageList]:radio:checked").val()).append('<div id="Div' + data[1] + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label>&nbsp;&nbsp;' + CreateButton + '&nbsp;<input id="btn" type="button" class="btnsmall" onclick="deletepageItem(\'' + data[1] + '\')" value="Remove" /><br /><br /></div>');
+                            }
+                            if (data[0] == "radio") {
+                                $('#Div_' + $("input[name = rdoPageList]:radio:checked").val()).append('<div id="Div' + data[1] + '" class="delete"><table><tr><td><label class="delete">' + $(nameid).val() + '</label>&nbsp;</td><td><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label></td><td>' + CreateButton + '</td><td>&nbsp;<input id="btn" type="button" class="btnsmall" onclick="deletepageItem(\'' + data[1] + '\')" value="Remove" /></td><tr><br /><br /></div>');
+                            }
+                        }
+                    }
+                },
+                error: function (x, e) {
+                    alert("error occur");
+                    return false;
+                }
+            });
+
+
+        }
+
+        function deletepageItem(valueid) {
+            $.ajax({
+                type: "POST",
+                url: "/JobSchema/DeletePageItem",
+                data: {
+                    itemlogicalID: valueid
+                },
+                async: true,
+                success: function (data) {
+                    if (data != null) {
+                        if (data == "success")
+                            $("#Div" + valueid).remove();
+                    }
+                },
+                error: function (x, e) {
+                    alert("error occur");
+                }
+            });
+            return false;
+        }
+
+        function ShowDynsmicControl(control) {
+            globalOptionID = 1;
+            var output = $(control).attr("id");
+            //            if (output == undefined)
+            //                output = control;
+            if (null != control) {
+                if (output == 'textbox') {
+                    $("#tdTextBoxControl").css("display", "block");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'check') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "block");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+
+                    $('#chk1').css('background', 'transparent');
+                    $('#chk1').css('border', 'none');
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'radio') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "block");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    document.getElementById('<%= hdnControlType.ClientID %>').value = "radio";
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'date') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "block");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'multitext') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "block");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'dropdown') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "block");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    document.getElementById('<%= hdnControlType.ClientID %>').value = "dropdown";
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'label') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "block");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'upload') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "block");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'other') {
+                }
+                else if (output == 'email') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "block");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'phone') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "block");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'decimal') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "block");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'number') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "block");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == '0') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "none");
+                }
+                else if (output == 'audio') {
+                    $("#tdTextBoxControl").css("display", "none");
+                    $("#tdRadioControl").css("display", "none");
+                    $("#tdCheckControl").css("display", "none");
+                    $("#tdMultiTextControl").css("display", "none");
+                    $("#tdDropDownControl").css("display", "none");
+                    $("#tdDateControl").css("display", "none");
+                    $("#tdLabelControl").css("display", "none");
+                    $("#tdFileUploadControl").css("display", "none");
+                    $("#tdEmailBoxControl").css("display", "none");
+                    $("#tdNumberBoxControl").css("display", "none");
+                    $("#tdDecimalBoxControl").css("display", "none");
+                    $("#tdPhoneBoxControl").css("display", "none");
+                    $("#tdAudioFileUploadControl").css("display", "block");
+                }
+                else {
+                }
+            }
+        }
+
+
+        function getTextBoxValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "text", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+            return false;
+        }
+
+        function getTextBoxValueforEdit(pagename, name1) {
+            name1 = name1.replace("!", "'");
+            $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + name1 + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input type="text" class="delete" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '"  type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+            if ($("#" + pagename).html() == null) {
+                $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + name1 + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input type="text" class="delete" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '"  type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+            }
+            else
+                $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + name1 + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input type="text" class="delete" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '"  type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+            pgcount = pgcount + 1;
+            count = count + 1;
+            return true;
+        }
+
+
+
+        function getDecimalBoxValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "decimal", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+            return false;
+        }
+        function getDecimalBoxValueforEdit(pagename, nameid, valueid) {
+
+            if (valueid.trim() == '') {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+            }
+            else {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+            }
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+        function getNumberBoxValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "number", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+        }
+
+        function getNumberBoxValueforEdit(pagename, nameid, valueid) {
+
+            nameid = nameid.replace("!", "'");
+            if (valueid == '') {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+            }
+            else {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+            }
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+        function getPhoneBoxValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "phone", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+        }
+
+        function getPhoneBoxValueforEdit(pagename, nameid, valueid) {
+            nameid = nameid.replace("!", "'");
+            if (valueid.trim() == '') {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+            }
+            else {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+            }
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+        function getCheckBoxValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "check", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+        }
+        function getCheckBoxValueforEdit(pagename, name, valueid) {
+            name = name.replace("!", "'");
+            if (valueid == "true") {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" checked="checked" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" checked="checked" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" checked="checked" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+            }
+            else if (valueid == "false") {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+            }
+            else {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="checkbox" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+            }
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+        function getRadioBoxValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+
+            if (null != nameid && $(nameid).val() != '' && null != valueid && $(valueid).val() != '') {
+
+                // It is a number
+                $("#addButton").removeAttr("disabled");
+                counter--;
+                //$(divid).remove();
+                $('#tdRadioControl').css("display", "none");
+                if ($(valueid).attr("checked") == true) {
+                    $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="radio" disabled="disabled" checked="checked" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                    if ($("#" + pagename).html() == null) {
+                        $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="radio" disabled="disabled" checked="checked" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                    }
+                    else
+                        $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="radio" disabled="disabled" checked="checked" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+                }
+                else if ($(valueid).attr("checked") == false) {
+                    $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="radio" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                    if ($("#" + pagename).html() == null) {
+                        $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="radio" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                    }
+                    else
+                        $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="radio" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+                }
+                $("#addPage").removeAttr("disabled");
+                $("#lblPageName").text('Page Name : ' + pgname);
+                createJobPage('', '', 'radio', $(nameid).val(), $(valueid).attr("checked"), $(isRequired).attr("checked"), $(canEdit).attr("checked"), $(canView).attr("checked"), '', $(canRepeat).attr("checked"), $('#jobPageCanRepeat').attr("checked"));
+                $(nameid).val("");
+            }
+
+            else if ($(nameid).val() == '') {
+                alert("Please provide control name");
+                $(nameid).focus();
+                return;
+            }
+            else if ($(valueid).val() == '') {
+                alert("Please provide control value");
+                $(valueid).focus();
+                return;
+            }
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+        function getDropdownValueforEdit(valueid) {
+            var value = valueid.split('$');
+            var createdrop = '';
+            if (value.length > 1) {
+                if (value[0] != "") {
+                    var s = value[0].split('txt="');
+                    for (var i = 1; i < s.length; i++) {
+                        var temp = s[i].split('/&gt;')[0].replace('"', ' ').trim();
+                        if (temp != '')
+                            createdrop = createdrop + '<option id=' + i + '> ' + temp + '</option>';
+                    }
+                    createdrop = '<select>' + createdrop + '</select>';
+                }
+            }
+            return createdrop;
+        }
+        function getRadioBoxValueforEdit(valueid) {
+            var value = valueid.split('$');
+            var createradio = '';
+            if (value.length > 1) {
+                if (value[0] != "") {
+                    createradio = '<table>';
+                    var s = value[0].split('txt="');
+                    for (var i = 1; i < s.length; i++) {
+                        var temp = s[i].split('/&gt;')[0].replace('"', ' ').trim();
+                        if (temp != '')
+                            createradio = createradio + '<tr><td><input type="radio" name=' + value[1] + ' id=' + i + ' value=' + temp + '/><label for=' + i + '>' + temp + '</label></td></tr>';
+                    }
+                    createradio = createradio + '</table>';
+                }
+            }
+            return createradio;
+        }
+
+        function getMultiTextValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "multitext", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+        }
+
+        function getMultiTextValueforEdit(pagename, nameid) {
+
+            nameid = nameid.replace("!", "'");
+            $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><textarea class="delete" disabled="disabled" cols="20" rows="2" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+            if ($("#" + pagename).html() == null) {
+                $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><textarea class="delete" disabled="disabled" cols="20" rows="2" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+            }
+            else {
+                $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><textarea class="delete" disabled="disabled" cols="20" rows="2" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+            }
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+        function getListBoxSelectedValue(nameid, counter, divid, lstboxid, isRequired, canEdit, canView, typeid, canRepeat) {
+
+
+            if (null != nameid && $(nameid).val() != '') {
+
+                // It is a number
+
+                var selectedValues = [];
+                $("#addButton").removeAttr("disabled");
+                counter--;
+                $(divid).remove();
+                var lSelectedListBoxText = [];
+                $(lstboxid).children('option').each(function () {
+                    lSelectedListBoxText.push($(this).text());
+                });
+                var lSelectedListBoxValue = [];
+                $(lstboxid).children('option').each(function () {
+                    lSelectedListBoxValue.push($(this).val());
+                });
+                if (lSelectedListBoxText.length > 0) {
+                    $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><label class="delete">&nbsp;&nbsp;' + lSelectedListBoxText.join(',') + '</label>&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                    if ($("#" + pagename).html() == null) {
+                        $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><label class="delete">&nbsp;&nbsp;' + lSelectedListBoxText.join(',') + '</label>&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                    }
+                    else
+                        $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + $(nameid).val() + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><label class="delete">&nbsp;&nbsp;' + lSelectedListBoxText.join(',') + '</label>&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+                    var i = 0;
+                    var selectedValueXML = '&lt;vals&gt;';
+                    while (i < lSelectedListBoxText.length) {
+                        selectedValueXML = selectedValueXML + '&lt;val id="' + lSelectedListBoxValue[i] + '" txt="' + lSelectedListBoxText[i] + '" +/&gt;';
+                        i++;
+                    }
+                    selectedValueXML = selectedValueXML + '&lt;/vals&gt;';
+                    createJobPage('', '', 'DROPDOWN', $(nameid).val(), selectedValueXML, $(isRequired).attr("checked"), $(canEdit).attr("checked"), $(canView).attr("checked"), 'SELECT', $(canRepeat).attr("checked"), $('#jobPageCanRepeat').attr("checked"));
+                    $("#addPage").removeAttr("disabled");
+                    $("#lblPageName").text('Page Name : ' + pgname);
+                    $(nameid).val("");
+                }
+                else {
+                    alert("Please select from the list");
+                    return;
+                }
+                //                createJobPage($(pagenameid).val(),$(pageorderid).val(),'DROPDOWN', $(nameid).val(),$(valueid).val(),$(isRequired).attr("checked"),$(canEdit).attr("checked"),$(canView).attr("checked"));
+            }
+
+            else if ($(nameid).val() == '') {
+                alert("Please provide control name");
+                $(nameid).focus();
+                return;
+            }
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+
+        function getListBoxSelectedValueforEdit(pagename, nameid, itemvaluetype) {
+
+            $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><label class="delete">&nbsp;&nbsp;</label>&nbsp;&nbsp;' + createdropdown + '&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+            if ($("#" + pagename).html() == null) {
+                $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><label class="delete">&nbsp;&nbsp;</label>&nbsp;&nbsp;' + createdropdown + '&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+            }
+            else
+                $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><label class="delete">&nbsp;&nbsp;</label>&nbsp;&nbsp;' + createdropdown + '&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+        function editdropitem(object) {
+
+            //            $("#addButton").click();
+            //            $('#trControlTypes').remove();
+            //            var i = $("#SelectButtonGroup").children().attr("id").replace("SelectBxDiv", "")
+            //            ShowDynsmicControl("dropdown");
+            //            $("#btnDeleteDropOption").removeAttr("disabled");
+            //            $("#txtdropdownName" + i).val($("div[id='" + $("#" + object.id).parent().attr("id") + "'] label")[0].innerHTML);
+            //            var option = $("div[id='" + $("#" + object.id).parent().attr("id") + "'] select")[0].innerHTML;
+            //            $("#selectedOther").html(option);
+            //            $("#btnAddOther").val("Edit");
+            //            $("#" + object.id).css("display", "none");
+            //            $("div[id='" + $("#" + object.id).parent().attr("id") + "'] input").attr("disabled", "disabled");
+            //            document.getElementById('<%= DeleteItemValue.ClientID %>').value = bvalue.toString();
+        }
+        function getLabelControlValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "label", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+        }
+        function getLabelControlValueforEdit(pagename, nameid) {
+
+            nameid = nameid.replace("!", "'");
+            $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label>&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+            if ($("#" + pagename).html() == null) {
+                $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+            }
+            else
+                $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label>&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+        function getDateControlValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "date", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+        }
+
+        function getDateControlValueforEdit(pagename, name) {
+
+            name = name.replace("!", "'");
+            $('#tdDateControl').css("display", "none");
+            $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="textbox" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /><div>');
+            if ($("#" + pagename).html() == null) {
+                $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="textbox" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /><div></div></div>');
+
+            }
+            else
+                $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + name + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="textbox" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /><div></div>');
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+
+        function getFileUploadControlValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "image", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+        }
+
+        function getFileUploadControlValueforEdit(pagename, nameid) {
+
+            nameid = nameid.replace("!", "'");
+            $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+            if ($("#" + pagename).html() == null) {
+                $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+            }
+            else
+                $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+        function getAudioFileUploadControlValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "audio", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+        }
+
+        function getAudioFileUploadControlValueforEdit(pagename, nameid) {
+
+            nameid = nameid.replace("!", "'");
+            $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+            if ($("#" + pagename).html() == null) {
+                $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+            }
+            else
+                $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+            pgcount = pgcount + 1;
+            count = count + 1;
+        }
+
+
+        function onSelectChangeGetValue(counter, nameid) {
+            var selected = $("#selectdroptype" + counter + " option:selected");
+            if (null != selected && selected.val() != '0') {
+                if (selected.val() == 'market') {
+                    $('#tblUserDropDown').remove();
+                    $('#tblPlaceDropDown').remove();
+                    $('#tblMarketDropDown').remove();
+                    $('#tblOtherDropDown').remove();
+
+                    var allmarketelement = $("input[id$=hdnMarketList]").val().split(",");
+                    var allmarketelementIDs = $("input[id$=hdnMarketListIDs]").val().split(",");
+                    var html = [];
+                    html[html.length] = '<table id="tblMarketDropDown"><tr style="height:10px;"></tr><tr><td style="vertical-align:top;"><table><tr><td>All Market List</td></tr><tr><td><select class="leftbar-heading-border" id="allMarket" multiple="multiple" style="height:220px;width: 250px;overflow:auto;">';
+                    var i = 0;
+                    while (i < allmarketelement.length) {
+                        html[html.length] = '<option value="' + allmarketelementIDs[i] + '">' + allmarketelement[i] + '</option>';
+                        i++;
+                    }
+                    html[html.length] = '</select></td></tr></table></td><td style="vertical-align:middle;"><table><tr><td style="vertical-align:bottom;"><input type="button" id="btnAssign" value=">" onclick="assignMarketList()"></td></tr><tr><td style="vertical-align:top;"><input type="button" id="btnUnassign" value="<" onclick="unassignMarketList()" /></td></tr></table></td><td style="vertical-align:top;"><table><tr><td>Selected Market List</td></tr><tr><td><select class="leftbar-heading-border" id="selectedMarket" multiple="multiple" style="height:220px;width: 250px;overflow:auto;"></select></td></tr></table></td></tr><tr><td align="right" colspan="3"><input type="checkbox" id="marketIsRequired' + counter + '" /><label>Is Required </label><input style="padding-left:10px;" type="checkbox" id="marketCanEdit' + counter + '" /><label>Can Edit </label><input style="padding-left:10px;" type="checkbox" id="marketCanView' + counter + '" /><label>Can View</label>&nbsp;&nbsp;<input type="button" value="Add" id="btnCreateMarket" class="btnsmall" onclick="getListBoxSelectedValue(txtdropdownName' + counter + ',' + counter + ',SelectBoxDiv' + counter + ',selectedMarket,marketIsRequired' + counter + ',marketCanEdit' + counter + ',marketCanView' + counter + ',txtJobPageName,txtJobPageSortOrder,selectdroptype' + counter + ')" /></td></tr></table>';
+                    $('#tdDropDownControl').append(html.join(''));
+                }
+                else if (selected.val() == 'place') {
+                    $('#tblUserDropDown').remove();
+                    $('#tblPlaceDropDown').remove();
+                    $('#tblMarketDropDown').remove();
+                    $('#tblOtherDropDown').remove();
+                    var allplaceelement = $("input[id$=hdnPlaceList]").val().split(",");
+                    var allplaceelementIDs = $("input[id$=hdnPlaceListIDs]").val().split(",");
+                    var html = [];
+                    html[html.length] = '<table id="tblPlaceDropDown"><tr style="height:10px;"></tr><tr><td style="vertical-align:top;"><table><tr><td>All Place List</td></tr><tr><td><select class="leftbar-heading-border" id="allPlace" multiple="multiple" style="height:220px;width: 250px;overflow:auto;">';
+                    var i = 0;
+                    while (i < allplaceelement.length) {
+                        html[html.length] = '<option value="' + allplaceelementIDs[i] + '">' + allplaceelement[i] + '</option>';
+                        i++;
+                    }
+                    html[html.length] = '</select></td></tr></table></td><td style="vertical-align:middle;"><table><tr><td style="vertical-align:bottom;"><input type="button" id="btnAssign" value=">" onclick="assignPlaceList()"></td></tr><tr><td style="vertical-align:top;"><input type="button" id="btnUnassign" value="<" onclick="unassignPlaceList()" /></td></tr></table></td><td style="vertical-align:top;"><table><tr><td>Selected Place List</td></tr><tr><td><select class="leftbar-heading-border" id="selectedPlace" multiple="multiple" style="height:220px;width: 250px;overflow:auto;"></select></td></tr></table></td></tr><tr><td align="right" colspan="3"><input type="checkbox" id="placeIsRequired' + counter + '" /><label>Is Required </label><input style="padding-left:10px;" type="checkbox" id="placeCanEdit' + counter + '" /><label>Can Edit </label><input style="padding-left:10px;" type="checkbox" id="placeCanView' + counter + '" /><label>Can View</label></select>&nbsp;&nbsp;<input type="button" value="Add" id="btnCreatePlace" class="btnsmall" onclick="getListBoxSelectedValue(txtdropdownName' + counter + ',' + counter + ',SelectBoxDiv' + counter + ',selectedPlace,placeIsRequired' + counter + ',placeCanEdit' + counter + ',placeCanView' + counter + ',txtJobPageName,txtJobPageSortOrder,selectdroptype' + counter + ')" /></td></tr></table>';
+                    $('#tdDropDownControl').append(html.join(''));
+                }
+                else if (selected.val() == 'user') {
+                    $('#tblUserDropDown').remove();
+                    $('#tblPlaceDropDown').remove();
+                    $('#tblMarketDropDown').remove();
+                    $('#tblOtherDropDown').remove();
+                    var alluserelement = $("input[id$=hdnUserList]").val().split(",");
+                    var alluserelementIDs = $("input[id$=hdnUserListIDs]").val().split(",");
+                    var html = [];
+                    html[html.length] = '<table id="tblUserDropDown"><tr style="height:10px;"></tr><tr><td style="vertical-align:top;"><table><tr><td>All User List</td></tr><tr><td><select class="leftbar-heading-border" id="allUser" multiple="multiple" style="height:220px;width: 250px;overflow:auto;">';
+                    var i = 0;
+                    while (i < alluserelement.length) {
+                        html[html.length] = '<option value="' + alluserelementIDs[i] + '">' + alluserelement[i] + '</option>';
+                        i++;
+                    }
+                    html[html.length] = '</select></td></tr></table></td><td style="vertical-align:middle;"><table><tr><td style="vertical-align:bottom;"><input type="button" id="btnAssign" value=">" onclick="assignUserList()"></td></tr><tr><td style="vertical-align:top;"><input type="button" id="btnUnassign" value="<" onclick="unassignUserList()"></td></tr></table></td><td style="vertical-align:top;"><table><tr><td>Selected User List</td></tr><tr><td><select class="leftbar-heading-border" id="selectedUser" multiple="multiple" style="height:220px;width: 250px;overflow:auto;"></select></td></tr></table></td></tr><tr><td align="right" colspan="3"><input type="checkbox" id="userIsRequired' + counter + '" /><label>Is Required </label><input style="padding-left:10px;" type="checkbox" id="userCanEdit' + counter + '" /><label>Can Edit </label><input style="padding-left:10px;" type="checkbox" id="userCanView' + counter + '" /><label>Can View</label>&nbsp;&nbsp;<input type="button" value="Add" id="btnCreateUser" class="btnsmall" onclick="getListBoxSelectedValue(txtdropdownName' + counter + ',' + counter + ',SelectBoxDiv' + counter + ',selectedUser,userIsRequired' + counter + ',userCanEdit' + counter + ',userCanView' + counter + ',txtJobPageName,txtJobPageSortOrder,selectdroptype' + counter + ')" /></td></tr></table>';
+                    $('#tdDropDownControl').append(html.join(''));
+                }
+                else if (selected.val() == 'other') {
+                    $('#tblUserDropDown').remove();
+                    $('#tblPlaceDropDown').remove();
+                    $('#tblMarketDropDown').remove();
+                    $('#tblOtherDropDown').remove();
+                    var html = [];
+                    html[html.length] = '<table id="tblOtherDropDown"><tr style="height:10px;"></tr><tr><td style="vertical-align:top;">';
+                    html[html.length] = '<table><tr><td style="vertical-align:top;"><select class="leftbar-heading-border" id="selectedOther" multiple="multiple" style="height:220px;width: 250px;overflow:auto;"></select><td style="vertical-align:top;">Other Value : <input class="leftbar-heading-border" type="text" id="txtOther" /></td></tr></table></td><td style="padding-left:10px;"><input class="btnsmall" type="button" id="btnAddOther" value="Add" /></td></tr></table>';
+                    $('#tdDropDownControl').append(html.join(''));
+                }
+            }
+            else {
+                $('#tblUserDropDown').remove();
+                $('#tblPlaceDropDown').remove();
+                $('#tblMarketDropDown').remove();
+            }
+        }
+
+        function addDropOption(optiontext, selectedbox, btnremoveoption) {
+            if (null != $(optiontext).val() && $(optiontext).val() != '') {
+                $(selectedbox).append('<option value="' + globalOptionID + '">' + $(optiontext).val() + '</option>');
+                $(optiontext).val('');
+                $(optiontext).focus();
+                globalOptionID++;
+                $(btnremoveoption).removeAttr("disabled");
+
+            }
+            else {
+                alert('Please provide options to add');
+                $(optiontext).focus();
+            }
+        }
+
+        function DeleteDropOption(selectedbox, btnremoveoption) {
+            if (null != $(selectedbox).find('option:selected').val() && $(selectedbox).find('option:selected').val() != '') {
+                $(selectedbox).find('option:selected').remove();
+                if ($(selectedbox).find('option').length == 0) {
+                    $(btnremoveoption).attr("disabled", "disabled");
+                }
+            }
+            else {
+                alert('Please select options to remove');
+            }
+        }
+
+        function getOptionValues(selectedbox, nameid, isRequired, canEdit, canView, canRepeat) {
+
+
+            if (null != nameid && $(nameid).val() != '') {
+
+                var lSelectedListBoxText = [];
+                if ($(selectedbox).children('option').length > 0) {
+                    $(selectedbox).children('option').each(function () {
+                        lSelectedListBoxText.push($(this).text());
+                    });
+                    var selectedValueXML = '&lt;vals&gt;';
+                    var CreateButton = '<select>';
+                    var i = 0;
+                    while (i < lSelectedListBoxText.length) {
+                        selectedValueXML = selectedValueXML + '&lt;val id="' + i + '" txt="' + lSelectedListBoxText[i] + '" /&gt;';
+                        CreateButton = CreateButton + '<option id="' + i + '">' + lSelectedListBoxText[i] + '</option>';
+                        i++;
+                    }
+
+                    selectedValueXML = selectedValueXML + '&lt;/vals&gt;'
+                    CreateButton = CreateButton + '</select>';
+                    var option = [selectedValueXML, CreateButton];
+                    savePageItemDetails(nameid, "dropdown", isRequired, canEdit, canView, canRepeat, option);
+
+                }
+            }
+        }
+
+        function getOptionValuesRadio(selectedbox, nameid, isRequired, canEdit, canView, canRepeat) {
+
+            if (null != nameid && $(nameid).val() != '') {
+
+                var lSelectedListBoxText = [];
+                if ($(selectedbox).children('option').length > 0) {
+                    $(selectedbox).children('option').each(function () {
+                        lSelectedListBoxText.push($(this).text());
+                    });
+
+                    var selectedValueXML = '&lt;vals&gt;';
+                    var CreateButton = '<table>';
+                    var i = 0;
+                    while (i < lSelectedListBoxText.length) {
+                        selectedValueXML = selectedValueXML + '&lt;val id="' + i + '" txt="' + lSelectedListBoxText[i] + '" /&gt;';
+                        CreateButton = CreateButton + '<tr><td><input type="radio" name=' + $(nameid).val() + ' id="' + i + '" value=' + lSelectedListBoxText[i] + '/><label for="' + i + '">' + lSelectedListBoxText[i] + '</label></td></tr>';
+                        i++;
+                    }
+                    selectedValueXML = selectedValueXML + '&lt;/vals&gt;'
+                    CreateButton = CreateButton + '</table>';
+                    var option = [selectedValueXML, CreateButton];
+                    savePageItemDetails(nameid, "radio", isRequired, canEdit, canView, canRepeat, option);
+                }
+            }
+
+        }
+        function getEmailtBoxValue(nameid, valueid, counter, divid, isRequired, canEdit, canView, canRepeat) {
+            if (null != nameid && $(nameid).val() != '') {
+                savePageItemDetails(nameid, "email", isRequired, canEdit, canView, canRepeat, valueid);
+            }
+        }
+        function getEMailValueforEdit(pagename, nameid, valueid) {
+
+            nameid = nameid.replace("!", "'");
+            var emailReg = /^([\w-\.]+([\w-]+\.)+[\w-]{2,4})?$/;//prabhu
+            if (valueid.trim() == '') {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><input class="delete" type="text" disabled="disabled" style="background-color:#FFFFFD;width:120px;" />&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+            }
+            else {
+                $('#SelectBoxDiv').append('<div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><label>&nbsp;&nbsp;' + $(valueid).val() + '</label>&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div>');
+                if ($("#" + pagename).html() == null) {
+                    $('#DivPageItemControls').append('<div id="' + pagename + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><label>&nbsp;&nbsp;' + $(valueid).val() + '</label>&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div></div>');
+
+                }
+                else
+                    $("#" + pagename).append('<div id="divpage' + pgcount + '"><div id="Div' + count + '" class="delete"><label class="delete">' + nameid + '</label><label class="delete" style="padding-left:50px;padding-bottom:10px;">:</label><label>&nbsp;&nbsp;' + $(valueid).val() + '</label>&nbsp;<input id="btn' + count + '" type="button" class="btnsmall" onclick="deleteitem(this)" value="Remove" /><br /><br /></div></div>');
+
+            }
+            pgcount = pgcount + 1;
+            count = count + 1;
+            return true;
+        }
+
+    </script>
+</body>
+</html>

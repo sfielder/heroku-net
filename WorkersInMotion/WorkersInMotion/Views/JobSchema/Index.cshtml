@@ -1,0 +1,142 @@
+﻿@model IEnumerable<WorkersInMotion.Model.ViewModel.JobSchemaModel>
+
+@{
+    // Layout = null;
+}
+@using PagedList.Mvc;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                Visit Form
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        <a href="#">@Session["OrganizationName"].ToString()</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                }
+                <li><a href="#">Visit Form</a></li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to Manage a Visit Form.</div>
+                    @*@Html.Raw(@ViewBag.Group)*@
+                </div>
+                <div class="portlet-body">
+                    <div class="table-toolbar">
+                        <div class="btn-group">
+                            @*<a href="@Url.Action("Create", "JobSchema")" class="btn green">
+                                    Add New Job Form <i class="icon-plus"></i>
+                                </a>*@
+                        </div>
+                    </div>
+
+                    <div id="sample_editable_2_wrapper" class="dataTables_wrapper" role="grid">
+                        <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_2" aria-describedby="sample_editable_2_info" style="width: 1065px;">
+                            <thead>
+                                <tr role="row">
+
+                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 233px;" aria-label="
+                                        Forms
+                                        : activate to sort column ascending">
+                                        Forms
+                                    </th>
+                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                             Created On
+                                        : activate to sort column ascending">
+                                        Created On
+                                    </th>
+                                    @*<th class="sorting-disabled" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 141px;" aria-label="
+                                                 Actions
+                                            : activate to sort column ascending">
+                                            Actions
+                                        </th>*@
+                                </tr>
+                            </thead>
+
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr class="odd gradeX">
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.JobSchemaName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LastModifiedDateTime)
+                                            </td>
+                                            @*<td>
+                                                    @Html.ActionLink("View", "ViewSchema", new { id = item.JobLogicalID }, new { @class = "label label-sm label-default", @style = "border-radius:0px;" })
+                                                </td>*@
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="3" align="center" style="color:red">
+                                            No Data Found
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+
+                    </div><div class="row"></div>
+
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+            <!-- END PAGE -->
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            TableEditable.init();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+﻿@model WorkersInMotion.Model.ViewModel.MarketViewForCreate
+@{
+    ViewBag.Title = "Edit";
+    // Layout = "~/Views/MasterPage.cshtml";
+    @Html.Raw(TempData["msg"])
+}
+
+<html>
+<head>
+
+    <title>Update</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+
+        .mask2 {
+            background-color: #000;
+            display: block;
+            height: 100%;
+            left: 0;
+            opacity: .8;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                Update Store
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        <a href="/MyCompany/Index">@Session["OrganizationName"].ToString()</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="/Place/Index">Clients</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    if (Session["CustomerName"] != null && !string.IsNullOrEmpty(Session["CustomerName"].ToString()))
+                    {
+                        <li>
+                            <a href="/CustomerView/Index/Details?customerid=@Session["CustomerGUID"].ToString()">@Session["CustomerName"].ToString()</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                    }
+                    <li>
+                        <a href="/CustomerView/Index/Stores?customerid=@Session["CustomerGUID"].ToString()">Stores</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#" id="bredcrumbend">@ViewBag.MarketName</a>
+                    </li>
+                }
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to update store information</div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            <div class="form-body">
+                                <h3 class="form-section">Store Information</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.MarketName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.MarketName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.MarketName)
+                                            @Html.HiddenFor(model => model.MarketModel.UserGUID)
+                                            @Html.HiddenFor(model => model.MarketModel.OrganizationGUID)
+                                            @Html.HiddenFor(model => model.MarketModel.EntityType)
+                                            @Html.HiddenFor(model => model.MarketModel.MarketGUID)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.MarketID, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.MarketID, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.MarketID)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.RegionGUID, new { @class = " control-label" })
+                                            @Html.DropDownListFor(model => model.MarketModel.RegionGUID, (SelectList)ViewBag.RegionDetails, "Select", new { onchange = "RegionSelectedIndexChanged()", @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.RegionGUID)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.TerritoryGUID, new { @class = " control-label" })
+                                            @Html.DropDownListFor(model => model.MarketModel.TerritoryGUID, (SelectList)ViewBag.TerritoryDetails, "Select", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.TerritoryGUID)
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.RMName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.RMName, new { @readonly = "readonly", @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.RMName)
+                                            @Html.HiddenFor(model => model.MarketModel.RMUserGUID)
+                                            @Html.HiddenFor(model => model.MarketModel.OwnerGUID)
+                                            @Html.HiddenFor(model => model.MarketModel.PrimaryContactGUID)
+                                            <a href="" onclick="return pickregionalManagerclick();">
+                                                Pick Regional Manager
+                                            </a>
+
+                                            @*@Html.LabelFor(model => model.MarketModel.ContactName, new { @class = "control-label" })
+                                                @Html.TextBoxFor(model => model.MarketModel.ContactName, new { @readonly = "readonly", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.MarketModel.ContactName)
+                                                @Html.HiddenFor(model => model.MarketModel.OwnerGUID)
+                                                @Html.HiddenFor(model => model.MarketModel.PrimaryContactGUID)
+                                                <a href="" onclick="return pickcontactclick();">
+                                                    Pick Contacts
+                                                </a>
+                                                &nbsp;&nbsp;
+                                                <a href="@Url.Action("Contact")" onclick="return createcontact();">
+                                                    Create Contact
+                                                </a>*@
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.FMName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.FMName, new { @readonly = "readonly", @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.FMName)
+                                            @Html.HiddenFor(model => model.MarketModel.FMUserGUID)
+                                            <a href="" onclick="return pickFieldManagerclick();">
+                                                Pick Field Manager
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if (@ViewBag.PlaceGUID == null)
+                                {
+                                    <div id="divmask" class="mask2" style="display:none;"></div>
+                                    <div id="divreginalpicker" style="position:absolute; display: none; z-index: 1000;background-color: White;padding: 25px;top: 0px;width:40%">
+                                        @Html.Partial("~/Views/User/_UserView.cshtml")
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div id="divmask" class="mask2" style="display:block;"></div>
+                                    <div id="divreginalpicker" style="position: absolute; display: block; z-index: 1000; background-color: White; padding: 25px; top: 0px; width: 40%">
+                                        @Html.Partial("~/Views/User/_UserView.cshtml")
+                                    </div>
+                                }
+                                @if (@ViewBag.PlaceGUID == null)
+                                {
+                                    <div id="divmasknew" class="mask2" style="display:none;"></div>
+                                    <div id="divfieldpicker" style="position: absolute; display: none; z-index: 1000; background-color: White; padding: 25px; top: 0px; width: 40%">
+                                        @Html.Partial("~/Views/User/_UserViewFM.cshtml")
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div id="divmasknew" class="mask2" style="display:block;"></div>
+                                    <div id="divfieldpicker" style="position: absolute; display: block; z-index: 1000; background-color: White; padding: 25px; top: 0px; width: 40%">
+                                        @Html.Partial("~/Views/User/_UserViewFM.cshtml")
+                                    </div>
+                                }
+                                <h3 class="form-section">Store Address</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.FirstName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.FirstName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.FirstName)
+                                            @Html.HiddenFor(model => model.MarketModel.CreateDate)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.LastName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.LastName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.LastName)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.MobilePhone, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.MobilePhone, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.MobilePhone)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.MarketPhone, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.MarketPhone, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.MarketPhone)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.HomePhone, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.HomePhone, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.HomePhone)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.Emails, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.Emails, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.Emails)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.AddressLine1, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.AddressLine1, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.AddressLine1)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.AddressLine2, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.AddressLine2, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.AddressLine2)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.City, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.City, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.City)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.State, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.State, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.State)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.Country, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.Country, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.Country)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MarketModel.ZipCode, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.MarketModel.ZipCode, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MarketModel.ZipCode)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions right">
+                            <a href="@Url.Action("Index", "CustomerView", new { id = "Stores", customerid = @Session["CustomerGUID"].ToString() })" class="btn default">Cancel</a>
+                            <button type="submit" class="btn blue"><i class="icon-ok"></i> Update</button>
+                        </div>
+                    }
+                    <!-- END PORTLET-->
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+            <!-- END PAGE -->
+        </div>
+    </div>
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$("input[name = rdoUser]").on("change", function () {
+            //    var val = $(this).val();
+            //    if (val == "00000000-0000-0000-0000-000000000000") {
+            //        $("#btnrmcontinuepicker").css("display", "none");
+            //    }
+            //    else {
+            //        $("#btnrmcontinuepicker").css("display", "block");
+            //    }
+            //});
+
+            //$("input[name = rdoUser]").on("change", function () {
+            //    var val = $(this).val();
+            //    if (val == "00000000-0000-0000-0000-000000000000") {
+            //        $("#btnrmcontinuepicker").css("display", "none");
+            //    }
+            //    else {
+            //        $("#btnfmcontinuepicker").css("display", "block");
+            //    }
+            //});
+
+            if ($("input[name = rdoUser]:radio:checked").length == 0)
+                $("#rdo_btn_00000000-0000-0000-0000-000000000000").prop('checked', true)
+            if ($("input[name = rdoFMUser]:radio:checked").length == 0)
+                $("#rdo_btn_FM_00000000-0000-0000-0000-000000000000").prop('checked', true)
+        });
+        //$("input[name = rdoPeople]").on("change", function () {
+        //    //  alert($(this).val());
+        //    var val = $(this).val();
+        //    $("#MarketModel_PrimaryContactGUID").val($(this).val());
+        //    $("#MarketModel_OwnerGUID").val($("#hdn_placeguid_" + val).val());
+        //    $("#MarketModel_ContactName").val($("#btn_people_" + val).val());
+        //    $("#MarketModel_UserGUID").val($("#hdn_userguid_" + val).val());
+        //    $("#MarketModel_OrganizationGUID").val($("#hdn_orgguid_" + val).val());
+
+        //});
+        function pickregionalManagerclick() {
+            $("#divmask").css("display", "block");
+            $("#divreginalpicker").css("display", "block");
+            return false;
+        }
+
+        function pickFieldManagerclick() {
+            $("#divmasknew").css("display", "block");
+            $("#divfieldpicker").css("display", "block");
+            return false;
+        }
+        function pickerCancelRMClick() {
+            $("#divmask").css("display", "none");
+            $("#divreginalpicker").css("display", "none");
+            return false;
+        }
+        function pickerCancelFMClick() {
+            $("#divmasknew").css("display", "none");
+            $("#divfieldpicker").css("display", "none");
+            return false;
+        }
+
+        function pickerContinueRMClick() {
+            $("input[name = rdoUser]:radio:checked").each(function () {
+                var val = $(this).val();
+                $("#MarketModel_RMUserGUID").val($("#hdn_userguid_" + val).val());
+                $("#MarketModel_OrganizationGUID").val($("#hdn_orgguid_" + val).val());
+                if (val != "00000000-0000-0000-0000-000000000000") {
+                    $("#MarketModel_RMName").val($("#hdn_firstname_" + val).val() + " " + $("#hdn_lastname_" + val).val());
+                }
+                else {
+                    $("#MarketModel_RMName").val("");
+                }
+            });
+            $("#divmask").css("display", "none");
+            $("#divreginalpicker").css("display", "none");
+            return false;
+        }
+        function pickerContinueFMClick() {
+            $("input[name = rdoFMUser]:radio:checked").each(function () {
+                var val = $(this).val();
+
+                $("#MarketModel_FMUserGUID").val($("#hdn_userguid_FM_" + val).val());
+                $("#MarketModel_OrganizationGUID").val($("#hdn_orgguid_FM_" + val).val());
+                if (val != "00000000-0000-0000-0000-000000000000") {
+                    $("#MarketModel_FMName").val($("#hdn_firstname_FM_" + val).val() + " " + $("#hdn_lastname_FM_" + val).val());
+                }
+                else {
+                    $("#MarketModel_FMName").val("");
+                }
+            });
+            $("#divmasknew").css("display", "none");
+            $("#divfieldpicker").css("display", "none");
+            return false;
+        }
+
+        function RegionSelectedIndexChanged() {
+            $.ajax({
+                type: "POST",
+                url: "/User/Region",
+                data: {
+                    RegionGUID: $("#MarketModel_RegionGUID").val()
+                },
+                async: true,
+                success: function (data) {
+                    $("#MarketModel_TerritoryGUID").empty();
+                    if (data.length != 1)
+                        $("#MarketModel_TerritoryGUID").append("<option value>Select</option>");
+                    $.each(data, function (index, optionData) {
+                        $("#MarketModel_TerritoryGUID").append("<option value='" + optionData.Value + "'>" + optionData.Text + "</option>");
+                    });
+                },
+                error: function (x, e) {
+                    alert("error occur");
+                }
+            });
+        }
+
+
+
+    </script>
+
+
+</body>
+</html>

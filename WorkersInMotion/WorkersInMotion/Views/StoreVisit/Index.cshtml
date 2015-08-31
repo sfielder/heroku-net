@@ -1,0 +1,350 @@
+﻿    @model WorkersInMotion.Model.ViewModel.StoreVisitReports
+@{
+    @Html.Raw(TempData["msg"])
+}
+
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Index</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <style>
+        .gridFooter td {
+            padding: 10px;
+            color: #999;
+            font-size: 10pt;
+            text-align: left;
+        }
+
+        .gridFooter a:hover {
+            color: #333;
+            border: 1px green solid;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        .gridFooter a {
+            color: #333;
+            border: 1px #ddd solid;
+            padding: 5px;
+        }
+    </style>
+
+</head>
+<body class="page-header-fixed" style="">
+    <input type="hidden" id="hdncurrentrecords" />
+    @if (TempData["TabName"] == null)
+    {
+        TempData["TabName"] = "";
+    }
+    <div class="clearfix">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("Dashboard","User")">
+                        Home
+                    </a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        <a href="@Url.Action("Index","MyCompany")">@Session["OrganizationName"].ToString()</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    if (TempData["CustomerName"] != null && !string.IsNullOrEmpty(TempData["CustomerName"].ToString()))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index","Place")">@TempData["CustomerName"].ToString()</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                    }
+                    if (TempData["TabName"] != null && !string.IsNullOrEmpty(TempData["TabName"].ToString()))
+                    {
+                        <li>
+                            <a href="#" id="bredcrumbend">@TempData["TabName"].ToString()</a>
+                        </li>
+                    }
+                }
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="tabbable-custom ">
+                <ul class="nav nav-tabs ">
+                    <li class="@(TempData["TabName"].ToString() == "Visits" ? "active" : "")" onclick="return actionmethod('Visits');">
+                        <a href="#tab_5_1" data-toggle="tab">
+                            Visits
+                        </a>
+                    </li>
+                    <li class="@(TempData["TabName"].ToString() == "Non-Visits" ? "active" : "")">
+                        <a href="#tab_5_2" data-toggle="tab" onclick="return actionmethod('Non-Visits');">
+                            Non-Visits
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div>
+                        <table align="right" style="margin-bottom:10px">
+                            <tr>
+                                <td>
+                                    <div id="reportrange" class="btn default" align="right">
+                                        <i class="icon-calendar"></i>
+                                        &nbsp;
+                                        <span id="StoreVisit"></span>
+                                        <b class="icon-angle-down"></b>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="@(TempData["TabName"].ToString() == "Visits" ? "tab-pane active" : "tab-pane")" id="tab_5_1">
+                        @{
+                            var redirectstr = @Request.Url.AbsoluteUri.ToString();
+                            if (!redirectstr.Contains("?"))
+                                redirectstr += "?Non-Visits&Visit_RowCount=" + ViewBag.pageVisitCountValue + "&Visit_Search=" + ViewBag.Visit_Search;
+                        }
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = redirectstr }))
+                        {
+                            if (Model != null && Model.StoreVisitList != null)
+                            {
+                                <div class="portlet box grey">
+                                <div class="portlet-title">
+                                    <div class="caption"><i class="icon-globe"></i>Store Visit Reports</div>
+                                    @Html.Raw(@ViewBag.CustomerListVisit)
+                                </div>
+                                <div class="portlet-body">
+                                    <div id="sample_editable_2_wrapper" class="dataTables_wrapper" role="grid">
+                                        @Html.ValidationSummary(false)
+                                        @if (ViewBag.Visit_TotalRows > 1)
+                                        {
+                                            <div class="col-md-6 col-sm-12">
+                                                <div id="sample_1_length" class="dataTables_length">
+                                                    <label style="margin-left:-15px;">
+                                                        @Html.DropDownList("Visit_RowCount", (SelectList)ViewBag.Visit_pCountList, new { @onchange = "RedirectAction('Visits','" + @ViewBag.CustomerID + "');", @class = "form-control input-small" })
+                                                        records
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="dataTables_filter" id="sample_1_filter">
+                                                    <label style="margin-right:-15px;">
+                                                        Search:
+                                                        @Html.TextBox("Visit_Search", "", new { @style = "padding-right:1%", @class = "form-control input-medium input-inline" })
+                                                        <button type="submit" class="btn green pull-right" onsubmit="this.form.submit();">
+                                                            Submit <i class="m-icon-swapright m-icon-white"></i>
+                                                        </button>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="table-scrollable">
+                                                @{
+                                                    var obj = new WebGrid(rowsPerPage: ViewBag.pageVisitCountValue, canPage: true);
+                                                    obj.Bind(source: Model.StoreVisitList, rowCount: ViewBag.Visit_TotalRows, autoSortAndPage: false);
+                                                }
+                                                @obj.GetHtml(htmlAttributes: new { @class = "table table-striped table-hover table-bordered", @id = "sample_1_info", @style = "overflow-y:scroll" },
+                                                            mode: WebGridPagerModes.Numeric | WebGridPagerModes.NextPrevious,
+                                                            nextText: "Next",
+                                                            previousText: "Previous",
+                                                            footerStyle: "gridFooter",
+                                                            numericLinksCount:10,
+                                                            alternatingRowStyle: "gradeX even",
+                                                            rowStyle: "gradeX odd",
+                                                            columns: obj.Columns(
+
+                                                            obj.Column("RegionName", header: "Region"),
+                                                            obj.Column("MarketID", header: "Store ID"),
+                                                               obj.Column("CustomerStopName", header: "Store Name"),
+                                                             obj.Column("ActualStartTime", header: "Check-In"),
+                                                              obj.Column("ActualEndTime", header: "Check-Out"),
+                                                                obj.Column("Status", header: "Status"),
+                                                                          obj.Column("FMName", header: "Field Manager"),
+                                                                                    obj.Column("",
+                                                                           header: "Details", style: "action",
+                                                                                        format:
+                                                                                        @<text>
+                                                                                            <a class="navbar-brand" style="padding:0px 5px 0px 5px" title="Generate PDF" href="@Url.Action("GeneratePDFByID", "StoreVisit", new { id = item.JobGUID, type = "StoreVisit" })">
+                                                                                                <img src="~/assets/img/application_pdf.png" alt="logo" style="width:20px;height:20px" class="" />
+                                                                                            </a>
+                                                                                            @Html.ActionLink("Details", "JobForm", new { id = item.JobGUID, type = "Visit" }, new { @class = "label label-sm label-default", @style = "border-radius:0px;" })
+                                                                                        </text>
+
+                                                         )
+                                                         ))
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <label>No Data Found</label>
+                                        }
+                                    </div>
+                                    <div class="row"></div>
+                                </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="@(TempData["TabName"].ToString() == "Non-Visits" ? "tab-pane active" : "tab-pane")" id="tab_5_2">
+                        @{
+                            redirectstr = @Request.Url.AbsoluteUri.ToString();
+                            if (!redirectstr.Contains("?"))
+                                redirectstr += "?Non-Visits&NonVisit_RowCount=" + ViewBag.pageNonCountValue + "&NonVisit_Search=" + ViewBag.NonVisit_Search;
+                        }
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = redirectstr })) {
+                            if (Model != null && Model.StoreNonVisitList != null)
+                            {
+                            <div class="portlet box grey">
+                                <div class="portlet-title">
+                                    <div class="caption"><i class="icon-globe"></i>Store Non-Visit Reports</div>
+                                    @Html.Raw(@ViewBag.CustomerListNonVisit)
+                                </div>
+                                <div class="portlet-body">
+                                    <div id="sample_editable_3_wrapper" class="dataTables_wrapper" role="grid">
+                                        @Html.ValidationSummary(false)
+                                        @if (ViewBag.Visit_TotalRows > 1)
+                                        {
+                                            <div class="col-md-6 col-sm-12">
+                                                <div id="sample_1_length" class="dataTables_length">
+                                                    <label style="margin-left:-15px;">
+                                                        @Html.DropDownList("NonVisit_RowCount", (SelectList)ViewBag.NonVisit_pCountList, new { @onchange = "RedirectAction('NonVisits','" + @ViewBag.CustomerID + "');", @class = "form-control input-small" })
+                                                        records
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="dataTables_filter" id="sample_1_filter">
+                                                    <label style="margin-right:-15px;">
+                                                        Search:
+                                                        @Html.TextBox("NonVisit_Search", "", new { @style = "padding-right:1%", @class = "form-control input-medium input-inline" })
+                                                        <button type="submit" class="btn green pull-right">
+                                                            Submit <i class="m-icon-swapright m-icon-white"></i>
+                                                        </button>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="table-scrollable">
+                                                @{
+                                            var obj = new WebGrid(rowsPerPage: ViewBag.pageNonCountValue, canPage: true);
+                                            obj.Bind(source: Model.StoreNonVisitList, rowCount: ViewBag.NonVisit_TotalRows, autoSortAndPage: false);
+                                                }
+                                                @obj.GetHtml(htmlAttributes: new { @class = "table table-striped table-hover table-bordered", @id = "sample_1_info", @style = "overflow-y:scroll" },
+                                                                                          mode: WebGridPagerModes.Numeric | WebGridPagerModes.NextPrevious,
+                                                                                          nextText: "Next",
+                                                                                          previousText: "Previous",
+                                                                            footerStyle: "gridFooter",
+                                                                            numericLinksCount:10,
+                                                                            alternatingRowStyle: "gradeX even",
+                                                                     rowStyle: "gradeX odd",
+                                                                                          columns: obj.Columns(
+
+                                                            obj.Column("RegionName", header: "Region"),
+                                                            obj.Column("MarketID", header: "Store ID"),
+                                                                obj.Column("MarketName", header: "Store Name"),
+                                                               obj.Column("LastStoreVisitedDate", header: "Last Visit Date"),
+                                                                          obj.Column("FMName", header: "Field Manager"),
+                                                                                    obj.Column("",
+                                                                           header: "Details", style: "action",
+                                                                                        format:
+                                                                                        @<text>
+                                                                                            <a class="navbar-brand" style="padding:0px 5px 5px 0px" title="Generate PDF" href="@Url.Action("GeneratePDFByID", "StoreVisit", new { id = item.MarketGUID, type = "StoreNonVisit" })">
+                                                                                                <img src="~/assets/img/application_pdf.png" alt="logo" style="width:20px;height:20px" class="img-responsive" />
+                                                                                            </a>
+                                                                                            @Html.ActionLink("Details", "JobForm", new { id = item.MarketGUID, type = "Nonvisit" }, new { @class = "label label-sm label-default", @style = "border-radius:0px;" })
+                                                                                        </text>
+
+                                                                                                              )
+                                                                                                              ))
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <label>No Data Found</label>
+                                        }
+                                    </div>
+                                    <div class="row"></div>
+                                </div>
+                            </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <script type="text/javascript">
+    jQuery(document).ready(function () {
+        TableEditable.init();
+        ComponentsPickers.init();
+
+        if ('@ViewBag.DateValue' != "") {
+            $('#reportrange span').html('@ViewBag.DateValue');
+            if ($("div[class='ranges'] ul li").hasClass("active")) {
+            }
+        }
+    });
+
+    function actionmethod(name) {
+        switch (name) {
+            case 'Visits':
+                //alert("Visits");
+                $("#bredcrumbend").text("Visits");
+                break;
+            case 'Non-Visits':
+                //alert("Non-Visits");
+                $("#bredcrumbend").text("Non-Visits");
+                break;
+            default: break;
+        }
+    }
+    function RedirectAction(type, id) {
+        var redirectstr = document.location.href;
+        redirectstr = redirectstr.substring(0, redirectstr.indexOf("?"));
+        if (type === "Visits") {
+            redirectstr += "?Visits&Visit_RowCount=" + $('#Visit_RowCount').val() + "&Visit_Search=" + $('#Visit_Search').val();
+            if (null !== '@ViewBag.FromDate' && '@ViewBag.FromDate' !== '')
+                redirectstr += '&FromDate=@ViewBag.FromDate' + '&ToDate=@ViewBag.ToDate' + '&Date=@ViewBag.Date';
+            if (id !== '')
+                redirectstr += '&customerid=' + id;
+        }
+        else if (type === "NonVisits") {
+            redirectstr += "?Non-Visits&NonVisit_RowCount=" + $('#NonVisit_RowCount').val() + "&NonVisit_Search=" + $('#NonVisit_Search').val();
+            if (null !== '@ViewBag.FromDate' && '@ViewBag.FromDate' !== '')
+                redirectstr += '&FromDate=@ViewBag.FromDate' + '&ToDate=@ViewBag.ToDate' + '&Date=@ViewBag.Date';
+            if (id !== '')
+                redirectstr += '&customerid=' + id;
+        }
+        document.location.href = redirectstr;
+    }
+    function remove_duplicates(arr) {
+        var obj = {};
+        for (var i = 0; i < arr.length; i++) {
+            obj[arr[i]] = true;
+        }
+        arr = [];
+        for (var key in obj) {
+            arr.push(key);
+        }
+        return arr;
+    }
+    </script>
+</body>
+</html>

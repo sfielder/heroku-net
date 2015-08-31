@@ -1,0 +1,363 @@
+﻿@model WorkersInMotion.Model.ViewModel.JobViewModel
+
+@{
+    ViewBag.Title = "Create";
+    // Layout = "~/Views/MasterPage.cshtml";
+    @Html.Raw(TempData["msg"])
+}
+
+<html>
+<head>
+    <script src="~/jqueryplugin-dyndatetime-0.2-src/jquery.dynDateTime.js"></script>
+    <script src="~/jqueryplugin-dyndatetime-0.2-src/lang/calendar-en.min.js"></script>
+    <link href="~/jqueryplugin-dyndatetime-0.2-src/css/calendar-blue.css" rel="stylesheet" />
+
+    <title>Edit</title>
+    <style type="text/css">
+        /*.leftbar-heading {
+            font-family: Arial,Verdana, Helvetica, sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+        }*/
+
+        .mask2 {
+            background-color: #000;
+            display: block;
+            height: 100%;
+            left: 0;
+            opacity: .8;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                Edit Job
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Job")">Job</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="#">Details</a></li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cog"></i>This page will allow you to edit a Job</div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <div class="form-body">
+                                <h3 class="form-section">Job Information</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.JobModel.JobName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.JobModel.JobName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.JobModel.JobName)
+                                            @Html.HiddenFor(model => model.JobModel.JobIndexGUID)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.JobModel.JobReferenceNo, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.JobModel.JobReferenceNo, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.JobModel.JobReferenceNo)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.JobModel.JobClass, new { @class = "control-label" })
+                                            @*@Html.DropDownListFor(model => model.JobModel.JobLogicalID, (SelectList)ViewBag.JobSchemaName, "Select Job Schema", new { @onchange = "return jobschemachanged(this);", @class = "form-control" })*@
+                                            @Html.DropDownListFor(model => model.JobModel.JobClass, (SelectList)ViewBag.JobSchemaName, "Select Job Schema", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.JobModel.JobClass)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.JobModel.IsScheduled, new { @class = "control-label" })
+                                            @Html.DropDownListFor(model => model.JobModel.IsScheduled, (SelectList)ViewBag.Schedule, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.JobModel.IsScheduled)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.JobModel.CustomerName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.JobModel.CustomerName, new { @readonly = "readonly", @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.JobModel.CustomerName)
+                                            @Html.HiddenFor(model => model.JobModel.StopsGUID)
+                                            @Html.HiddenFor(model => model.JobModel.CustGUID)
+                                            @Html.HiddenFor(model => model.JobModel.RegionCode)
+                                            @Html.HiddenFor(model => model.JobModel.TerritoryCode)
+                                            @Html.HiddenFor(model => model.JobModel.CustomerPointName, new { @value = "" })
+                                            @Html.HiddenFor(model => model.JobModel.GroupName, new { @value = "" })
+                                            @Html.HiddenFor(model => model.JobModel.CreateDate)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <br />
+                                            <br />
+                                            <a href="" onclick="return pickcustomerstopclick();">
+                                                Pick Customer Stop
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (@ViewBag.PlaceGUID == null)
+                                {
+                                    <div id="divmask" class="mask2" style="display:none;"></div>
+                                    <div id="divconpicker" style="position:absolute; display: none; z-index: 1000;background-color: White;padding: 25px;top: 0px;">
+                                        @Html.Partial("~/Views/Market/_CustomerStop.cshtml")
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div id="divmask" class="mask2" style="display:block;"></div>
+                                    <div id="divconpicker" style="position:absolute; display: block; z-index: 1000;background-color: White;padding: 25px;top: 0px;">
+                                        @Html.Partial("~/Views/Market/_CustomerStop.cshtml")
+                                    </div>
+                                }
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.JobModel.PreferredStartTime, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.JobModel.PreferredStartTime, new { @class = "form-control", @readonly = "readonly", @style = "cursor:pointer" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.JobModel.PreferredEndTime, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.JobModel.PreferredEndTime, new { @class = "form-control", @readonly = "readonly", @style = "cursor:pointer" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.JobModel.EstimatedDuration, new { @class = "control-label" })
+                                            @*@Html.TextBoxFor(model => model.JobModel.EstimatedDuration, new { @readonly = "readonly", @class = "form-control" })*@
+                                            @Html.TextBoxFor(model => model.JobModel.EstimatedDuration, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.JobModel.Instruction, new { @class = "control-label" })
+                                                @Html.TextBoxFor(model => model.JobModel.Instruction, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.JobModel.Instruction)
+                                            </div>
+                                        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions right">
+                            <a href="@Url.Action("Index")" class="btn default">Cancel</a>
+                            <button type="submit" onclick="return datevalidate();" class="btn blue"><i class="icon-ok"></i> Update</button>
+                        </div>
+                    }
+                    <!-- END PORTLET-->
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+            <!-- END PAGE -->
+        </div>
+    </div>
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("input[name = rdoPlace]").on("change", function () {
+                //  alert($(this).val());
+                var val = $(this).val();
+                window.location = "/Job/Edit/" + val + "?jobindexguid=" + $("#JobModel_JobIndexGUID").val() + "";
+            });
+            $("input[name = rdoPlace]").each(function () {
+                var val = $(this).val();
+                var PlaceGUID = '@ViewBag.PlaceGUID';
+                if (PlaceGUID != "") {
+                    if (val == PlaceGUID) {
+                        $(this).prop('checked', true);
+                        return false;
+                    }
+                }
+            });
+            if ($("input[name = rdoPlace]:radio:checked").length == 0)
+                $("#rdo_btn_00000000-0000-0000-0000-000000000000").prop('checked', true);
+
+
+            $("#JobModel_PreferredStartTime").dynDateTime({
+                showsTime: true,
+                ifFormat: "%Y/%m/%d %H:%M",
+                daFormat: "%l;%M %p, %e %m, %Y",
+                align: null,
+                electric: true,
+                singleClick: false,
+                displayArea: ".siblings('.dtcDisplayArea')",
+                button: ".next()",
+                timeFormat: "12"
+            });
+            $("#JobModel_PreferredEndTime").dynDateTime({
+                showsTime: true,
+                ifFormat: "%Y/%m/%d %H:%M",
+                daFormat: "%l;%M %p, %e %m, %Y",
+                align: null,
+                electric: true,
+                singleClick: false,
+                displayArea: ".siblings('.dtcDisplayArea')",
+                button: ".next()",
+                timeFormat: "12"
+
+            });
+            if ($("#JobModel_PreferredStartTime").val() == "") {
+                document.getElementById("JobModel_PreferredStartTime").value = '@System.DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm")';
+            }
+            if ($("#JobModel_PreferredEndTime").val() == "") {
+                document.getElementById("JobModel_PreferredEndTime").value = '@System.DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm")';
+            }
+
+            $('#JobModel_PreferredStartTime').keydown(function (event) {
+                var key = event.keyCode || event.charCode;
+                if (key == 8 || key == 46)
+                    return false;
+            });
+            $('#JobModel_PreferredEndTime').keydown(function (event) {
+                var key = event.keyCode || event.charCode;
+                if (key == 8 || key == 46)
+                    return false;
+            });
+        });
+
+
+        //$("input[name = rdoCusStop]").on("change", function () {
+        //    //  alert($(this).val());
+        //    var val = $(this).val();
+        //    $("#JobModel_StopsGUID").val($(this).val());
+        //    $("#JobModel_CustGUID").val($("#hdnPlaceGUID_" + val).val());
+        //    $("#JobModel_RegionCode").val($("#hdnRegion_" + val).val());
+        //    $("#JobModel_TerritoryCode").val($("#hdnTerritory_" + val).val());
+        //    $("#JobModel_CustomerName").val($("#hdnMarketName_" + val).val());
+
+        //});
+
+        function pickcustomerstopclick() {
+            $("#divmask").css("display", "block");
+            $("#divconpicker").css("display", "block");
+            return false;
+        }
+        function pickerCancelClick() {
+            //$("#JobModel_StopsGUID").val("");
+            //$("#JobModel_CustGUID").val("");
+            //$("#JobModel_RegionCode").val("");
+            //$("#JobModel_TerritoryCode").val("");
+            //$("#JobModel_CustomerName").val("");
+            $("#divmask").css("display", "none");
+            $("#divconpicker").css("display", "none");
+            return false;
+        }
+
+        function pickerContinueClick() {
+            $("input[name = rdoCusStop]:radio:checked").each(function () {
+                var val = $(this).val();
+                $("#JobModel_StopsGUID").val($(this).val());
+                $("#JobModel_CustGUID").val($("#hdnPlaceGUID_" + val).val());
+                $("#JobModel_RegionCode").val($("#hdnRegion_" + val).val());
+                $("#JobModel_TerritoryCode").val($("#hdnTerritory_" + val).val());
+                $("#JobModel_CustomerName").val($("#hdnMarketName_" + val).val());
+            });
+            $("#divmask").css("display", "none");
+            $("#divconpicker").css("display", "none");
+            return false;
+        }
+
+        function jobschemachanged(object) {
+            if ($(object).val() != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "/Job/getEstimateDuration",
+                    data: {
+                        JobLogicalID: $(object).val()
+                    },
+                    async: true,
+                    success: function (data) {
+                        if (data != null) {
+                            if (data != "failure")
+                                $("#JobModel_EstimatedDuration").val(data);
+                        }
+                    },
+                    error: function (x, e) {
+                        alert("error occur");
+                    }
+                });
+            }
+            else {
+                $("#JobModel_EstimatedDuration").val("");
+            }
+            return false;
+        }
+
+
+        function datevalidate() {
+            if ($("#JobModel_PreferredStartTime").val() < '@System.DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm")') {
+                ModalPopupsAlert('Workers-In-Motion', 'Start time should be greater or equal to current time.');
+                return false;
+            }
+            else if ($("#JobModel_PreferredEndTime").val() < '@System.DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm")') {
+                ModalPopupsAlert('Workers-In-Motion', 'End time should be greater or equal to current time.');
+                return false;
+            }
+            else if ($("#JobModel_PreferredEndTime").val() >= $("#JobModel_PreferredStartTime").val()) {
+                return true;
+            }
+            else {
+                ModalPopupsAlert('Workers-In-Motion', 'End time should be greater or equal to start time.');
+                return false;
+            }
+        }
+
+    </script>
+
+</body>
+</html>

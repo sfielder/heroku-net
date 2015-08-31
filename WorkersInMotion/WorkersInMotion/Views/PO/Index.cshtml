@@ -1,0 +1,156 @@
+﻿@model WorkersInMotion.Model.ViewModel.POViewLists
+
+@{
+    // Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit</title>
+    <link href="~/Content/JqueryUI.css" rel="stylesheet" />
+    <style type="text/css">
+        .gridFooter td {
+            padding: 10px;
+            color: #999;
+            font-size: 10pt;
+            text-align: left;
+        }
+
+        .gridFooter a:hover {
+            color: #333;
+            border: 1px green solid;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        .gridFooter a {
+            color: #333;
+            border: 1px #ddd solid;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+            <h3 class="page-title">
+                PO List
+            </h3>
+
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        <a href="@Url.Action("Index","MyCompany")">@Session["OrganizationName"].ToString()</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","Place")">Clients</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">POs</a>
+                    </li>
+                }
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+    </div>
+    <!-- END DASHBOARD STATS -->
+
+    <div class="clearfix"></div>
+    <div class="row">
+        @using (Html.BeginForm("Index", "PO", FormMethod.Get))
+        {
+            @Html.ValidationSummary(false)
+            <div class="col-md-12 col-sm-12">
+                <!-- BEGIN PORTLET-->
+                <div class="portlet box grey">
+                    <div class="portlet-title">
+                        <div class="caption"><i class="icon-cog"></i>This page will allow you to view PO List.</div>
+                        @Html.Raw(@ViewBag.CustomerList)
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-toolbar">
+                        </div>
+                        <div id="sample_1_wrapper" class="dataTables_wrapper" role="grid">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <div id="sample_1_length" class="dataTables_length">
+                                        <label>
+                                            @Html.DropDownList("RowCount", (SelectList)ViewBag.pCountList, new { @onchange = "this.form.submit();", @class = "form-control input-small" })
+                                            @*<select size="1" name="sample_1_length" aria-controls="sample_1" class="form-control input-small">
+                                                    <option value="5" selected="selected">5</option>
+                                                    <option value="15">15</option>
+                                                    <option value="20">20</option>
+                                                    <option value="-1">All</option>
+                                                </select>*@
+                                            records
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="dataTables_filter" id="sample_1_filter">
+                                        <label>
+                                            Search:
+                                            @Html.TextBox("search", "", new { @style = "padding-right:1%", @class = "form-control input-medium input-inline" })
+                                            <button type="submit" class="btn green pull-right">
+                                                Submit <i class="m-icon-swapright m-icon-white"></i>
+                                            </button>
+                                            @*<input type="text" aria-controls="sample_1" class="form-control input-medium input-inline">*@
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-scrollable">
+                                @{
+                                    var obj = new WebGrid(rowsPerPage: ViewBag.pageCountValue, canPage: true);
+                                    obj.Bind(source: Model.POViewList, rowCount: ViewBag.TotalRows, autoSortAndPage: false);
+                                }
+                                @obj.GetHtml(htmlAttributes: new { @class = "table table-striped table-hover table-bordered", @id = "sample_1_info", @style = "overflow-y:scroll" },
+                                    mode: WebGridPagerModes.Numeric | WebGridPagerModes.NextPrevious,
+                                    nextText: "Next",
+                                    previousText: "Previous",
+                                    numericLinksCount: 10,
+                                    footerStyle: "gridFooter",
+                                    alternatingRowStyle: "gradeX even",
+                                    rowStyle: "gradeX odd",
+                                  columns: obj.Columns(
+                                        obj.Column("PlaceName", header: "Client Name"),
+                                        obj.Column("PONumber", header: "PO Number"),
+                                        obj.Column("MarketID", header: "Store Number"),
+                                        obj.Column("InstallerName", header: "Installer Name"),
+                                        obj.Column("POCustomerName", header: "Customer Name"),
+                                        obj.Column("POCustomerPhone", header: "Phone")
+                                ))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+            </div>
+            <div class="clearfix"></div>
+        }
+    </div>
+    <!-- END PAGE -->
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            TableAdvanced.init();
+            ComponentsPickers.init();
+        });
+    </script>
+</body>
+</html>

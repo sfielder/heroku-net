@@ -1,0 +1,647 @@
+﻿@model WorkersInMotion.Model.ViewModel.JobViewModel
+@{
+    @Html.Raw(TempData["msg"])
+}
+
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Index</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <script src="~/jqueryplugin-dyndatetime-0.2-src/jquery.dynDateTime.js"></script>
+    <script src="~/jqueryplugin-dyndatetime-0.2-src/lang/calendar-en.min.js"></script>
+    <link href="~/jqueryplugin-dyndatetime-0.2-src/css/calendar-blue.css" rel="stylesheet" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <style type="text/css">
+        /*.leftbar-heading {
+                font-family: Arial,Verdana, Helvetica, sans-serif;
+                font-size: 13px;
+                font-style: normal;
+                line-height: normal;
+                font-weight: normal;
+                font-variant: normal;
+                text-transform: none;
+            }*/
+
+        .mask2 {
+            background-color: #000;
+            display: block;
+            height: 100%;
+            left: 0;
+            opacity: .8;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="page-header-fixed" style="">
+    @if (TempData["TabName"] == null)
+    {
+        TempData["TabName"] = "";
+    }
+    <div class="clearfix">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                @if (Model.JobModel != null)
+                {
+                    @Model.JobModel.JobName
+                }
+            </h3>
+            <ul class="page-breadcrumb breadcrumb">
+
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="@Url.Action("DashBoard","User")">
+                        Home
+                    </a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                @if (Session["OrganizationName"] != null && !string.IsNullOrEmpty(Session["OrganizationName"].ToString()))
+                {
+                    <li>
+                        <a href="@Url.Action("Index","MyCompany")">@Session["OrganizationName"].ToString()</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","JobStatus")">Visit</a>
+                    </li>
+                    @*if (Session["CustomerName"] != null && !string.IsNullOrEmpty(Session["CustomerName"].ToString()))
+                        {
+                            if (TempData["TabName"] != null && !string.IsNullOrEmpty(TempData["TabName"].ToString()) && TempData["TabName"].ToString() == "Stores")
+                            {
+                                <li>
+                                    <a href="#">@Session["CustomerName"].ToString()</a>
+
+                                </li>
+                                <li id="breadcrumbli">
+                                    <i class="icon-angle-right"></i>
+                                    <a href="#" id="bredcrumbend">@TempData["TabName"].ToString()</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="#">@Session["CustomerName"].ToString()</a>
+
+                                </li>
+                                <li style="display:none" id="breadcrumbli">
+                                    <i class="icon-angle-right"></i>
+                                    <a href="#" id="bredcrumbend">@TempData["TabName"].ToString()</a>
+                                </li>
+                            }
+                        }*@
+
+
+                }
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="tabbable-custom">
+                <ul class="nav nav-tabs ">
+                    <li class="@(TempData["TabName"].ToString() == "Details" ? "active" : "")" onclick="return actionmethod('Details');">
+                        <a href="#tab_5_1" data-toggle="tab">
+                            Details
+                        </a>
+                    </li>
+                    <li class="@(TempData["TabName"].ToString() == "Status" ? "active" : "")">
+                        <a href="#tab_5_2" data-toggle="tab" onclick="return actionmethod('Status');">
+                            Status
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="min-height:500px;overflow-y:scroll;overflow-x:hidden">
+                    <div class="@(TempData["TabName"].ToString() == "Details" ? "tab-pane active" : "tab-pane")" id="tab_5_1">
+                        @if (Model != null)
+                        {
+                                <!-- BEGIN PAGE HEADER-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                                    @*<ul class="page-breadcrumb breadcrumb">
+                                            <li>
+                                                <i class="icon-home"></i>
+                                                <a href="/User/DashBoard">Home</a>
+                                                <i class="icon-angle-right"></i>
+                                            </li>
+                                            <li>
+                                                <a href="/Place/Index">Customer</a>
+                                                <i class="icon-angle-right"></i>
+                                            </li>
+                                            <li><a href="#">Details</a></li>
+                                        </ul>*@
+                                    <!-- END PAGE TITLE & BREADCRUMB-->
+                                </div>
+                            </div>
+                                <!-- END PAGE HEADER-->
+                            <!-- BEGIN DASHBOARD STATS -->
+                            <div class="row">
+                            </div>
+                             <!-- END DASHBOARD STATS -->
+
+
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <!-- BEGIN PORTLET-->
+                                    <div class="portlet box grey">
+                                        <div class="portlet-title">
+                                            @if (Model.JobModel.Status == 1)
+                                            {
+                                                <div class="caption"><i class="icon-cog"></i>This page will allow you to update a Visit</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="caption"><i class="icon-cog"></i> This page displays the visit details of the organization</div>
+                                            }
+                                        </div>
+                                        <div class="portlet-body form">
+                                            @using (Html.BeginForm("EditJobDetails", "JobDetails", FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                if (Model.JobModel != null && Model.JobModel.Status == 1)
+                                                {
+                                                    <div class="form-horizontal">
+                                                        <div class="form-body">
+                                                            <h3 class="form-section">Job Information</h3>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.JobName, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.JobName, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.JobModel.JobName)
+                                                                        @Html.HiddenFor(model => model.JobModel.JobIndexGUID)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.JobReferenceNo, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.JobReferenceNo, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.JobModel.JobReferenceNo)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.JobClass, new { @class = "control-label" })
+                                                                        @*@Html.DropDownListFor(model => model.JobModel.JobLogicalID, (SelectList)ViewBag.JobSchemaName, "Select Job Schema", new { @onchange = "return jobschemachanged(this);", @class = "form-control" })*@
+                                                                        @Html.DropDownListFor(model => model.JobModel.JobClass, (SelectList)ViewBag.JobSchemaName, "Select Job Schema", new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.JobModel.JobClass)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.IsScheduled, new { @class = "control-label" })
+                                                                        @Html.DropDownListFor(model => model.JobModel.IsScheduled, (SelectList)ViewBag.Schedule, new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.JobModel.IsScheduled)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.CustomerName, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.CustomerName, new { @readonly = "readonly", @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.JobModel.CustomerName)
+                                                                        @Html.HiddenFor(model => model.JobModel.StopsGUID)
+                                                                        @Html.HiddenFor(model => model.JobModel.CustGUID)
+                                                                        @Html.HiddenFor(model => model.JobModel.RegionCode)
+                                                                        @Html.HiddenFor(model => model.JobModel.TerritoryCode)
+                                                                        @Html.HiddenFor(model => model.JobModel.CustomerPointName, new { @value = "" })
+                                                                        @Html.HiddenFor(model => model.JobModel.GroupName, new { @value = "" })
+                                                                        @Html.HiddenFor(model => model.JobModel.CreateDate)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <br />
+                                                                        <br />
+                                                                        <a href="" onclick="return pickcustomerstopclick();">
+                                                                            Pick Store
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @if (@ViewBag.PlaceGUID == null)
+                                                            {
+                                                                <div id="divmask" class="mask2" style="display:none;"></div>
+                                                                <div id="divconpicker" style="position: absolute; display: none; z-index: 1000; background-color: White; padding: 25px; top: 0px;">
+                                                                    @Html.Partial("~/Views/Market/_CustomerStop.cshtml")
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div id="divmask" class="mask2" style="display:block;"></div>
+                                                                <div id="divconpicker" style="position: absolute; display: block; z-index: 1000; background-color: White; padding: 25px; top: 0px;">
+                                                                    @Html.Partial("~/Views/Market/_CustomerStop.cshtml")
+                                                                </div>
+                                                            }
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.ActualStartTime, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.ActualStartTime, new { @class = "form-control", @readonly = "readonly", @style = "cursor:pointer" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.ActualEndTime, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.ActualEndTime, new { @class = "form-control", @readonly = "readonly", @style = "cursor:pointer" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.EstimatedDuration, new { @class = "control-label" })
+                                                                        @*@Html.TextBoxFor(model => model.JobModel.EstimatedDuration, new { @readonly = "readonly", @class = "form-control" })*@
+                                                                        @Html.TextBoxFor(model => model.JobModel.EstimatedDuration, new { @class = "form-control" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-actions right">
+                                                        @if (Model.JobModel.Status == 1)
+                                                        {
+                                                            <a href="@Url.Action("Index","JobStatus")" class="btn default">Cancel</a>
+                                                            <button type="submit" onclick="return datevalidate();" class="btn blue"><i class="icon-ok"></i> Update</button>
+                                                        }
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-horizontal">
+                                                        <div class="form-body">
+                                                            <h3 class="form-section">Visit Information</h3>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.JobName, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.JobName, new { @class = "form-control", @disabled = "disabled" })
+                                                                        @Html.ValidationMessageFor(model => model.JobModel.JobName)
+                                                                        @Html.HiddenFor(model => model.JobModel.JobIndexGUID)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.JobReferenceNo, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.JobReferenceNo, new { @class = "form-control", @disabled = "disabled" })
+                                                                        @Html.ValidationMessageFor(model => model.JobModel.JobReferenceNo)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.JobClass, new { @class = "control-label" })
+                                                                        @Html.DropDownListFor(model => model.JobModel.JobClass, (SelectList)ViewBag.JobSchemaName, "Select Job Schema", new { @class = "form-control", @disabled = "disabled" })
+                                                                        @Html.ValidationMessageFor(model => model.JobModel.JobClass)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.IsScheduled, new { @class = "control-label" })
+                                                                        @Html.DropDownListFor(model => model.JobModel.IsScheduled, (SelectList)ViewBag.Schedule, new { @class = "form-control", @disabled = "disabled" })
+                                                                        @Html.ValidationMessageFor(model => model.JobModel.IsScheduled)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.CustomerName, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.CustomerName, new { @readonly = "readonly", @class = "form-control", @disabled = "disabled" })
+                                                                        @Html.ValidationMessageFor(model => model.JobModel.CustomerName)
+                                                                        @Html.HiddenFor(model => model.JobModel.StopsGUID)
+                                                                        @Html.HiddenFor(model => model.JobModel.CustGUID)
+                                                                        @Html.HiddenFor(model => model.JobModel.RegionCode)
+                                                                        @Html.HiddenFor(model => model.JobModel.TerritoryCode)
+                                                                        @Html.HiddenFor(model => model.JobModel.CustomerPointName, new { @value = "" })
+                                                                        @Html.HiddenFor(model => model.JobModel.GroupName, new { @value = "" })
+                                                                        @Html.HiddenFor(model => model.JobModel.CreateDate)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.ActualStartTime, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.ActualStartTime, new { @class = "form-control", @readonly = "readonly", @style = "cursor:pointer", @disabled = "disabled" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(model => model.JobModel.ActualEndTime, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.ActualEndTime, new { @class = "form-control", @readonly = "readonly", @style = "cursor:pointer", @disabled = "disabled" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        @Html.HiddenFor(model => model.JobModel.EstimatedDuration)
+                                                                        @Html.LabelFor(model => model.JobModel.EstimatedDuration, new { @class = "control-label" })
+                                                                        @Html.TextBoxFor(model => model.JobModel.Duration, new { @class = "form-control", @disabled = "disabled" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-actions right">
+                                                    </div>
+                                                }
+                                            }
+                                            <!-- END PORTLET-->
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                    </div>
+                                    <!-- END PAGE -->
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="@(TempData["TabName"].ToString() == "Status" ? "tab-pane active" : "tab-pane")" id="tab_5_2">
+                        @if (Model.JobProgressList != null)
+                        {
+                            <div class="portlet box grey">
+                                <div class="portlet-title">
+                                    <div class="caption"><i class="icon-globe"></i>This page displays the visit status of the organization.</div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div id="sample_editable_2_wrapper" class="dataTables_wrapper" role="grid">
+                                        <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_2" aria-describedby="sample_editable_2_info" style="width: 1065px;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+                                    : activate to sort column ascending">
+                                                    </th>
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 233px;" aria-label="
+                                             Date Time
+                                        : activate to sort column ascending">
+                                                        Date Time
+                                                    </th>
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 240px;" aria-label="
+                                            Status
+                                        : activate to sort column ascending">
+                                                        Status
+                                                    </th>
+
+                                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 101px;" aria-label="
+                                             Duration
+                                        : activate to sort column ascending">
+                                                        Duration
+                                                    </th>
+                                                    <th class="sorting-disabled" role="columnheader" tabindex="0" aria-controls="sample_editable_2" rowspan="1" colspan="1" style="width: 141px;" aria-label="
+                                             Description
+                                        : activate to sort column ascending">
+                                                        Description
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                @if (Model.JobProgressList.Count() > 0)
+                                                {
+                                                    foreach (var item in Model.JobProgressList)
+                                                    {
+                                                        <tr class="odd gradeX">
+                                                            <td style="text-align: center;width:20px">
+                                                                @if (item.LocationMismatch != null && item.LocationMismatch == true)
+                                                                {
+                                                                    <span style="color:red;font-weight:bold">!</span>
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.StartTime)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Status)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.DurationInHourFormat)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.StatusNote)
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="5" align="center" style="color:red">
+                                                            No Data Found
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+
+                                    </div><div class="row"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            TableEditable.init();
+            @*var tabname = "@TempData["TabName"]";
+            $('a[data-toggle=tab]').each(function () {
+                var _id = $(this).attr("href").substring(1);
+                if ($(this).text().trim() == tabname.trim()) {
+                    $(this).parent('li').addClass("active");
+                    $("#" + _id).addClass("active");
+                }
+                else {
+                    $(this).parent('li').removeClass("active");
+                    $("#" + _id).removeClass("active");
+                }
+            });*@
+
+
+            $("input[name = rdoPlace]").on("change", function () {
+                //  alert($(this).val());
+                var val = $(this).val();
+                window.location = "/JobDetails/Index/?marketguid=" + val + "&jobindexguid=" + $("#JobModel_JobIndexGUID").val() + "";
+            });
+            $("input[name = rdoPlace]").each(function () {
+                var val = $(this).val();
+                var PlaceGUID = '@ViewBag.PlaceGUID';
+                if (PlaceGUID != "") {
+                    if (val == PlaceGUID) {
+                        $(this).prop('checked', true);
+                        return false;
+                    }
+                }
+            });
+            if ($("input[name = rdoPlace]:radio:checked").length == 0)
+                $("#rdo_btn_00000000-0000-0000-0000-000000000000").prop('checked', true);
+
+
+            $("#JobModel_PreferredStartTime").dynDateTime({
+                showsTime: true,
+                ifFormat: "%m/%d/%Y %H:%M",
+                daFormat: "%l;%M %p, %e %m, %Y",
+                align: null,
+                electric: true,
+                singleClick: false,
+                displayArea: ".siblings('.dtcDisplayArea')",
+                button: ".next()",
+                timeFormat: "12"
+            });
+            $("#JobModel_PreferredEndTime").dynDateTime({
+                showsTime: true,
+                ifFormat: "%m/%d/%Y %H:%M",
+                daFormat: "%l;%M %p, %e %m, %Y",
+                align: null,
+                electric: true,
+                singleClick: false,
+                displayArea: ".siblings('.dtcDisplayArea')",
+                button: ".next()",
+                timeFormat: "12"
+
+            });
+            if ($("#JobModel_PreferredStartTime").val() == "") {
+                document.getElementById("JobModel_PreferredStartTime").value = '@System.DateTime.UtcNow.ToString("MM/dd/yyyy HH:mm")';
+            }
+            if ($("#JobModel_PreferredEndTime").val() == "") {
+                document.getElementById("JobModel_PreferredEndTime").value = '@System.DateTime.UtcNow.ToString("MM/dd/yyyy HH:mm")';
+            }
+
+            $('#JobModel_PreferredStartTime').keydown(function (event) {
+                var key = event.keyCode || event.charCode;
+                if (key == 8 || key == 46)
+                    return false;
+            });
+            $('#JobModel_PreferredEndTime').keydown(function (event) {
+                var key = event.keyCode || event.charCode;
+                if (key == 8 || key == 46)
+                    return false;
+            });
+        });
+
+        function actionmethod(name) {
+            switch (name) {
+                case 'Details':
+                    $("#bredcrumbend").text("Details");
+                    $("#breadcrumbli").css("display", "none");
+                    break;
+                case 'Status':
+                    $("#bredcrumbend").text("Status");
+                    $("#breadcrumbli").css("display", "none");
+                    break;
+            }
+        }
+
+        function pickcustomerstopclick() {
+            $("#divmask").css("display", "block");
+            $("#divconpicker").css("display", "block");
+            return false;
+        }
+        function pickerCancelClick() {
+            //$("#JobModel_StopsGUID").val("");
+            //$("#JobModel_CustGUID").val("");
+            //$("#JobModel_RegionCode").val("");
+            //$("#JobModel_TerritoryCode").val("");
+            //$("#JobModel_CustomerName").val("");
+            $("#divmask").css("display", "none");
+            $("#divconpicker").css("display", "none");
+            return false;
+        }
+
+        function pickerContinueClick() {
+            $("input[name = rdoCusStop]:radio:checked").each(function () {
+                var val = $(this).val();
+                $("#JobModel_StopsGUID").val($(this).val());
+                $("#JobModel_CustGUID").val($("#hdnPlaceGUID_" + val).val());
+                $("#JobModel_RegionCode").val($("#hdnRegion_" + val).val());
+                $("#JobModel_TerritoryCode").val($("#hdnTerritory_" + val).val());
+                $("#JobModel_CustomerName").val($("#hdnMarketName_" + val).val());
+            });
+            $("#divmask").css("display", "none");
+            $("#divconpicker").css("display", "none");
+            return false;
+        }
+
+        function jobschemachanged(object) {
+            if ($(object).val() != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "/Job/getEstimateDuration",
+                    data: {
+                        JobLogicalID: $(object).val()
+                    },
+                    async: true,
+                    success: function (data) {
+                        if (data != null) {
+                            if (data != "failure")
+                                $("#JobModel_EstimatedDuration").val(data);
+                        }
+                    },
+                    error: function (x, e) {
+                        alert("error occur");
+                    }
+                });
+            }
+            else {
+                $("#JobModel_EstimatedDuration").val("");
+            }
+            return false;
+        }
+
+
+        function datevalidate() {
+            if ($("#JobModel_PreferredStartTime").val() < '@System.DateTime.UtcNow.ToString("MM/dd/yyyy HH:mm")') {
+                ModalPopupsAlert('Workers-In-Motion', 'Start time should be greater or equal to current time.');
+                return false;
+            }
+            else if ($("#JobModel_PreferredEndTime").val() < '@System.DateTime.UtcNow.ToString("MM/dd/yyyy HH:mm")') {
+                ModalPopupsAlert('Workers-In-Motion', 'End time should be greater or equal to current time.');
+                return false;
+            }
+            else if ($("#JobModel_PreferredEndTime").val() >= $("#JobModel_PreferredStartTime").val()) {
+                return true;
+            }
+            else {
+                ModalPopupsAlert('Workers-In-Motion', 'End time should be greater or equal to start time.');
+                return false;
+            }
+        }
+
+    </script>
+
+</body>
+</html>
